@@ -1,0 +1,117 @@
+table HOQ_RATING_CHANGE
+	lineageTag: 9223c5c5-5e6f-4231-ad05-8f06b240f449
+
+	column 'Calendar Date'
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		sourceProviderType: date
+		lineageTag: 464afe17-38af-4633-8cb5-201dd5db026c
+		summarizeBy: none
+		sourceColumn: Calendar Date
+
+		variation Variation
+			isDefault
+			relationship: ca5c5b56-ffcd-448c-aacd-fe3d59b7b7e6
+			defaultHierarchy: LocalDateTable_fc09b0dc-3769-4b27-be78-f487ce94b6ab.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'HOQ Message Description'
+		dataType: string
+		isNullable: false
+		sourceProviderType: nvarchar(255)
+		lineageTag: c59e9f82-00b5-42b1-85f6-469514e60583
+		summarizeBy: none
+		sourceColumn: HOQ Message Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column HOQ_MESSAGE_IDENTIFIER
+		dataType: double
+		isNullable: false
+		sourceProviderType: decimal(38, 0)
+		lineageTag: 78070fe1-5789-4901-b016-7c0b3a73d65e
+		summarizeBy: sum
+		sourceColumn: HOQ_MESSAGE_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SOURCE_SYSTEM_STATUS_IDENTIFIER
+		dataType: double
+		isNullable: false
+		sourceProviderType: decimal(38, 0)
+		lineageTag: aff8cdaf-5938-4f3d-b3ab-3681c5093eee
+		summarizeBy: sum
+		sourceColumn: SOURCE_SYSTEM_STATUS_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Instrument Name'
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: fcc4e815-e2a0-445d-9734-05286535b3df
+		summarizeBy: none
+		sourceColumn: Instrument Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column INSTRUMENT_IDENTIFIER
+		dataType: string
+		sourceProviderType: nvarchar(255)
+		lineageTag: ca1f0a00-e8e9-40c0-97d9-6436709ba899
+		summarizeBy: none
+		sourceColumn: INSTRUMENT_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Identifier Type'
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: 13346591-9192-47ac-9486-d711ce25a862
+		summarizeBy: none
+		sourceColumn: Identifier Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Current Identifier'
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: 5e65dc31-e9a0-4506-a138-dd6e05de39fd
+		summarizeBy: none
+		sourceColumn: Current Identifier
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Previous Identifier'
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: 033be2e3-384f-4393-9f6b-56ca54a182ad
+		summarizeBy: none
+		sourceColumn: Previous Identifier
+
+		annotation SummarizationSetBy = Automatic
+
+	partition HOQ_RATING_CHANGE = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases(snowflake_url,"ANALYST_WH_XS"),
+				    HUB_Database = Source{[Name="HUB",Kind="Database"]}[Data],
+				    JOB_Schema = HUB_Database{[Name="JOB",Kind="Schema"]}[Data],
+				    HOQ_RATING_CHANGE_View = JOB_Schema{[Name="HOQ_RATING_CHANGE",Kind="View"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(HOQ_RATING_CHANGE_View,{{"CALENDAR_DATE", "Calendar Date"}, {"CURRENT_IDENTIFIER", "Current Identifier"}, {"HOQ_MESSAGE_DESCRIPTION", "HOQ Message Description"}, {"IDENTIFIER_TYPE", "Identifier Type"}, {"INSTRUMENT_NAME", "Instrument Name"}, {"PREVIOUS_IDENTIFIER", "Previous Identifier"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

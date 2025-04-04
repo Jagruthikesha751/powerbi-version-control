@@ -1,0 +1,624 @@
+table INSTRUMENT_LIQUIDITY
+	lineageTag: 2aeee580-786e-4c6a-a7ca-7dec17b4d62b
+
+	column 'Calendar Date'
+		dataType: dateTime
+		formatString: Short Date
+		sourceProviderType: date
+		lineageTag: 3474a45b-a12d-4c0d-bd52-42b7f651ba14
+		summarizeBy: none
+		sourceColumn: Calendar Date
+
+		variation Variation
+			isDefault
+			relationship: 4566e54f-7461-4cfa-a4eb-cecbdc624bf9
+			defaultHierarchy: LocalDateTable_78c92bb0-8f42-42e2-9039-4287a9f61bf5.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column INSTRUMENT_IDENTIFIER
+		dataType: string
+		sourceProviderType: nvarchar(32)
+		lineageTag: 0ed10f79-18be-4ee4-b65b-a391973a67ad
+		summarizeBy: none
+		sourceColumn: INSTRUMENT_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Data Provider Name'
+		dataType: string
+		sourceProviderType: nvarchar(8)
+		lineageTag: 3e286618-bdb9-4709-9144-7bf63072b204
+		summarizeBy: none
+		sourceColumn: Data Provider Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Liquidity Score'
+		dataType: double
+		formatString: 0.0
+		sourceProviderType: decimal(38, 20)
+		lineageTag: f4bdee91-e39a-463e-b75c-01b0c16df94e
+		summarizeBy: none
+		sourceColumn: Liquidity Score
+
+		annotation SummarizationSetBy = User
+
+	column 'Liquidity Score 7 Day'
+		dataType: double
+		sourceProviderType: decimal(38, 23)
+		lineageTag: f53f926d-2a57-448b-97a9-eff948402e3b
+		summarizeBy: none
+		sourceColumn: Liquidity Score 7 Day
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Liquidity Score 30 Day'
+		dataType: double
+		sourceProviderType: decimal(38, 23)
+		lineageTag: 8d0a014f-00a2-4fe8-b2c0-86757c87199a
+		summarizeBy: none
+		sourceColumn: Liquidity Score 30 Day
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Liquidity Score 60 Day'
+		dataType: double
+		sourceProviderType: decimal(38, 23)
+		lineageTag: b20e17ae-06a1-421e-8ffe-14909c4f850f
+		summarizeBy: none
+		sourceColumn: Liquidity Score 60 Day
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Liquidity Score 90 Day'
+		dataType: double
+		sourceProviderType: decimal(38, 23)
+		lineageTag: e624a279-aba2-4d8e-a25b-1176f85bd1b4
+		summarizeBy: none
+		sourceColumn: Liquidity Score 90 Day
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Quote Spread'
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 396d1096-42eb-4521-b1e8-b39c042ca6de
+		summarizeBy: sum
+		sourceColumn: Quote Spread
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_SPREAD_7_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 23)
+		lineageTag: 113c3d05-d893-492b-aeb9-eecb26b4e758
+		summarizeBy: sum
+		sourceColumn: QUOTE_SPREAD_7_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_SPREAD_30_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 3da3f53a-1788-457b-82c9-b7fc5cb57fbd
+		summarizeBy: sum
+		sourceColumn: QUOTE_SPREAD_30_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_SPREAD_60_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 72a6754f-6c42-4d41-b314-8c04ea6c1f5a
+		summarizeBy: sum
+		sourceColumn: QUOTE_SPREAD_60_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_SPREAD_90_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: f4d1ff4a-c010-456f-b1c6-6abe83dd3977
+		summarizeBy: sum
+		sourceColumn: QUOTE_SPREAD_90_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Quote Depth'
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 55932e3d-8388-4df9-a67d-da0624780b29
+		summarizeBy: sum
+		sourceColumn: Quote Depth
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_DEPTH_TEXT
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 56f2977f-8e7c-4abc-b64f-64af8acf8f91
+		summarizeBy: sum
+		sourceColumn: QUOTE_DEPTH_TEXT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Quote Depth 7 Day'
+		dataType: double
+		sourceProviderType: decimal(38, 23)
+		lineageTag: 7e976a5d-f1e8-47de-a548-c0c0a919b376
+		summarizeBy: sum
+		sourceColumn: Quote Depth 7 Day
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Quote Depth 30 Day'
+		dataType: double
+		sourceProviderType: decimal(38, 23)
+		lineageTag: 37a4b878-4b9c-4bf2-b700-5247e9d60020
+		summarizeBy: sum
+		sourceColumn: Quote Depth 30 Day
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Quote Depth 60 Day'
+		dataType: double
+		sourceProviderType: decimal(38, 23)
+		lineageTag: ab9891dc-9235-4f18-8663-c4d80b34a20d
+		summarizeBy: sum
+		sourceColumn: Quote Depth 60 Day
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Quote Depth 90 Day'
+		dataType: double
+		sourceProviderType: decimal(38, 23)
+		lineageTag: e160af9c-c5f5-4abc-8016-d67e35dd68c0
+		summarizeBy: sum
+		sourceColumn: Quote Depth 90 Day
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_SIZE
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 357f3e09-b198-40c3-a585-0a39bde00415
+		summarizeBy: sum
+		sourceColumn: QUOTE_SIZE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_SIZE_7_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 23)
+		lineageTag: 6479ea60-5d1e-4b15-b16b-276bd27bf5ed
+		summarizeBy: sum
+		sourceColumn: QUOTE_SIZE_7_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_SIZE_30_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 604a6745-7c4e-43a3-9bfd-aa9d38af8885
+		summarizeBy: sum
+		sourceColumn: QUOTE_SIZE_30_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_SIZE_60_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 313f9220-ed3d-42ba-bc62-640afb1b8608
+		summarizeBy: sum
+		sourceColumn: QUOTE_SIZE_60_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_SIZE_90_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: ab6bcb3e-28db-4601-8770-b7449b4db562
+		summarizeBy: sum
+		sourceColumn: QUOTE_SIZE_90_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_MESSAGES_COUNT
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 3686acb6-84e0-4ca1-95c1-feb2a037f343
+		summarizeBy: sum
+		sourceColumn: QUOTE_MESSAGES_COUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_MESSAGES_COUNT_7_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 23)
+		lineageTag: 858bbe46-47fd-41dd-b648-c603a33b1241
+		summarizeBy: sum
+		sourceColumn: QUOTE_MESSAGES_COUNT_7_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_MESSAGES_COUNT_30_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: a5f15582-05ab-4991-b69e-80f8a4562736
+		summarizeBy: sum
+		sourceColumn: QUOTE_MESSAGES_COUNT_30_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_MESSAGES_COUNT_60_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: ef2c730c-23a4-4c97-a86f-4e9152980f94
+		summarizeBy: sum
+		sourceColumn: QUOTE_MESSAGES_COUNT_60_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_MESSAGES_COUNT_90_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 0344cbd7-0f0e-46d7-9bdb-8a8be1b4856f
+		summarizeBy: sum
+		sourceColumn: QUOTE_MESSAGES_COUNT_90_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_SOURCES_COUNT
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 317cba4f-9f95-4272-89bd-948b688d3b3d
+		summarizeBy: sum
+		sourceColumn: QUOTE_SOURCES_COUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_SOURCES_COUNT_7_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 23)
+		lineageTag: f2a5de3b-bd6e-498a-8264-08fea8edb268
+		summarizeBy: sum
+		sourceColumn: QUOTE_SOURCES_COUNT_7_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_SOURCES_COUNT_30_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 4228b3da-9318-4f00-ab57-c02f8e845f26
+		summarizeBy: sum
+		sourceColumn: QUOTE_SOURCES_COUNT_30_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_SOURCES_COUNT_60_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: d5dd91bd-b581-4f0a-a2d6-024a22a835c6
+		summarizeBy: sum
+		sourceColumn: QUOTE_SOURCES_COUNT_60_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_SOURCES_COUNT_90_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: f1501db3-b381-408b-8100-c0a5cb314727
+		summarizeBy: sum
+		sourceColumn: QUOTE_SOURCES_COUNT_90_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_MOVERS_COUNT
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 6498d709-fd11-4133-a49e-0188695fed53
+		summarizeBy: sum
+		sourceColumn: QUOTE_MOVERS_COUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_MOVERS_COUNT_7_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 23)
+		lineageTag: 0c082dbe-cfed-4206-9e80-db8cad1699f4
+		summarizeBy: sum
+		sourceColumn: QUOTE_MOVERS_COUNT_7_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_MOVERS_COUNT_30_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 1aa7c27d-ea9e-4458-8a74-2ec90349877b
+		summarizeBy: sum
+		sourceColumn: QUOTE_MOVERS_COUNT_30_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_MOVERS_COUNT_60_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: a158938f-1494-49b6-94fc-7004438e4410
+		summarizeBy: sum
+		sourceColumn: QUOTE_MOVERS_COUNT_60_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_MOVERS_COUNT_90_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: cf10b93b-b7f4-4f4f-b4e5-04e0b2bc37a9
+		summarizeBy: sum
+		sourceColumn: QUOTE_MOVERS_COUNT_90_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_SOURCES_WITH_SIZE_COUNT
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 7eb2cd1f-1eb7-418a-9050-ddab2e61df61
+		summarizeBy: sum
+		sourceColumn: QUOTE_SOURCES_WITH_SIZE_COUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_SOURCES_WITH_SIZE_COUNT_7_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 23)
+		lineageTag: e688eee0-5e17-4d68-845f-afbf1e8464e7
+		summarizeBy: sum
+		sourceColumn: QUOTE_SOURCES_WITH_SIZE_COUNT_7_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_SOURCES_WITH_SIZE_COUNT_30_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 5bf3497a-69dc-4374-9836-a46702847ef9
+		summarizeBy: sum
+		sourceColumn: QUOTE_SOURCES_WITH_SIZE_COUNT_30_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_SOURCES_WITH_SIZE_COUNT_60_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: a6fe6f3e-bd5a-403b-a6b6-36bf7fe09e63
+		summarizeBy: sum
+		sourceColumn: QUOTE_SOURCES_WITH_SIZE_COUNT_60_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_SOURCES_WITH_SIZE_COUNT_90_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: c693025b-af3e-4551-8ddd-58b071811206
+		summarizeBy: sum
+		sourceColumn: QUOTE_SOURCES_WITH_SIZE_COUNT_90_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column BID_RATIO
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: ffa88210-132a-4ca9-a8c0-75fc07a8ee69
+		summarizeBy: sum
+		sourceColumn: BID_RATIO
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column BID_RATIO_7_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 23)
+		lineageTag: 53195236-d35e-4b61-b89c-ea243fa012fa
+		summarizeBy: sum
+		sourceColumn: BID_RATIO_7_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column BID_RATIO_30_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 23)
+		lineageTag: 9a0648b2-40e5-4d5f-9a99-cd29c515209b
+		summarizeBy: sum
+		sourceColumn: BID_RATIO_30_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column BID_RATIO_60_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 23)
+		lineageTag: 6b6c3307-4da7-4dd0-92ef-ce254afee0bc
+		summarizeBy: sum
+		sourceColumn: BID_RATIO_60_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column BID_RATIO_90_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 23)
+		lineageTag: c46df830-d1ee-4e0a-abcf-31f7c3beb81d
+		summarizeBy: sum
+		sourceColumn: BID_RATIO_90_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column OFFER_RATIO
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 61946150-5d57-4f88-ad2a-cd7b50d78908
+		summarizeBy: sum
+		sourceColumn: OFFER_RATIO
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column OFFER_RATIO_7_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 23)
+		lineageTag: f2dc1e12-3823-40dd-ada6-3fb4e69ac62a
+		summarizeBy: sum
+		sourceColumn: OFFER_RATIO_7_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column OFFER_RATIO_30_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 23)
+		lineageTag: 9f6a31d1-6916-42ed-a10b-125ca149deb2
+		summarizeBy: sum
+		sourceColumn: OFFER_RATIO_30_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column OFFER_RATIO_60_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 23)
+		lineageTag: 54fc1592-fd3b-46d7-ac72-1fd50adabfdb
+		summarizeBy: sum
+		sourceColumn: OFFER_RATIO_60_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column OFFER_RATIO_90_DAY
+		dataType: double
+		sourceProviderType: decimal(38, 23)
+		lineageTag: 09874336-8ddb-4160-81d6-441c6b637477
+		summarizeBy: sum
+		sourceColumn: OFFER_RATIO_90_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ID_DATE
+		dataType: string
+		lineageTag: c5a01dcc-3d1f-4a17-a112-25c56be7593a
+		summarizeBy: none
+		sourceColumn: ID_DATE
+
+		annotation SummarizationSetBy = Automatic
+
+	partition INSTRUMENT_LIQUIDITY = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases(snowflake_url,"ANALYST_WH_XS"),
+				    HUB_Database = Source{[Name="HUB",Kind="Database"]}[Data],
+				    PRICE_Schema = HUB_Database{[Name="PRICE",Kind="Schema"]}[Data],
+				    INSTRUMENT_LIQUIDITY_View = PRICE_Schema{[Name="INSTRUMENT_LIQUIDITY_DAILY",Kind="View"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(INSTRUMENT_LIQUIDITY_View,{{"CALENDAR_DATE", "Calendar Date"}, {"LIQUIDITY_SCORE", "Liquidity Score"}, {"LIQUIDITY_SCORE_30_DAY", "Liquidity Score 30 Day"}, {"LIQUIDITY_SCORE_60_DAY", "Liquidity Score 60 Day"}, {"LIQUIDITY_SCORE_90_DAY", "Liquidity Score 90 Day"}, {"LIQUIDITY_SCORE_7_DAY", "Liquidity Score 7 Day"}, {"DATA_PROVIDER_NAME", "Data Provider Name"}}),
+				    #"Added Custom" = Table.AddColumn(#"Renamed Columns", "ID_DATE", each [INSTRUMENT_IDENTIFIER]&Date.ToText([Calendar Date], [Format="yyyy-MM-dd"])),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Added Custom",{{"QUOTE_SPREAD", "Quote Spread"}, {"QUOTE_DEPTH", "Quote Depth"}, {"QUOTE_DEPTH_60_DAY", "Quote Depth 60 Day"}, {"QUOTE_DEPTH_90_DAY", "Quote Depth 90 Day"}, {"QUOTE_DEPTH_30_DAY", "Quote Depth 30 Day"}, {"QUOTE_DEPTH_7_DAY", "Quote Depth 7 Day"}})
+				in
+				    #"Renamed Columns1"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

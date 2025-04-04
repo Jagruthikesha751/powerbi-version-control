@@ -1,0 +1,122 @@
+table DATA_PROVIDER
+	isHidden
+	lineageTag: fdabc316-b735-4281-a6d2-2181f3c0f0bc
+
+	column 'Data Provider Name'
+		dataType: string
+		isHidden
+		lineageTag: 3ebcf062-056d-4d31-9627-3a6b84de227a
+		summarizeBy: none
+		sourceColumn: Data Provider Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column DATA_PROVIDER_DESCRIPTION
+		dataType: string
+		isHidden
+		lineageTag: 61c351d0-79db-492d-81c5-10ac6f3e1ce4
+		summarizeBy: none
+		sourceColumn: DATA_PROVIDER_DESCRIPTION
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_DATETIME
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 2ba0c6fe-7340-4dfd-9cd2-e9dbf3638db0
+		summarizeBy: none
+		sourceColumn: CREATED_DATETIME
+
+		variation Variation
+			isDefault
+			relationship: 0b2fa7f7-0ccf-46cb-bd33-6dbe29da8537
+			defaultHierarchy: LocalDateTable_42294615-3021-4c43-91ec-6f2b1f8b61e5.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_BY_NAME
+		dataType: string
+		isHidden
+		lineageTag: 0e8cb65b-4853-4aa2-8de9-71d0325c7f15
+		summarizeBy: none
+		sourceColumn: CREATED_BY_NAME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_BY_COMMENTS
+		dataType: string
+		isHidden
+		lineageTag: fe3acf9f-4aa0-43af-8548-8a5b6d24704a
+		summarizeBy: none
+		sourceColumn: CREATED_BY_COMMENTS
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_DATETIME
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 38011256-515f-4f40-96fc-7518b41fc29f
+		summarizeBy: none
+		sourceColumn: MODIFIED_DATETIME
+
+		variation Variation
+			isDefault
+			relationship: cf220974-d8f8-4f75-a14a-c0ad2703ed46
+			defaultHierarchy: LocalDateTable_a60835a6-56d3-4fa2-8915-881e22432bdf.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_BY_NAME
+		dataType: string
+		isHidden
+		lineageTag: 28665e83-68cf-4165-ad36-d667f50dc3bd
+		summarizeBy: none
+		sourceColumn: MODIFIED_BY_NAME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_BY_COMMENTS
+		dataType: string
+		isHidden
+		lineageTag: 9406ecb0-a67c-4276-9344-73ca001940d2
+		summarizeBy: none
+		sourceColumn: MODIFIED_BY_COMMENTS
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DATA_PROVIDER = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases(snowflake_url,"ANALYST_WH_XS"),
+				    HUB_Database = Source{[Name="HUB",Kind="Database"]}[Data],
+				    JOB_Schema = HUB_Database{[Name="JOB",Kind="Schema"]}[Data],
+				    DATA_PROVIDER_Table = JOB_Schema{[Name="DATA_PROVIDER",Kind="Table"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(DATA_PROVIDER_Table,{{"DATA_PROVIDER_NAME", "Data Provider Name"}})
+				in
+				    #"Renamed Columns"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

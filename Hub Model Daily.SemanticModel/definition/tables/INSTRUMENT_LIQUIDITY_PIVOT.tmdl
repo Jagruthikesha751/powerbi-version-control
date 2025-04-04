@@ -1,0 +1,150 @@
+table INSTRUMENT_LIQUIDITY_PIVOT
+	isHidden
+	lineageTag: 3d2df06b-5314-47a5-b6fb-bd18ab7f2ea7
+
+	column 'Calendar Date'
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: a9e87d95-f27d-47de-8145-460130512683
+		summarizeBy: none
+		sourceColumn: Calendar Date
+
+		variation Variation
+			isDefault
+			relationship: 57ac067b-3d7c-4d26-91bb-f5d09b225584
+			defaultHierarchy: LocalDateTable_6d8fa206-6d16-4102-95a1-302aacd8d1e5.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column INSTRUMENT_IDENTIFIER
+		dataType: string
+		isHidden
+		lineageTag: 68b4c5c9-eb0d-4c97-9faa-7bbc2d7e1698
+		summarizeBy: none
+		sourceColumn: INSTRUMENT_IDENTIFIER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column IBOXXEOD_LIQUIDITY_SCORE
+		dataType: double
+		isHidden
+		lineageTag: 3f42c9ec-7042-46d8-be62-e1c5cadf55ad
+		summarizeBy: sum
+		sourceColumn: IBOXXEOD_LIQUIDITY_SCORE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column OCTAURA_LIQUIDITY_SCORE
+		dataType: double
+		isHidden
+		formatString: 0
+		lineageTag: 21a0d230-0cc3-409f-b1d8-003c9ea5116a
+		summarizeBy: sum
+		sourceColumn: OCTAURA_LIQUIDITY_SCORE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column S&P_LIQUIDITY_SCORE
+		dataType: double
+		isHidden
+		formatString: 0
+		lineageTag: 19ca1df4-7d98-433d-abd4-73093e3d49f2
+		summarizeBy: sum
+		sourceColumn: S&P_LIQUIDITY_SCORE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column 'Liquidity Score 7 Day'
+		dataType: double
+		isHidden
+		lineageTag: 44f546cc-2e22-41cc-a82f-cad453c27243
+		summarizeBy: sum
+		sourceColumn: Liquidity Score 7 Day
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Liquidity Score 30 Day'
+		dataType: double
+		isHidden
+		lineageTag: fb427be3-7c86-4263-af4b-a62f1c908b24
+		summarizeBy: sum
+		sourceColumn: Liquidity Score 30 Day
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Liquidity Score 60 Day'
+		dataType: double
+		isHidden
+		lineageTag: 2f835e47-bf0d-475d-816e-f16f22f1e8ff
+		summarizeBy: sum
+		sourceColumn: Liquidity Score 60 Day
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Liquidity Score 90 Day'
+		dataType: double
+		isHidden
+		lineageTag: ce0a5cee-778e-4f12-aadc-640d05a6a3af
+		summarizeBy: sum
+		sourceColumn: Liquidity Score 90 Day
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition INSTRUMENT_LIQUIDITY_PIVOT = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases(snowflake_url,"ANALYST_WH_XS"),
+				    HUB_Database = Source{[Name="HUB",Kind="Database"]}[Data],
+				    PRICE_Schema = HUB_Database{[Name="PRICE",Kind="Schema"]}[Data],
+				    INSTRUMENT_LIQUIDITY_View = PRICE_Schema{[Name="INSTRUMENT_LIQUIDITY_DAILY",Kind="View"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(INSTRUMENT_LIQUIDITY_View,{{"CALENDAR_DATE", "Calendar Date"}, {"LIQUIDITY_SCORE", "Liquidity Score"}, {"LIQUIDITY_SCORE_30_DAY", "Liquidity Score 30 Day"}, {"LIQUIDITY_SCORE_60_DAY", "Liquidity Score 60 Day"}, {"LIQUIDITY_SCORE_90_DAY", "Liquidity Score 90 Day"}, {"LIQUIDITY_SCORE_7_DAY", "Liquidity Score 7 Day"}, {"DATA_PROVIDER_NAME", "Data Provider Name"}}),
+				    #"Added Custom" = Table.AddColumn(#"Renamed Columns", "ID_DATE", each [INSTRUMENT_IDENTIFIER]&Date.ToText([Calendar Date], [Format="yyyy-MM-dd"])),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Added Custom",{{"QUOTE_SPREAD", "Quote Spread"}, {"QUOTE_DEPTH", "Quote Depth"}, {"QUOTE_DEPTH_60_DAY", "Quote Depth 60 Day"}, {"QUOTE_DEPTH_90_DAY", "Quote Depth 90 Day"}, {"QUOTE_DEPTH_30_DAY", "Quote Depth 30 Day"}, {"QUOTE_DEPTH_7_DAY", "Quote Depth 7 Day"}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns1",{"Quote Spread", "QUOTE_SPREAD_7_DAY", "QUOTE_SPREAD_30_DAY", "QUOTE_SPREAD_60_DAY", "QUOTE_SPREAD_90_DAY", "Quote Depth", "QUOTE_DEPTH_TEXT", "Quote Depth 7 Day", "Quote Depth 30 Day", "Quote Depth 60 Day", "Quote Depth 90 Day", "QUOTE_SIZE", "QUOTE_SIZE_7_DAY", "QUOTE_SIZE_30_DAY", "QUOTE_SIZE_60_DAY", "QUOTE_SIZE_90_DAY", "QUOTE_MESSAGES_COUNT", "QUOTE_MESSAGES_COUNT_7_DAY", "QUOTE_MESSAGES_COUNT_30_DAY", "QUOTE_MESSAGES_COUNT_60_DAY", "QUOTE_MESSAGES_COUNT_90_DAY", "QUOTE_SOURCES_COUNT", "QUOTE_SOURCES_COUNT_7_DAY", "QUOTE_SOURCES_COUNT_30_DAY", "QUOTE_SOURCES_COUNT_60_DAY", "QUOTE_SOURCES_COUNT_90_DAY", "QUOTE_MOVERS_COUNT", "QUOTE_MOVERS_COUNT_7_DAY", "QUOTE_MOVERS_COUNT_30_DAY", "QUOTE_MOVERS_COUNT_60_DAY", "QUOTE_MOVERS_COUNT_90_DAY", "QUOTE_SOURCES_WITH_SIZE_COUNT", "QUOTE_SOURCES_WITH_SIZE_COUNT_7_DAY", "QUOTE_SOURCES_WITH_SIZE_COUNT_30_DAY", "QUOTE_SOURCES_WITH_SIZE_COUNT_60_DAY", "QUOTE_SOURCES_WITH_SIZE_COUNT_90_DAY", "BID_RATIO", "BID_RATIO_7_DAY", "BID_RATIO_30_DAY", "BID_RATIO_60_DAY", "BID_RATIO_90_DAY", "OFFER_RATIO", "OFFER_RATIO_7_DAY", "OFFER_RATIO_30_DAY", "OFFER_RATIO_60_DAY", "OFFER_RATIO_90_DAY", "ID_DATE"}),
+				    #"Pivoted Column" = Table.Pivot(#"Removed Columns", List.Distinct(#"Removed Columns"[#"Data Provider Name"]), "Data Provider Name", "Liquidity Score"),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Pivoted Column",{{"IBOXXEOD", "IBOXXEOD_LIQUIDITY_SCORE"}, {"SPGLOBAL", "S&P_LIQUIDITY_SCORE"}, {"OCTAURA", "OCTAURA_LIQUIDITY_SCORE"}})
+				in
+				    #"Renamed Columns2"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

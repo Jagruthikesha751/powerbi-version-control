@@ -1,0 +1,239 @@
+table INSTRUMENT_OFFICIAL_PRICE
+	lineageTag: ca012a0f-0c51-4e07-b4d1-b5c61ef78e32
+
+	measure 'Mid Price Measure' = sum(INSTRUMENT_OFFICIAL_PRICE[Mid Price])
+		formatString: 0.000
+		lineageTag: 0b0e10b9-5b61-4289-9c5e-9d37c969c6bb
+
+	measure 'Ask Price Measure' = SUM(INSTRUMENT_OFFICIAL_PRICE[Ask Price])
+		lineageTag: 22ffe50f-ff3d-40fa-832c-ceb55147cbcd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Bid Price Measure' = SUM(INSTRUMENT_OFFICIAL_PRICE[Bid Price])
+		lineageTag: c55495e6-7caa-428e-9f5b-64422dfddb02
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column INSTRUMENT_IDENTIFIER
+		dataType: string
+		lineageTag: 1900495f-ec9c-4cf9-b866-b49cef729b1d
+		summarizeBy: none
+		sourceColumn: INSTRUMENT_IDENTIFIER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Calendar Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: e731cc37-15af-413d-9a43-50a0f786af6d
+		summarizeBy: none
+		sourceColumn: Calendar Date
+
+		variation Variation
+			isDefault
+			relationship: a41d6c89-42fe-41a1-8934-f4d82ee50646
+			defaultHierarchy: LocalDateTable_c1c53c49-0995-4baf-b2bd-e382529ef784.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Data Provider Name'
+		dataType: string
+		lineageTag: a7d7f2a7-1f0d-4e76-a925-ade5786f8f25
+		summarizeBy: none
+		sourceColumn: Data Provider Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column COUNTERPARTY_PRICE_IDENTIFIER
+		dataType: string
+		lineageTag: 3d26ebc7-ed0b-4b80-aaf5-b5dfd58c0129
+		summarizeBy: none
+		sourceColumn: COUNTERPARTY_PRICE_IDENTIFIER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column FINAL_PRICE_INDICATOR
+		dataType: double
+		lineageTag: 46a1a1c0-6752-4813-b61c-65184937d733
+		summarizeBy: sum
+		sourceColumn: FINAL_PRICE_INDICATOR
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column EOD_PRICE
+		dataType: double
+		formatString: 0.000
+		lineageTag: 7542a780-59c4-480c-ab9e-08a6f1ad0f01
+		summarizeBy: sum
+		sourceColumn: EOD_PRICE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column BID_SIZE
+		dataType: double
+		lineageTag: 92eadde7-2a0e-421e-89f8-e0abf29def34
+		summarizeBy: sum
+		sourceColumn: BID_SIZE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Bid Price'
+		dataType: double
+		formatString: 0.000
+		lineageTag: 2a42ddcb-e139-4828-8c54-e33d573759b9
+		summarizeBy: sum
+		sourceColumn: Bid Price
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ask Price'
+		dataType: double
+		formatString: 0.000
+		lineageTag: 64656b97-8d5e-453e-984d-ea875b6a2ec1
+		summarizeBy: sum
+		sourceColumn: Ask Price
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ASK_SIZE
+		dataType: double
+		formatString: 0.000
+		lineageTag: eb82f8d1-1e5f-4a1c-8725-8095721565b4
+		summarizeBy: sum
+		sourceColumn: ASK_SIZE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mid Price'
+		dataType: double
+		formatString: 0.000
+		lineageTag: cb2f8eae-ad52-4fa3-8f02-3ff44a31cb10
+		summarizeBy: sum
+		sourceColumn: Mid Price
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column QUOTE_DEPTH
+		dataType: double
+		lineageTag: 1130130c-9285-407b-8fe5-eca26adfa2c4
+		summarizeBy: sum
+		sourceColumn: QUOTE_DEPTH
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_DEPTH_TEXT
+		dataType: string
+		lineageTag: b86967a2-00c1-4cd5-abf5-e352995b269c
+		summarizeBy: none
+		sourceColumn: QUOTE_DEPTH_TEXT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID_DATE
+		dataType: string
+		lineageTag: 58db0e9d-7770-412d-9c31-95d947742fb6
+		summarizeBy: none
+		sourceColumn: ID_DATE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Price Bucket' =
+			SWITCH(TRUE,
+			     [Bid Price] < 10, " 0,10",
+			    [Bid Price] < 20, " 10,20",
+			    [Bid Price] < 30, " 20,30",
+			    [Bid Price] < 40, " 30,40",
+			    [Bid Price] < 50, " 40,50",
+			    [Bid Price] < 60, " 50,60",
+			    [Bid Price] < 70, " 60,70",
+			    [Bid Price] < 80, " 70,80",
+			    [Bid Price] < 90, " 80,90",
+			    [Bid Price] < 95, " 90,95",
+			    [Bid Price] < 100, " 95,100",
+			    [Bid Price] < 105, "100,105",
+			    "105+"
+			)
+		lineageTag: 8deb80e4-f097-4177-8af5-6754b85e1dfb
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column PRICE_DATE
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 473cb915-b320-4e59-8491-8084a2e67e5a
+		summarizeBy: none
+		sourceColumn: PRICE_DATE
+
+		variation Variation
+			isDefault
+			relationship: 67374ffb-720e-4928-9ad6-63b4cc6a2d48
+			defaultHierarchy: LocalDateTable_8389bb23-7960-4539-891f-db6b234d659a.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition INSTRUMENT_OFFICIAL_PRICE = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases(snowflake_url,"ANALYST_WH_XS"),
+				    HUB_Database = Source{[Name="HUB",Kind="Database"]}[Data],
+				    PRICE_Schema = HUB_Database{[Name="PRICE",Kind="Schema"]}[Data],
+				    INSTRUMENT_PRICE_View = PRICE_Schema{[Name="INSTRUMENT_PRICE_DAILY",Kind="View"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(INSTRUMENT_PRICE_View,{{"CALENDAR_DATE", "Calendar Date"}, {"BID_PRICE", "Bid Price"}}),
+				    #"Added Custom" = Table.AddColumn(#"Renamed Columns", "ID_DATE", each [INSTRUMENT_IDENTIFIER]&Date.ToText([Calendar Date], [Format="yyyy-MM-dd"])),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Added Custom",{{"MID_PRICE", "Mid Price"}, {"ASK_PRICE", "Ask Price"}, {"DATA_PROVIDER_NAME", "Data Provider Name"}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Renamed Columns1", each Date.IsInYearToDate([Calendar Date])),
+				    #"Filtered Rows1" = Table.SelectRows(#"Filtered Rows", each ([Data Provider Name] = "SPGLOBAL"))
+				in
+				    #"Filtered Rows1"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
