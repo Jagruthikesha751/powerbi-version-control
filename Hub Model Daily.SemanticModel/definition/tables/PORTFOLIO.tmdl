@@ -1,0 +1,226 @@
+table PORTFOLIO
+	lineageTag: 07f2d3fa-633b-4fae-b04b-fcc08b693530
+
+	column PORTFOLIO_IDENTIFIER
+		dataType: string
+		isKey
+		lineageTag: 8dcfc086-ab89-4b15-86f0-65215a4c35d4
+		summarizeBy: none
+		sourceColumn: PORTFOLIO_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Portfolio Name'
+		dataType: string
+		lineageTag: c165b7fd-99b1-47c7-a4da-5ad3018a2a87
+		isDefaultLabel
+		summarizeBy: none
+		sourceColumn: Portfolio Name
+		sortByColumn: PortfolioSortOrder
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Portfolio Alias Name'
+		dataType: string
+		lineageTag: e556cf57-8b7f-4f1c-a9b7-ab41dafc5cfc
+		summarizeBy: none
+		sourceColumn: Portfolio Alias Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column PORTFOLIO_PRIMARY_STRATEGY_NAME
+		dataType: string
+		lineageTag: 7c119e4d-9201-4b31-ba39-cbc1b305ae72
+		summarizeBy: none
+		sourceColumn: PORTFOLIO_PRIMARY_STRATEGY_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column PORTFOLIO_TRADING_GROUP_NAME
+		dataType: string
+		lineageTag: f90390b7-3310-48d6-9f86-abb71fa9429f
+		summarizeBy: none
+		sourceColumn: PORTFOLIO_TRADING_GROUP_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column PORTFOLIO_GROUP_NAME
+		dataType: string
+		lineageTag: fbe98af3-95c3-482a-9e0b-c11bd88724f5
+		summarizeBy: none
+		sourceColumn: PORTFOLIO_GROUP_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column PORTFOLIO_SHORT_NAME
+		dataType: string
+		lineageTag: 78e349c9-ed50-4ca0-b9b4-c48b22c2e0d7
+		summarizeBy: none
+		sourceColumn: PORTFOLIO_SHORT_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column PORTFOLIO_LEGAL_NAME
+		dataType: string
+		lineageTag: 2b2ef613-184f-49b1-9a51-370ef63d7d54
+		summarizeBy: none
+		sourceColumn: PORTFOLIO_LEGAL_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column PORTFOLIO_ADMIN_CODE
+		dataType: string
+		lineageTag: 9f571888-22a7-4242-8946-d889e694db21
+		summarizeBy: none
+		sourceColumn: PORTFOLIO_ADMIN_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column PORTFOLIO_ADMIN_NAME
+		dataType: string
+		lineageTag: 41e0100b-30d8-416f-908a-cd22062afdfa
+		summarizeBy: none
+		sourceColumn: PORTFOLIO_ADMIN_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column PORTFOLIO_TYPE_CODE
+		dataType: string
+		lineageTag: fc532792-8a5b-40ee-94f4-2cc33f71b33d
+		summarizeBy: none
+		sourceColumn: PORTFOLIO_TYPE_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_DATETIME
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 294974ca-5dc9-4544-aa79-91a898cdfbe1
+		summarizeBy: none
+		sourceColumn: CREATED_DATETIME
+
+		variation Variation
+			isDefault
+			relationship: 598e2ff1-2390-4328-9d8f-04c7a2819cd0
+			defaultHierarchy: LocalDateTable_9d32c064-14ef-428e-b72f-f16e4fac54f2.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_BY_NAME
+		dataType: string
+		lineageTag: 682c461d-1ed1-47a8-b544-7d9203205b75
+		summarizeBy: none
+		sourceColumn: CREATED_BY_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_BY_COMMENTS
+		dataType: string
+		lineageTag: 1143df77-3bcc-45c8-98d4-b4815383ad94
+		summarizeBy: none
+		sourceColumn: CREATED_BY_COMMENTS
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_DATETIME
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: df354e41-4f44-4474-bb80-e174f6636126
+		summarizeBy: none
+		sourceColumn: MODIFIED_DATETIME
+
+		variation Variation
+			isDefault
+			relationship: ded083b0-ef01-489c-ace9-5640ed2ceb4a
+			defaultHierarchy: LocalDateTable_0289e314-a50f-4de8-95a0-54508ccea20a.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_BY_NAME
+		dataType: string
+		lineageTag: c7bb1ca9-007e-42b2-a556-4906bbd74b80
+		summarizeBy: none
+		sourceColumn: MODIFIED_BY_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_BY_COMMENTS
+		dataType: string
+		lineageTag: 25cf6b6f-97e1-4e92-855c-f88af7c5c02c
+		summarizeBy: none
+		sourceColumn: MODIFIED_BY_COMMENTS
+
+		annotation SummarizationSetBy = Automatic
+
+	column PORTFOLIO_VANTAGE_IDENTIFIER
+		dataType: string
+		lineageTag: d9f5a4c5-1a13-4365-8c83-eb8f185421f0
+		summarizeBy: none
+		sourceColumn: PORTFOLIO_VANTAGE_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column PORTFOLIO_VANTAGE_NAME
+		dataType: string
+		lineageTag: 6e4d75ed-7406-465a-ab1a-e8a66cf50161
+		summarizeBy: none
+		sourceColumn: PORTFOLIO_VANTAGE_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column PORTFOLIO_BACKOFFICE_CODE
+		dataType: string
+		lineageTag: 422c41b3-869d-4076-a2aa-4526e151c81a
+		summarizeBy: none
+		sourceColumn: PORTFOLIO_BACKOFFICE_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column PORTFOLIO_BACKOFFICE_NAME
+		dataType: string
+		lineageTag: eed3a86f-2925-4ba1-87e4-1845259eee7a
+		summarizeBy: none
+		sourceColumn: PORTFOLIO_BACKOFFICE_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column PortfolioSortOrder = ```
+			
+			SWITCH(
+			    TRUE(),
+			    PORTFOLIO[PORTFOLIO_IDENTIFIER] = "IBOXLTRI", 1,
+			    PORTFOLIO[PORTFOLIO_IDENTIFIER]  = "IBOXX_SELECT", 2,
+			    PORTFOLIO[PORTFOLIO_IDENTIFIER]  = "MPC_IBOXX_SELECT_PLUS", 3,
+			    PORTFOLIO[PORTFOLIO_IDENTIFIER]  = "MPINV1", 4,
+			    5   // Default if no match (to keep any other names at the bottom)
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 030f76c5-c913-412f-b2a5-497e30cd4044
+		summarizeBy: sum
+
+		changedProperty = SortByColumn
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition PORTFOLIO = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases(snowflake_url,"ANALYST_WH_XS"),
+				    HUB_Database = Source{[Name="HUB",Kind="Database"]}[Data],
+				    PORTFOLIO_Schema = HUB_Database{[Name="PORTFOLIO",Kind="Schema"]}[Data],
+				    PORTFOLIO_Table = PORTFOLIO_Schema{[Name="PORTFOLIO",Kind="Table"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(PORTFOLIO_Table,{{"PORTFOLIO_NAME", "Portfolio Name"}, {"PORTFOLIO_ALIAS_NAME", "Portfolio Alias Name"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

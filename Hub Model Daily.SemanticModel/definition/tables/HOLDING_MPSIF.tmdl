@@ -1,0 +1,1070 @@
+table HOLDING_MPSIF
+	lineageTag: 393a06cb-3908-4ab7-a267-7f20b5dbfb9f
+
+	measure 'MPSIF MV Measure' = sum('HOLDING_MPSIF'[MPSIF MV (Clean)])
+		lineageTag: 429f2da9-9d40-4f0a-a62d-40c501ee62ee
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'MPSIF MV (Clean) + AI Measure' = sum('HOLDING_MPSIF'[MPSIF MV (Clean) + AI])
+		lineageTag: 84612cae-23b3-4d25-8ac2-489ad0dbd710
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'MPSIF MV % - IBOXXS MV %' =
+			
+			SUM('HOLDING_MPSIF'[MPSIF MV % (Dirty)]) - SUM('HOLDING_IBOXXS'[IBOXXS MV % (Dirty)])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: MPSIF-IBOXXS
+		lineageTag: 25dc07f3-10af-4c39-874d-e0d80cdf0a40
+
+		extendedProperty MeasureTemplate =
+				{
+				  "version": 0,
+				  "daxTemplateName": "MathematicalSubtraction"
+				}
+
+		changedProperty = FormatString
+
+	measure 'MPSIF Updated MV Weight (Clean Price & Minus Cash)' =
+			
+			IF(
+			    HOLDING_MPSIF[MPSIF MV Measure]= BLANK(),
+			    BLANK(),
+			    DIVIDE(
+			        HOLDING_MPSIF[MPSIF MV Measure],
+			        CALCULATE(
+			            HOLDING_MPSIF[MPSIF MV Measure],
+			            filter(ALL(HOLDING_MPSIF),'HOLDING_MPSIF'[Instrument Identifier] <> "96c3f10ecbc02bf14bdee5a10eebf998")
+			        ),
+			        BLANK()
+			    )
+			)
+		lineageTag: 5b156708-8817-4e46-8b96-f97da3d90904
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'MPSIF Target Market Value (Clean)' =
+			
+			var CurrentCash = lookupvalue('HOLDING_MPSIF'[MPSIF Notional], INSTRUMENT_TS[INVESTMENT_TYPE_CODE], "Fiat Currency")
+			var ProjectedCashBalance = PORTFOLIO_NAV_DAILY[target_portfolio_size_excl_new_issue_mpinv1]
+			//var TotalAvailableCash = 594257316 //CurrentCash + ProjectedCashBalance
+			var TotalAvailableCash = CurrentCash + ProjectedCashBalance
+			//var TotalAvailableCash = 594742684.98 //CurrentCash + ProjectedCashBalance
+			return HOLDING_IBOXXS[IBOXXS MV % (Clean - Cash)] * TotalAvailableCash   //'HOLDING_MPSIF'[MPSIF Target Cash]
+		formatString: #,0
+		lineageTag: 25c09538-08d4-4d88-83d9-b5c0c62810b9
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'B/S to 1x' =
+			
+			[MPSIF Target Notional] - 'HOLDING_MPSIF'[MPSIF Notional Measure]
+		formatString: #,0
+		lineageTag: 5f8cec7d-c5b2-4862-b75e-5876bbb08fda
+
+		extendedProperty MeasureTemplate =
+				{
+				  "version": 0,
+				  "daxTemplateName": "MathematicalSubtraction"
+				}
+
+		changedProperty = FormatString
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Insturment Identifier' = DISTINCT(HOLDING_IBOXXS[Instrument Identifier])
+		lineageTag: aa9a24d7-d2c8-4936-827e-e50da40467b1
+
+	measure 'MPSIF Notional Measure' = sum(HOLDING_MPSIF[MPSIF Notional])
+		formatString: #,0
+		lineageTag: a08a7d50-9da7-4a84-8111-e42000242b0f
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'MPSIF Target Cash' = ```
+			SUMX(
+			    FILTER(
+			        HOLDING_MPSIF,
+			        'HOLDING_MPSIF'[Instrument Identifier] =  "96c3f10ecbc02bf14bdee5a10eebf998" 
+			    ),
+			    HOLDING_MPSIF[MPSIF Notional] + PORTFOLIO_NAV_DAILY[target_portfolio_size_excl_new_issue_mpinv1])
+			```
+		formatString: #,0
+		lineageTag: d585e69e-a88f-4911-aea1-a12558e3514c
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'MPSIF Target Notional' = ```
+			
+			
+			DIVIDE(
+			        'HOLDING_MPSIF'[MPSIF Target Market Value (Clean)], 
+			       DIVIDE([Mid Price Measure], 100)
+			)
+			--SUMX(
+			--    'HOLDING_MPSIF',
+			--    DIVIDE(
+			--        'HOLDING_MPSIF'[MPSIF Target Market Value (Clean)], 
+			--        DIVIDE(CALCULATE([Mid Price Measure]), 100)
+			 --   )
+			--)
+			
+			--)
+			```
+		formatString: #,0
+		lineageTag: 806948b0-3814-4620-8752-213ced719957
+
+		extendedProperty MeasureTemplate =
+				{
+				  "version": 0,
+				  "daxTemplateName": "MathematicalMultiplication"
+				}
+
+		changedProperty = FormatString
+
+	measure 'MPSIF MV % - IBOXXS MV % (ABS)' =
+			
+			ABS(SUM('HOLDING_MPSIF'[MPSIF MV % (Dirty)])- SUM('HOLDING_IBOXXS'[IBOXXS MV % (Dirty)]))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: MPSIF-IBOXXS
+		lineageTag: 7ac96016-b5a4-4045-b3f2-afb9631645e7
+
+	measure 'MPSIF Threshold %' =
+			
+			CALCULATE(
+			    IF(
+			        HOLDING_MPSIF[MPSIF Notional Measure] <> 0,
+			        DIVIDE(HOLDING_MPSIF[MPSIF Target Notional], HOLDING_MPSIF[MPSIF Notional Measure]),
+			        0  -- or handle the zero case as needed
+			    ),
+			    FILTER(
+			        HOLDING_MPSIF,
+			        NOT(ISBLANK(HOLDING_MPSIF[MPSIF Target Notional])) && NOT(ISBLANK(HOLDING_MPSIF[MPSIF Notional Measure]))
+			    )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 02916fc9-9ed1-4a46-9216-b01e641ddefb
+
+	measure 'MPSIF MV % - IBOXX MV %' =
+			
+			SUM('HOLDING_MPSIF'[MPSIF MV % (Dirty)]) - SUM('HOLDING_IBOXX'[IBOXX MV % (Dirty)])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: MPSIF-IBOXX
+		lineageTag: 264b453e-da9b-452f-8f3b-28744758ae0a
+
+	measure 'MPSIF MV % - IBOXX MV % (ABS)' =
+			
+			ABS(SUM('HOLDING_MPSIF'[MPSIF MV % (Dirty)])- SUM('HOLDING_IBOXX'[IBOXX MV % (Dirty)]))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: MPSIF-IBOXX
+		lineageTag: 8f8001ba-6d0e-4a5a-8a2e-a28c98f292b1
+
+	measure 'Holding Risk Rank' =
+			
+			VAR RiskRank = 1
+			VAR PFThreshold = 0.99
+			RETURN
+			    IF(
+			        RiskRank = 1,
+			        IF(
+			            PFThreshold >= 0.90 && PFThreshold <= 1.10, 1, -- Green
+			            IF(
+			                (PFThreshold >= 0.75 && PFThreshold < 0.90) || (PFThreshold > 1.10 && PFThreshold <= 1.25), 2, -- Yellow
+			                IF(
+			                    (PFThreshold > 0 && PFThreshold < 0.75) || (PFThreshold > 1.25 && PFThreshold <= 1.50), 3, -- Orange
+			                    IF(PFThreshold > 1.50, 4, 0) -- Red
+			                )
+			            )
+			        ),
+			        IF(
+			            RiskRank = 2,
+			            IF(
+			                PFThreshold >= 0.60 && PFThreshold <= 0.70, 1, -- Green
+			                IF(
+			                    (PFThreshold >= 0.50 && PFThreshold < 0.60) || (PFThreshold > 0.70 && PFThreshold <= 0.80), 2, -- Yellow
+			                    IF(
+			                        (PFThreshold > 0 && PFThreshold < 0.50) || (PFThreshold > 0.80 && PFThreshold <= 1.00), 3, -- Orange
+			                        IF(PFThreshold > 1.00, 4, 0) -- Red
+			                    )
+			                )
+			            ),
+			            IF(
+			                RiskRank = 3,
+			                IF(PFThreshold > 0, 4, 0), -- Red
+			                0 -- White (No Risk)
+			            )
+			        )
+			    )
+		formatString: 0
+		lineageTag: 75a4cc77-75e6-473a-8183-13efe59665bb
+
+	measure 'MPSIF MV (Clean) Measure' = [MPSIF Notional Measure] * [Mid Price Measure] / 100
+		formatString: #,0
+		lineageTag: ffc43c83-c017-491d-8c83-0f5e11f880db
+
+	measure 'MPSIF Target Market Value (Clean) - SELECT PLUS' =
+			
+			var CurrentCash = lookupvalue('HOLDING_MPSIF'[MPSIF Notional], INSTRUMENT_TS[INVESTMENT_TYPE_CODE], "Fiat Currency")
+			var ProjectedCashBalance = PORTFOLIO_NAV_DAILY[target_portfolio_size_excl_new_issue_mpinv1]
+			//var TotalAvailableCash = 594257316 //CurrentCash + ProjectedCashBalance
+			var TotalAvailableCash = CurrentCash + ProjectedCashBalance
+			//var TotalAvailableCash = 594742684.98 //CurrentCash + ProjectedCashBalance
+			return HOLDING_IBOXXS_PLUS[IBOXXS PLUS MV % (Clean - Cash)] * TotalAvailableCash   //'HOLDING_MPSIF'[MPSIF Target Cash]
+		lineageTag: 3760de18-497a-424b-9d1c-a13fd40ff02a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'MPSIF Target Notional - SELECT PLUS' = ```
+			
+			
+			DIVIDE(
+			        'HOLDING_MPSIF'[MPSIF Target Market Value (Clean) - SELECT PLUS], 
+			       DIVIDE(IF(ISBLANK([Mid Price Measure]),100,[Mid Price Measure]), 100)
+			)
+			--SUMX(
+			--    'HOLDING_MPSIF',
+			--    DIVIDE(
+			--        'HOLDING_MPSIF'[MPSIF Target Market Value (Clean)], 
+			--        DIVIDE(CALCULATE([Mid Price Measure]), 100)
+			 --   )
+			--)
+			
+			--)
+			```
+		formatString: #,0
+		lineageTag: 6bf1d662-bf73-4357-8d2d-82490f2f0e00
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'B/S to 1x SELECT PLUS' =
+			
+			[MPSIF Target Notional - SELECT PLUS] - 'HOLDING_MPSIF'[MPSIF Notional Measure]
+		formatString: #,0
+		lineageTag: d9d3a89b-1aa1-4913-a174-ec1d845dad25
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'MPSIF Threshold % SELECT PLUS' =
+			
+			DIVIDE(SUM('HOLDING_MPSIF'[MPSIF Notional]), [MPSIF Target Notional - SELECT PLUS])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: bd2936c2-4d9a-40a5-952e-86d00600b511
+
+	measure 'B/S to 1x SELECT PLUS Sum' =
+			
+			SUMX(
+			    DISTINCT('INSTRUMENT_TS'[LX ID]),  -- Get unique LX IDs
+			    [B/S to 1x SELECT PLUS]  -- Use the existing measure
+			)
+		formatString: #,0
+		lineageTag: c18e814b-7a94-4306-a441-1fd02dc9be4f
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'B/S to 1x Sum' = ```
+			
+			SUMX(
+			 DISTINCT('INSTRUMENT_TS'[LX ID]),  -- Get unique LX IDs
+			 [B/S to 1x]  -- Use the existing measure
+			)
+			
+			
+			
+			
+			```
+		formatString: #,0
+		lineageTag: c78e9160-b32f-4300-9432-b76dd265c625
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'MPSIF Target Notional Sum' =
+			
+			SUMX(
+			    DISTINCT('INSTRUMENT_TS'[LX ID]),  -- Get unique LX IDs
+			    [MPSIF Target Notional]  -- Use the existing measure
+			)
+		formatString: #,0
+		lineageTag: ed3c2e28-f72c-4215-bb57-738b3a62afa8
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'MPSIF Target Notional - SELECT PLUS Sum' =
+			
+			SUMX(
+			    DISTINCT('INSTRUMENT_TS'[LX ID]),  -- Get unique LX IDs
+			    [MPSIF Target Notional - SELECT PLUS]  -- Use the existing measure
+			)
+		formatString: #,0
+		lineageTag: 38539d3e-ea7b-4438-89e1-f19043fc8d57
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'MPSIF MV (Clean) Measure Sum' =
+			
+			SUMX(
+			    DISTINCT('INSTRUMENT_TS'[LX ID]),  -- Get unique LX IDs
+			    [MPSIF MV (Clean) Measure]  -- Use the existing measure
+			)
+		formatString: #,0
+		lineageTag: fc51f3ee-bbf3-4b6a-8b46-98aa9b0ea3d9
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'Risk Bucket New - Holding(New)' = ```
+			
+			VAR RiskRank = 
+			  CALCULATE(
+			        MAX('INSTRUMENT_RISK_RANKING_DAILY'[Risk_Rank]),
+			        TREATAS(
+			            VALUES('Instrument_TS'[INSTRUMENT_IDENTIFIER]),
+			            'INSTRUMENT_RISK_RANKING_DAILY'[INSTRUMENT_IDENTIFIER]
+			        )
+			    )
+			
+			VAR MPSIF_Notional = SUM('HOLDING_MPSIF'[MPSIF Notional])
+			VAR Threshold = DIVIDE(MPSIF_Notional, [MPSIF Target Notional])
+			
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        -- Risk Rank 0
+			        RiskRank = "NI", "#47C2F3", -- Blue 
+			        
+			        -- Risk Rank 1
+			        RiskRank = "1" && (MPSIF_Notional = 0 || ISBLANK(MPSIF_Notional)), "#FFA500", -- Orange
+			        RiskRank = "1" && Threshold >= 0.90 && Threshold <= 1.10, "#1FA92F", -- Green
+			        RiskRank = "1" && Threshold >= 0.75 && Threshold < 0.90 || Threshold > 1.10 && Threshold <= 1.25, "#F0F389", -- Yellow
+			        RiskRank = "1" && Threshold > 0 && Threshold < 0.75 || Threshold > 1.25 && Threshold <= 1.5, "#FFA500", -- Orange
+			        RiskRank = "1" && Threshold > 1.5, "#FF0000", -- Red
+			
+			        -- Risk Rank 2
+			        RiskRank = "2" && (MPSIF_Notional = 0 || ISBLANK(MPSIF_Notional)), "#FFA500", -- Orange
+			        RiskRank = "2" && Threshold >= 0.6 && Threshold <= 0.7, "#1FA92F", -- Green
+			        RiskRank = "2" && Threshold >= 0.5 && Threshold < 0.6 || Threshold > 0.7 && Threshold <= 0.8, "#F0F389", -- Yellow
+			        RiskRank = "2" && Threshold > 0 && Threshold < 0.5 || Threshold > 0.8 && Threshold <= 1, "#FFA500", -- Orange
+			        RiskRank = "2" && Threshold > 1, "#FF0000", -- Red
+			
+			        -- Risk Rank 3
+			        RiskRank = "3" && MPSIF_Notional <= 0, "#1FA92F", -- Green
+			        RiskRank = "3" && MPSIF_Notional > 0, "#FF0000", -- Red
+			
+			        -- Default
+			        RiskRank IN {"NI", "CCY", "1", "2", "3"}, "#FFFFFF" -- White (No Risk)
+			    )
+			
+			```
+		lineageTag: 321fad8e-aad3-43fe-94a7-220810b2a99f
+
+	measure 'Risk Bucket New - Holding SELECT PLUS(New)' = ```
+			
+			VAR RiskRank = 
+			   
+			      CALCULATE(
+			        MAX('INSTRUMENT_RISK_RANKING_DAILY'[Risk_Rank]),
+			        TREATAS(
+			            VALUES('Instrument_TS'[INSTRUMENT_IDENTIFIER]),
+			            'INSTRUMENT_RISK_RANKING_DAILY'[INSTRUMENT_IDENTIFIER]
+			        )
+			    )
+			      
+			VAR Threshold = [MPSIF Threshold % SELECT PLUS]
+			VAR MPSIF_Notional = SUM('HOLDING_MPSIF'[MPSIF Notional])
+			 
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        -- Risk Rank 0
+			        RiskRank = "NI", "#47C2F3", --BLUE 
+			        -- Risk Rank 1
+			        RiskRank = "1" && (MPSIF_Notional = BLANK() || MPSIF_Notional = 0), "#FFA500", -- Orange
+			        RiskRank = "1" && Threshold >= 0.90 && Threshold <= 1.10, "#1FA92F", -- Green
+			        RiskRank = "1" && (Threshold >= 0.75 && Threshold < 0.90 || Threshold > 1.10 && Threshold <= 1.25), "#F0F389", -- Yellow
+			        RiskRank = "1" && (Threshold > 0 && Threshold < 0.75 || Threshold > 1.25 && Threshold <= 1.5), "#FFA500", -- Orange
+			        RiskRank = "1" && Threshold > 1.5, "#FF0000", -- Red
+			 
+			        -- Risk Rank 2
+			        RiskRank = "2" && (MPSIF_Notional = BLANK() || MPSIF_Notional = 0), "#FFA500", -- Orange
+			        RiskRank = "2" && Threshold >= 0.6 && Threshold <= 0.7, "#1FA92F", -- Green
+			        RiskRank = "2" && (Threshold >= 0.5 && Threshold < 0.6 || Threshold > 0.7 && Threshold <= 0.8), "#F0F389", 
+			        RiskRank = "2" && (Threshold > 0 && Threshold < 0.5 || Threshold > 0.8 && Threshold <= 1), "#FFA500", 
+			        RiskRank = "2" && Threshold > 1, "#FF0000", --Red
+			 
+			        -- Risk Rank 3
+			        RiskRank = "3" && (MPSIF_Notional = BLANK() || MPSIF_Notional = 0), "#1FA92F", -- Green
+			        RiskRank = "3" && Threshold > 0, "#FF0000", --Red
+			        RiskRank = "3" && MPSIF_Notional > 0, "#FF0000", --Red
+			 
+			        -- Default
+			        RiskRank IN {"NI", "CCY", "1", "2", "3"},"#FFFFFF" -- White (No Risk)
+			    )
+			```
+		lineageTag: 4658bb90-4d7c-4df1-a7ba-7897697ee40f
+
+	measure 'Measure 3'
+		lineageTag: 9a851707-e74a-4697-815f-e400c362b898
+
+		annotation 43dbc3e8-3a1c-4b6f-9923-b49ff7d6691c = True
+
+	measure 'MPSIF - IBOXXS (BPS)_New' =
+			
+			(SUM('HOLDING_MPSIF'[MPSIF MV % (Dirty)]) - SUM('HOLDING_IBOXXS'[IBOXXS MV % (Dirty)])) *10000
+		formatString: 0
+		lineageTag: efa1ea61-0024-4904-95e9-6fb093c208f9
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'MPSIF MV % (Clean)' =
+			
+			IF(
+			    HOLDING_MPSIF[MPSIF MV (Clean) Measure] = BLANK(),
+			    BLANK(),
+			    DIVIDE(
+			        HOLDING_MPSIF[MPSIF MV (Clean) Measure],
+			        CALCULATE(
+			            HOLDING_MPSIF[MPSIF MV (Clean) Measure],
+			            ALL(HOLDING_MPSIF)
+			        ),
+			        BLANK()
+			    )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: e0535301-1d2c-4596-a9be-454af304c48c
+
+	measure 'MPSIF - IBOXXS (BPS)_New1' = ```
+			
+			
+			(SUMX(HOLDING_MPSIF, HOLDING_MPSIF[MPSIF MV % (Dirty)]) - 
+			 SUMX(HOLDING_IBOXXS, HOLDING_IBOXXS[IBOXXS MV % (Dirty)]))*100
+			
+			```
+		lineageTag: 80693266-0417-41da-afd1-5412cf3baddc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Period End Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 384bad97-a600-48f0-8c2b-c4fe26126a8d
+		summarizeBy: none
+		sourceColumn: Period End Date
+
+		variation Variation
+			isDefault
+			relationship: 27635fa6-484f-42cd-84ca-cc73096e4b8e
+			defaultHierarchy: LocalDateTable_e3ce1306-5df1-4078-b255-9b684c73505e.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column SOURCE_SYSTEM_CODE
+		dataType: string
+		isHidden
+		lineageTag: 58c7f886-084f-4877-9d62-147f079f4315
+		summarizeBy: none
+		sourceColumn: SOURCE_SYSTEM_CODE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column SOURCE_SYSTEM_SHORT_NAME
+		dataType: string
+		isHidden
+		lineageTag: ecf1799f-17c6-4023-9807-45d1a8d218e7
+		summarizeBy: none
+		sourceColumn: SOURCE_SYSTEM_SHORT_NAME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column SOURCE_SYSTEM_NAME
+		dataType: string
+		isHidden
+		lineageTag: a06c3c38-3f80-4688-a61f-01c543f7f80b
+		summarizeBy: none
+		sourceColumn: SOURCE_SYSTEM_NAME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Instrument Identifier'
+		dataType: string
+		lineageTag: 52cea933-b10a-46e2-8756-a6cd6e539b55
+		summarizeBy: none
+		sourceColumn: Instrument Identifier
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PORTFOLIO_IDENTIFIER
+		dataType: string
+		isHidden
+		lineageTag: 8ad41c7b-5e56-49b7-927a-257f61690e4b
+		summarizeBy: none
+		sourceColumn: PORTFOLIO_IDENTIFIER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CUSTODIAN_ACCOUNT_IDENTIFIER
+		dataType: string
+		isHidden
+		lineageTag: efb3b5d2-0ea3-4bfd-92ce-d16aad1e5489
+		summarizeBy: none
+		sourceColumn: CUSTODIAN_ACCOUNT_IDENTIFIER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'MPSIF Notional'
+		dataType: double
+		formatString: #,0
+		lineageTag: 18aea92b-3275-4f4a-aa02-5a0b4d1cd119
+		summarizeBy: sum
+		sourceColumn: MPSIF Notional
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column ORIGINAL_FACE_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: bb1fc621-882a-4530-99c0-39010aff7950
+		summarizeBy: sum
+		sourceColumn: ORIGINAL_FACE_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CURRENT_FACE_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: f4eac78f-1d6e-406a-a302-8e5b23695550
+		summarizeBy: sum
+		sourceColumn: CURRENT_FACE_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'MPSIF MV (Clean)'
+		dataType: double
+		isHidden
+		formatString: #,0
+		lineageTag: 988849e2-df2a-4fab-8cef-eeb2d9124eb6
+		summarizeBy: sum
+		sourceColumn: MPSIF MV (Clean)
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column MV_LOCAL_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: f6a7613a-2c1d-41fe-aa62-24e4a6becbe0
+		summarizeBy: sum
+		sourceColumn: MV_LOCAL_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'MPSIF AI'
+		dataType: double
+		formatString: #,0
+		lineageTag: 3267b6eb-6c9a-45bb-95b6-7b608de61180
+		summarizeBy: sum
+		sourceColumn: MPSIF AI
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column ACCRUED_LOCAL_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: 7adc80b8-4adb-4ae4-a7a8-bf3d3a9d32f1
+		summarizeBy: sum
+		sourceColumn: ACCRUED_LOCAL_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column COST_BASIS_HOME_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: de20a42b-e9d1-416d-855a-59666b56a3f2
+		summarizeBy: sum
+		sourceColumn: COST_BASIS_HOME_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column COST_BASIS_LOCAL_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: 965fc143-3115-444d-a682-03543f924a13
+		summarizeBy: sum
+		sourceColumn: COST_BASIS_LOCAL_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CURRENCY_CODE
+		dataType: string
+		isHidden
+		lineageTag: 9f8fbe2d-2855-48ac-aa58-c68c7c137bcd
+		summarizeBy: none
+		sourceColumn: CURRENCY_CODE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PRICE_DATE
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: 74f378db-85a5-40a7-a9bd-4c31c9e1cc8c
+		summarizeBy: none
+		sourceColumn: PRICE_DATE
+
+		variation Variation
+			isDefault
+			relationship: 3107b143-e40d-44bb-8d14-68210dec8704
+			defaultHierarchy: LocalDateTable_cb687a2d-cf38-4fd9-aab4-458489a21438.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Price Home Amount'
+		dataType: double
+		formatString: 0.000
+		lineageTag: bf320e85-df32-4e3c-bf86-50ddadadff03
+		summarizeBy: sum
+		sourceColumn: Price Home Amount
+
+		annotation SummarizationSetBy = Automatic
+
+	column PRICE_LOCAL_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: ae1ecb33-b2d7-40da-97ef-575a08662f7d
+		summarizeBy: sum
+		sourceColumn: PRICE_LOCAL_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PRICE_SOURCE_NAME
+		dataType: string
+		isHidden
+		lineageTag: e11e207f-f049-483d-9624-c47c37e1579a
+		summarizeBy: none
+		sourceColumn: PRICE_SOURCE_NAME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'FX Rate'
+		dataType: double
+		isHidden
+		lineageTag: d750f3eb-6d1c-48a9-bce6-bb8671fbcbd7
+		summarizeBy: sum
+		sourceColumn: FX Rate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Portfolio Holding Percent'
+		dataType: double
+		lineageTag: 6a5ff6cc-a448-45e1-809e-4134feeb3a06
+		summarizeBy: sum
+		sourceColumn: Portfolio Holding Percent
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column REDEMPTION_FACTOR
+		dataType: double
+		isHidden
+		lineageTag: 112e71ec-4352-4909-ab46-5f78fe475dc1
+		summarizeBy: sum
+		sourceColumn: REDEMPTION_FACTOR
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SOURCE_SYSTEM_STATUS_IDENTIFIER
+		dataType: double
+		isHidden
+		lineageTag: 057e96f3-7fe8-4632-9d6b-89c57934b8cb
+		summarizeBy: sum
+		sourceColumn: SOURCE_SYSTEM_STATUS_IDENTIFIER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ENDING_NAV_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: dd8fa441-08bc-4ab6-afdb-c517b8ba1e80
+		summarizeBy: sum
+		sourceColumn: ENDING_NAV_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column BEGINNING_NAV_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: 342df91e-b4f7-4959-b381-ed1bde038bde
+		summarizeBy: sum
+		sourceColumn: BEGINNING_NAV_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column UNFUNDED_COMMITMENT_LOCAL
+		dataType: double
+		isHidden
+		lineageTag: b142b192-fb96-48ae-9a00-89607d2e5f76
+		summarizeBy: sum
+		sourceColumn: UNFUNDED_COMMITMENT_LOCAL
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CREATED_DATETIME
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 9c5ca0dd-df01-44e6-a4f4-55dc2fdfd056
+		summarizeBy: none
+		sourceColumn: CREATED_DATETIME
+
+		variation Variation
+			isDefault
+			relationship: ed5a4aa4-cbd7-46cf-90df-ba928954c9c5
+			defaultHierarchy: LocalDateTable_c694651e-0fde-4ab0-aa86-4ae95b87804c.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_BY_NAME
+		dataType: string
+		isHidden
+		lineageTag: 5661f6bd-7eb1-4cf4-9836-c0b92ef2bd0e
+		summarizeBy: none
+		sourceColumn: CREATED_BY_NAME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_BY_COMMENTS
+		dataType: string
+		isHidden
+		lineageTag: a55b3730-60c8-45b2-84f4-4d4876d089a1
+		summarizeBy: none
+		sourceColumn: CREATED_BY_COMMENTS
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_DATETIME
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: be604c64-2e56-45a3-b56e-9c8b752914eb
+		summarizeBy: none
+		sourceColumn: MODIFIED_DATETIME
+
+		variation Variation
+			isDefault
+			relationship: db591a7f-45d1-4bcc-a988-86792da42952
+			defaultHierarchy: LocalDateTable_6734d12e-2203-4248-ba6b-e75c620935be.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_BY_NAME
+		dataType: string
+		isHidden
+		lineageTag: bf2c9d05-c8d0-4286-a20a-59810521bc21
+		summarizeBy: none
+		sourceColumn: MODIFIED_BY_NAME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_BY_COMMENTS
+		dataType: string
+		isHidden
+		lineageTag: bf8010d2-4734-49ed-b033-0dd18602f00d
+		summarizeBy: none
+		sourceColumn: MODIFIED_BY_COMMENTS
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID_DATE
+		dataType: string
+		isHidden
+		lineageTag: 5145e5dc-0c64-494c-b3e9-ca979b13ba94
+		summarizeBy: none
+		sourceColumn: ID_DATE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID_DATE_PORT
+		dataType: string
+		isHidden
+		lineageTag: 17d28b88-1fdd-454e-ba61-de1747c5153f
+		summarizeBy: none
+		sourceColumn: ID_DATE_PORT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'MPSIF In Position' = if(MAX('HOLDING_MPSIF'[MPSIF Notional]) >0, TRUE, FALSE())
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 8958d5e3-7d3f-4d67-a184-0e6435ae4674
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'MPSIF MV % (Dirty)' = ```
+			
+			IF(
+			    HOLDING_MPSIF[MPSIF MV (Clean) + AI] = BLANK(),
+			    BLANK(),
+			    DIVIDE(
+			        HOLDING_MPSIF[MPSIF MV (Clean) + AI],
+			        CALCULATE(
+			            SUM(HOLDING_MPSIF[MPSIF MV (Clean) + AI]),
+			            ALLSELECTED(HOLDING_MPSIF)
+			        )+0
+			    )
+			)
+			
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 0ca9855f-6acb-48fd-8c01-059288ad93d2
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'MPSIF MV % - IBOXXS %' = if( isblank(HOLDING_MPSIF[MPSIF MV % (Dirty)]), 0, HOLDING_MPSIF[MPSIF MV % (Dirty)])  - RELATED((HOLDING_IBOXXS[IBOXXS MV % (Dirty)]))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: MPSIF-IBOXXS
+		lineageTag: 515f6f1f-b212-4e92-8823-4ecc04ada910
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'MPSIF MV (Clean) + AI' = HOLDING_MPSIF[MPSIF MV (Clean)] + HOLDING_MPSIF[MPSIF AI]
+		formatString: #,0
+		lineageTag: 1e6eddca-f082-4c26-841b-740ebcc64a44
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column 'MPSIF MV % (Clean) + AI %' =
+			
+			IF(
+			    HOLDING_MPSIF[MPSIF MV (Clean) + AI] = BLANK(),
+			    BLANK(),
+			    DIVIDE(
+			        HOLDING_MPSIF[MPSIF MV (Clean) + AI],
+			        CALCULATE(
+			            HOLDING_MPSIF[MPSIF MV (Clean) + AI Measure],
+			            ALL(HOLDING_MPSIF)
+			        ),
+			        BLANK()
+			    )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 0fc5b9fa-f698-467c-9930-6f823baf65db
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'MPSIF Settled Notional'
+		dataType: double
+		formatString: 0
+		lineageTag: 9757559d-38b6-475a-8909-516f1e49ae38
+		summarizeBy: sum
+		sourceColumn: MPSIF Settled Notional
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column 'MPSIF Notional %' =
+			
+			IF(
+			    HOLDING_MPSIF[MPSIF Notional] = BLANK(),
+			    BLANK(),
+			    DIVIDE(
+			        HOLDING_MPSIF[MPSIF Notional],
+			        CALCULATE(
+			            sum(HOLDING_MPSIF[MPSIF Notional]),
+			            ALL(HOLDING_MPSIF)
+			        ),
+			        BLANK()
+			    )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 3120a18b-1de7-47b0-bfed-908ddd4093a8
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'MPSIF BPS - IBOXXS BPS' = 'HOLDING_MPSIF'[MPSIF MV % - IBOXXS %] * 10000
+		dataType: int64
+		formatString: #,0
+		lineageTag: dddc9b4e-f19e-45aa-bc44-cb0591ac7564
+		summarizeBy: sum
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column SENTRY_PORTFOLIO_IDENTIFIER
+		dataType: string
+		lineageTag: a8290ed1-9670-4b73-a77e-78d25b345f6f
+		summarizeBy: none
+		sourceColumn: SENTRY_PORTFOLIO_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column DATA_PROVIDER_NAME
+		dataType: string
+		lineageTag: 1f826e24-3875-4eac-87d2-1abd6fdb4d38
+		summarizeBy: none
+		sourceColumn: DATA_PROVIDER_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column VANTAGE_PORTFOLIO_IDENTIFIER
+		dataType: string
+		lineageTag: eba405c7-9856-48aa-81ae-2bb316257d2b
+		summarizeBy: none
+		sourceColumn: VANTAGE_PORTFOLIO_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column VANTAGE_CUSTODIAN_ACCOUNT_IDENTIFIER
+		dataType: string
+		lineageTag: 871b2aab-6c36-4547-a7f6-59b90b57da5d
+		summarizeBy: none
+		sourceColumn: VANTAGE_CUSTODIAN_ACCOUNT_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'MPSIF MV % (Dirty)_new Nidhi' =
+			
+			IF(
+			    HOLDING_MPSIF[MPSIF MV (Clean)] = BLANK(),
+			    BLANK(),
+			    DIVIDE(
+			        HOLDING_MPSIF[MPSIF MV (Clean)],
+			        CALCULATE(
+			            SUM(HOLDING_MPSIF[MPSIF MV (Clean)]),
+			            ALLSELECTED(HOLDING_MPSIF)
+			        )+0
+			    )
+			)
+		lineageTag: 37593c7e-51d9-4a4b-92d7-b31ae3279e08
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition HOLDING_MPSIF = m
+		mode: import
+		source =
+				let
+				    Source = HOLDING,
+				    #"Filtered Rows1" = Table.SelectRows(Source, each [PORTFOLIO_IDENTIFIER] = "MPSIF" or [PORTFOLIO_IDENTIFIER] = "MPINV1"),
+				    #"Duplicated Column" = Table.DuplicateColumn(#"Filtered Rows1", "Instrument Identifier", "Instrument Identifier - Copy"),
+				    #"Duplicated Column1" = Table.DuplicateColumn(#"Duplicated Column", "PORTFOLIO_IDENTIFIER", "PORTFOLIO_IDENTIFIER - Copy"),
+				    #"Merged Columns" = Table.CombineColumns(#"Duplicated Column1",{"Instrument Identifier - Copy", "PORTFOLIO_IDENTIFIER - Copy"},Combiner.CombineTextByDelimiter("", QuoteStyle.None),"Merged"),
+				    #"Filtered Rows" = Table.SelectRows(#"Merged Columns", each ([Merged] <> "96c3f10ecbc02bf14bdee5a10eebf998MPINV1")),
+				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows",{"Merged"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Columns",{{"Accrued", "MPSIF AI"}, {"MV Home Amount", "MPSIF MV (Clean)"}, {"Position Quantity", "MPSIF Notional"}, {"POSITION_SETTLED_QUANTITY", "MPSIF Settled Notional"}}),
+				    #"Sorted Rows" = Table.Sort(#"Renamed Columns",{{"Instrument Identifier", Order.Ascending}}),
+				    #"Filtered Rows2" = Table.SelectRows(#"Sorted Rows", each ([PORTFOLIO_IDENTIFIER] = "MPINV1"))
+				in
+				    #"Filtered Rows2"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

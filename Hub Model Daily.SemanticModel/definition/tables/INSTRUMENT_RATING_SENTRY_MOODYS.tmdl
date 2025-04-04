@@ -1,0 +1,450 @@
+table INSTRUMENT_RATING_SENTRY_MOODYS
+	isHidden
+	lineageTag: 35aad337-0f75-4c87-851e-a5fb6fcdc2a2
+
+	column 'Calendar Date'
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: e672520d-2951-4710-a9db-d37f333a25eb
+		summarizeBy: none
+		sourceColumn: Calendar Date
+
+		variation Variation
+			isDefault
+			relationship: ae3d374d-b9bd-443b-a2dd-d78841ebd230
+			defaultHierarchy: LocalDateTable_f7389292-508a-43ec-8120-0007dd4fe2ac.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column INSTRUMENT_IDENTIFIER
+		dataType: string
+		isHidden
+		lineageTag: abeecc99-fc0b-40ab-b40a-74a0c5cd4e9d
+		summarizeBy: none
+		sourceColumn: INSTRUMENT_IDENTIFIER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ISSUER_IDENTIFIER
+		dataType: string
+		isHidden
+		lineageTag: bc3f551c-ca91-45c3-b80f-ab6ff3c9600c
+		summarizeBy: none
+		sourceColumn: ISSUER_IDENTIFIER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Data Provider Name'
+		dataType: string
+		isHidden
+		lineageTag: 99420c6f-8cbf-4074-94ab-6898d41eb7c7
+		summarizeBy: none
+		sourceColumn: Data Provider Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Rating
+		dataType: string
+		isHidden
+		lineageTag: 53bab907-f556-4238-b090-5a612c4d1b69
+		summarizeBy: none
+		sourceColumn: Rating
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Rating Date'
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 907b500b-f95f-438e-9919-11dd370a05f7
+		summarizeBy: none
+		sourceColumn: Rating Date
+
+		variation Variation
+			isDefault
+			relationship: 6c000ba8-9c21-46f3-a120-aad00dc8eb1d
+			defaultHierarchy: LocalDateTable_302cc458-a727-4325-8d48-057d6b2791be.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Effective Start Date'
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: a800fb4f-303e-41f9-9d7d-5d9520498be0
+		summarizeBy: none
+		sourceColumn: Effective Start Date
+
+		variation Variation
+			isDefault
+			relationship: 48e16a97-82bb-442c-b0bc-fe01bec7937c
+			defaultHierarchy: LocalDateTable_79a25e2c-38be-481e-99be-eee8bb9d7107.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Effective End Date'
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: e8790c04-dca0-4832-95e2-1858e7456636
+		summarizeBy: none
+		sourceColumn: Effective End Date
+
+		variation Variation
+			isDefault
+			relationship: fe8ecca7-7a81-4791-8d8a-48d30f4ebe49
+			defaultHierarchy: LocalDateTable_67dd2e54-3b5f-49b0-ad25-50837449d963.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Rating Action'
+		dataType: string
+		isHidden
+		lineageTag: 75547832-eafc-4791-93e0-ba13f5a919b6
+		summarizeBy: none
+		sourceColumn: Rating Action
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Credit Watch'
+		dataType: string
+		isHidden
+		lineageTag: 7694eee7-1450-40be-97e6-76e8d4613138
+		summarizeBy: none
+		sourceColumn: Credit Watch
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Credit Watch Date'
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 38ee8b5f-0d25-4013-845b-48183cd67fa4
+		summarizeBy: none
+		sourceColumn: Credit Watch Date
+
+		variation Variation
+			isDefault
+			relationship: a22d6a6d-4a6c-42dd-b547-89793985c2e2
+			defaultHierarchy: LocalDateTable_59fe76e5-afce-47b6-b22a-c81d9fac7f93.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Outlook
+		dataType: string
+		isHidden
+		lineageTag: e3f1bf7c-bf53-4f80-ab3c-8a0c99b53970
+		summarizeBy: none
+		sourceColumn: Outlook
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Outlook Date'
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 5f0866e3-93e2-4f9c-87e1-439ece1b4885
+		summarizeBy: none
+		sourceColumn: Outlook Date
+
+		variation Variation
+			isDefault
+			relationship: 319ccae8-e1f6-49b0-9ad4-61250905fb73
+			defaultHierarchy: LocalDateTable_a31b7d5d-c49d-40c6-ac62-831ec4dac790.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Recovery Rating'
+		dataType: string
+		isHidden
+		lineageTag: 0581e97c-f949-4a51-9917-8bab4630d2ae
+		summarizeBy: none
+		sourceColumn: Recovery Rating
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Recovery Rating Date'
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 0f39f9c7-a28d-44d3-bc7e-15f18387fcf3
+		summarizeBy: none
+		sourceColumn: Recovery Rating Date
+
+		variation Variation
+			isDefault
+			relationship: dbcb58ba-e868-4832-b4ab-2764eb7e0854
+			defaultHierarchy: LocalDateTable_86c95edb-090e-496f-888d-7de870e69220.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Issuer Rating'
+		dataType: string
+		isHidden
+		lineageTag: 8edb35d1-65fa-41bf-a564-1654bdbd751a
+		summarizeBy: none
+		sourceColumn: Issuer Rating
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Issuer Rating Date'
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 39c1903a-8a26-4652-bbee-48ec72edbb9e
+		summarizeBy: none
+		sourceColumn: Issuer Rating Date
+
+		variation Variation
+			isDefault
+			relationship: a25d815d-94a8-4356-905f-3bda328e4e4b
+			defaultHierarchy: LocalDateTable_ef4ee63c-efe5-4a31-a4d4-12aac0fac0b7.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Issuer Rating Effective Start Date'
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 7da916af-98d8-4c18-bedc-9dd84e4c33da
+		summarizeBy: none
+		sourceColumn: Issuer Rating Effective Start Date
+
+		variation Variation
+			isDefault
+			relationship: 49ec79d8-07bc-4df5-b460-9b6df1361686
+			defaultHierarchy: LocalDateTable_bac5045b-dabb-4189-b4b2-7cde1295c800.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ISSUER_RATING_EFFECTIVE_END_DATE
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 45a7b2c0-8d63-4812-9f95-bf845c0e7c6f
+		summarizeBy: none
+		sourceColumn: ISSUER_RATING_EFFECTIVE_END_DATE
+
+		variation Variation
+			isDefault
+			relationship: 7bbf6e42-f1e0-4253-af7c-13f5fbe0b2f8
+			defaultHierarchy: LocalDateTable_924ef3f1-a448-42ed-9c0c-fd9ba411a5d2.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Issuer Rating Action Description'
+		dataType: string
+		isHidden
+		lineageTag: f9eb29d4-9db6-42a3-9da4-a553cfbe010f
+		summarizeBy: none
+		sourceColumn: Issuer Rating Action Description
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Issuer Credit Watch'
+		dataType: string
+		isHidden
+		lineageTag: c01012be-5a2c-400b-81f1-c10122f313b7
+		summarizeBy: none
+		sourceColumn: Issuer Credit Watch
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Issuer Credit Watch Date'
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: a34a49f2-c407-41d1-a2c6-c383157bc515
+		summarizeBy: none
+		sourceColumn: Issuer Credit Watch Date
+
+		variation Variation
+			isDefault
+			relationship: c2d8b862-bca5-410d-bc92-824fb4e6adca
+			defaultHierarchy: LocalDateTable_54a1a8fc-8b23-4e66-b7a8-ea9395468e99.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Issuer Outlook'
+		dataType: string
+		isHidden
+		lineageTag: a79bc5e1-7b12-4d23-87d7-99161d98f90d
+		summarizeBy: none
+		sourceColumn: Issuer Outlook
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Issuer Outlook Date'
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 1efd1bcf-3397-49dd-8688-a1daf1ac22de
+		summarizeBy: none
+		sourceColumn: Issuer Outlook Date
+
+		variation Variation
+			isDefault
+			relationship: e05bcaff-0d3a-47e0-8bbd-da9aed666c79
+			defaultHierarchy: LocalDateTable_b59b9473-739b-4e68-8ba9-150f2015e052.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column RATING_CODE_DATA_PROVIDER_NAME
+		dataType: string
+		isHidden
+		lineageTag: fc03b37c-9945-4ee3-838e-3d15f45cdbf8
+		summarizeBy: none
+		sourceColumn: RATING_CODE_DATA_PROVIDER_NAME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ISSUER_RATING_CODE_DATA_PROVIDER_NAME
+		dataType: string
+		isHidden
+		lineageTag: ad7a46c8-a53d-43a7-8229-743aa8dfd33f
+		summarizeBy: none
+		sourceColumn: ISSUER_RATING_CODE_DATA_PROVIDER_NAME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Rating Number'
+		dataType: double
+		isHidden
+		lineageTag: 89eeab26-eca9-4ed1-859e-d84111133de4
+		summarizeBy: sum
+		sourceColumn: Rating Number
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column RATING_FACTOR
+		dataType: double
+		isHidden
+		lineageTag: fb96c39e-2d09-4fe4-9c7a-0c48c6c1017c
+		summarizeBy: sum
+		sourceColumn: RATING_FACTOR
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ISSUER_RATING_NUMBER
+		dataType: double
+		isHidden
+		lineageTag: 12e9c6a8-9cda-4296-ae26-160eb5ffad02
+		summarizeBy: sum
+		sourceColumn: ISSUER_RATING_NUMBER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ISSUER_RATING_FACTOR
+		dataType: double
+		isHidden
+		lineageTag: f4d37739-e200-4843-9727-20033c639d1b
+		summarizeBy: sum
+		sourceColumn: ISSUER_RATING_FACTOR
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ID_DATE
+		dataType: string
+		isHidden
+		lineageTag: 0390e5d8-fff2-43fd-98a0-cccc6d1673b6
+		summarizeBy: none
+		sourceColumn: ID_DATE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition INSTRUMENT_RATING_SENTRY_MOODYS = m
+		mode: import
+		source =
+				let
+				    Source = INSTRUMENT_RATING,
+				    #"Filtered Rows" = Table.SelectRows(Source, each ([Data Provider Name] = "SENTRY-MOODYS"))
+				in
+				    #"Filtered Rows"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

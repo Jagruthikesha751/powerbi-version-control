@@ -1,0 +1,144 @@
+table RATING_MATRIX
+	lineageTag: 6f58e0fe-24a7-47e3-a23f-f98ffadf68e4
+
+	column RATING_NUMBER
+		dataType: double
+		lineageTag: 1223e6f1-2a6b-4d85-ab05-a4fe54a4e4da
+		summarizeBy: sum
+		sourceColumn: RATING_NUMBER
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column RATING_FACTOR
+		dataType: double
+		lineageTag: cbc36d9f-1d8f-41eb-8d4c-ae19ec70941c
+		summarizeBy: sum
+		sourceColumn: RATING_FACTOR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MOODYS_RATING_CODE
+		dataType: string
+		lineageTag: 4be27cc8-6ced-4cc3-a5a3-31a80d33b668
+		summarizeBy: none
+		sourceColumn: MOODYS_RATING_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column SPGLOBAL_RATING_CODE
+		dataType: string
+		lineageTag: c7b5630c-a073-4365-a466-4da615eea7b5
+		summarizeBy: none
+		sourceColumn: SPGLOBAL_RATING_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column FITCH_RATING_CODE
+		dataType: string
+		lineageTag: f402e122-2647-4866-a145-0da6f7ebd752
+		summarizeBy: none
+		sourceColumn: FITCH_RATING_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column MARKIT_RATING_CODE
+		dataType: string
+		lineageTag: ce69e2ae-d114-4175-8683-3732a94867ff
+		summarizeBy: none
+		sourceColumn: MARKIT_RATING_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column RATING_CATEGORY_NAME
+		dataType: string
+		lineageTag: 2f8d8063-1fe1-4924-bc65-acf914dcf802
+		summarizeBy: none
+		sourceColumn: RATING_CATEGORY_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column RATING_GRADE_NAME
+		dataType: string
+		lineageTag: 0c9d1923-1f35-4283-9ca5-b1ab6015d259
+		summarizeBy: none
+		sourceColumn: RATING_GRADE_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_DATETIME
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 07d069f4-dceb-438d-857d-9185874254a8
+		summarizeBy: none
+		sourceColumn: CREATED_DATETIME
+
+		variation Variation
+			isDefault
+			relationship: 4e43ff5b-fadc-43fa-9d27-960d5552ee7e
+			defaultHierarchy: LocalDateTable_ddab77ba-b7ca-47cc-b7e1-0fe43b2dcec4.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_BY_NAME
+		dataType: string
+		lineageTag: 9691fe99-65c4-4f66-afd4-e349d2011e81
+		summarizeBy: none
+		sourceColumn: CREATED_BY_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_BY_COMMENTS
+		dataType: string
+		lineageTag: c0ed600b-bca8-4488-8220-084f47693a50
+		summarizeBy: none
+		sourceColumn: CREATED_BY_COMMENTS
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_DATETIME
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 5740ed69-4745-4d2c-a341-35032b51ff32
+		summarizeBy: none
+		sourceColumn: MODIFIED_DATETIME
+
+		variation Variation
+			isDefault
+			relationship: 5b109673-30b9-4331-9dda-0135e7f44c8d
+			defaultHierarchy: LocalDateTable_e72d9646-5f44-4d76-984d-378cc789f404.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_BY_NAME
+		dataType: string
+		lineageTag: 71cc46b2-96b9-4db2-b3a6-e21065b3f48e
+		summarizeBy: none
+		sourceColumn: MODIFIED_BY_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_BY_COMMENTS
+		dataType: string
+		lineageTag: c84d5e43-b7b9-488a-81ae-a17cea4e8cec
+		summarizeBy: none
+		sourceColumn: MODIFIED_BY_COMMENTS
+
+		annotation SummarizationSetBy = Automatic
+
+	partition RATING_MATRIX = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases("vtb24437.us-east-1.snowflakecomputing.com","ANALYST_WH_XS"),
+				    HUB_Database = Source{[Name="HUB",Kind="Database"]}[Data],
+				    ASSET_Schema = HUB_Database{[Name="ASSET",Kind="Schema"]}[Data],
+				    RATING_MATRIX_Table = ASSET_Schema{[Name="RATING_MATRIX",Kind="Table"]}[Data]
+				in
+				    RATING_MATRIX_Table
+
+	changedProperty = Name
+
