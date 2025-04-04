@@ -1,0 +1,716 @@
+table HOLDING_IBOXXS
+	lineageTag: 9e793c94-0ad6-4bfe-b1c8-9adaa98317f8
+
+	measure 'IBOXXS MV + AI Measure' = sum(HOLDING_IBOXXS[IBOXXS MV (Dirty)])
+		lineageTag: ff0660f5-a119-4e22-91bc-a4616d766df9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'IBOXXS MV % (Clean - Cash)' = ```
+			
+			IF(
+			    HOLDING_IBOXXS[IBOXXS MV (Mid Clean)] = BLANK(),
+			    BLANK(),
+			    DIVIDE(
+			        SUMX(
+			    FILTER(
+			        HOLDING_IBOXXS,
+			        HOLDING_IBOXXS[Instrument Identifier] <> "96c3f10ecbc02bf14bdee5a10eebf998"
+			    ),
+			    HOLDING_IBOXXS[IBOXXS MV (Mid Clean)]
+			), 
+			        CALCULATE(
+			            HOLDING_IBOXXS[IBOXXS MV (Mid Clean)] ,
+			            filter(ALL(HOLDING_IBOXXS),'HOLDING_IBOXXS'[Instrument Identifier] <> "96c3f10ecbc02bf14bdee5a10eebf998")
+			        ),
+			        
+			        BLANK()
+			    )
+			)
+			```
+		formatString: #,0.00%;-#,0.00%;#,0.00%
+		lineageTag: c042b60f-8e16-44ac-9c31-c783764f86ec
+
+	measure 'IBOXXS MV (Mid Clean)' = ```
+			SUMX(
+			    'HOLDING_IBOXXS',
+			    'HOLDING_IBOXXS'[IBOXXS Notional] * 
+			    IF(
+			        ISBLANK(DIVIDE(RELATED('INSTRUMENT_OFFICIAL_PRICE'[Mid Price]), 100)),
+			        1,
+			        DIVIDE(RELATED('INSTRUMENT_OFFICIAL_PRICE'[Mid Price]), 100)
+			    )
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: 47344232-b709-4458-83e3-93bfb67c218e
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'IBOXX MV % - IBOXX MV %' =
+			
+			SUM('HOLDING_IBOXXS'[IBOXXS MV % (Dirty)]) - SUM('HOLDING_IBOXX'[IBOXX MV % (Dirty)])
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: IBOXXS-IBOXX
+		lineageTag: d7e605ed-3153-450e-97f8-2e3e57484173
+
+	measure 'IBOXXS MV % - IBOXX MV % (ABS)' =
+			
+			ABS(SUM('HOLDING_IBOXXS'[IBOXXS MV % (Dirty)])- SUM('HOLDING_IBOXX'[IBOXX MV % (Dirty)]))
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: IBOXXS-IBOXX
+		lineageTag: 746312ec-6978-4fa2-aaee-a6b56a086e37
+
+	measure iboxxs_instrument_count =
+			CALCULATE(
+			    DISTINCTCOUNT(HOLDING_IBOXXS[Instrument Identifier]),
+			    NOT(ISBLANK(INSTRUMENT_TS[LX ID]))
+			)
+		formatString: 0
+		lineageTag: 4418a3e8-69c7-47e0-9546-5f61e62533c8
+
+	measure 'IBOXXS - IBOXX (BPS)_New' =
+			
+			(SUM('HOLDING_IBOXXS'[IBOXXS MV % (Dirty)]) - SUM('HOLDING_IBOXX'[IBOXX MV % (Dirty)])) * 10000
+		formatString: 0
+		lineageTag: 6c2a7565-6b62-44ee-aa4e-e33dbf85e4bb
+
+	measure 'IBOXXS vs IBOXX MV % Difference' = ```
+			
+			
+			IF(
+			    ISBLANK(CALCULATE(SUM(HOLDING_IBOXXS[IBOXXS MV % (Dirty)]))) || 
+			    ISBLANK(CALCULATE(SUM(HOLDING_IBOXX[IBOXX MV % (Dirty)]))),
+			    BLANK(),
+			    CALCULATE(SUM(HOLDING_IBOXXS[IBOXXS MV % (Dirty)])) - 
+			    CALCULATE(SUM(HOLDING_IBOXX[IBOXX MV % (Dirty)]))*100
+			)
+			
+			
+			
+			
+			
+			```
+		lineageTag: 698ee3a6-02b1-424f-b614-e3adbf57ad3d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Period End Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 4aa914be-699b-4ac3-aafd-e94fbdd5c00f
+		summarizeBy: none
+		sourceColumn: Period End Date
+
+		variation Variation
+			isDefault
+			relationship: 1843be71-1056-4460-9cc3-dc09cbf4a6b9
+			defaultHierarchy: LocalDateTable_4b1dacaf-6ed9-432c-9bc4-a28f81970467.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column SOURCE_SYSTEM_CODE
+		dataType: string
+		isHidden
+		lineageTag: b3292f94-d495-41e1-97df-33194d3d902e
+		summarizeBy: none
+		sourceColumn: SOURCE_SYSTEM_CODE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column SOURCE_SYSTEM_SHORT_NAME
+		dataType: string
+		isHidden
+		lineageTag: 46336dd1-b12e-4c1a-a8cd-ad9b26c87943
+		summarizeBy: none
+		sourceColumn: SOURCE_SYSTEM_SHORT_NAME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column SOURCE_SYSTEM_NAME
+		dataType: string
+		isHidden
+		lineageTag: 432d7b13-d1b4-4c6d-87c3-e5d688a96f8f
+		summarizeBy: none
+		sourceColumn: SOURCE_SYSTEM_NAME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Instrument Identifier'
+		dataType: string
+		lineageTag: 549e35d2-c5ad-4deb-9bda-531bebc1e7c3
+		summarizeBy: none
+		sourceColumn: Instrument Identifier
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PORTFOLIO_IDENTIFIER
+		dataType: string
+		isHidden
+		lineageTag: 27b6cfd2-400b-4fba-bf44-529156f9969b
+		summarizeBy: none
+		sourceColumn: PORTFOLIO_IDENTIFIER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CUSTODIAN_ACCOUNT_IDENTIFIER
+		dataType: string
+		isHidden
+		lineageTag: 0a126402-8a41-4c56-b12a-927fdc78fdfa
+		summarizeBy: none
+		sourceColumn: CUSTODIAN_ACCOUNT_IDENTIFIER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IBOXXS Notional'
+		dataType: double
+		formatString: #,0
+		lineageTag: 41eba418-492e-4272-bd5c-38df91165338
+		summarizeBy: sum
+		sourceColumn: IBOXXS Notional
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column ORIGINAL_FACE_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: 88aa2b74-b490-4bf6-b07d-a77dc3a59595
+		summarizeBy: sum
+		sourceColumn: ORIGINAL_FACE_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CURRENT_FACE_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: 2c4b258c-a0a9-42f1-806b-25b7282e9583
+		summarizeBy: sum
+		sourceColumn: CURRENT_FACE_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'IBOXXS MV (Dirty)'
+		dataType: double
+		formatString: #,0
+		lineageTag: 3c2a152c-5edb-450d-858d-23c8fba40ce5
+		summarizeBy: sum
+		sourceColumn: IBOXXS MV (Dirty)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column MV_LOCAL_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: 86d2eb8d-c31a-4f05-a236-330f835daf9a
+		summarizeBy: sum
+		sourceColumn: MV_LOCAL_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'IBOXXS AI'
+		dataType: double
+		formatString: #,0
+		lineageTag: d91f12aa-1481-4f39-b3c9-61494d022b29
+		summarizeBy: sum
+		sourceColumn: IBOXXS AI
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column ACCRUED_LOCAL_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: 13884f49-ae6a-4eea-9ca9-fce7c1eca2b7
+		summarizeBy: sum
+		sourceColumn: ACCRUED_LOCAL_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column COST_BASIS_HOME_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: 7ac69d00-9b72-4173-bf2e-a3980ef971af
+		summarizeBy: sum
+		sourceColumn: COST_BASIS_HOME_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column COST_BASIS_LOCAL_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: 63512b17-0194-48be-bcf0-53d0ddf86e2e
+		summarizeBy: sum
+		sourceColumn: COST_BASIS_LOCAL_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CURRENCY_CODE
+		dataType: string
+		isHidden
+		lineageTag: 40b92bb3-fb4b-4210-b82f-dd5e19567526
+		summarizeBy: none
+		sourceColumn: CURRENCY_CODE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PRICE_DATE
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: e77faad7-f097-407a-abc0-9d24c29ed3a3
+		summarizeBy: none
+		sourceColumn: PRICE_DATE
+
+		variation Variation
+			isDefault
+			relationship: 205c5999-addb-47cc-bef9-41bdabb732b8
+			defaultHierarchy: LocalDateTable_62e7d39b-3b72-438d-a82c-2de54637d9cb.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Price Home Amount'
+		dataType: double
+		formatString: 0.000
+		lineageTag: a61f8580-1184-4987-a33e-da148a25a3ea
+		summarizeBy: sum
+		sourceColumn: Price Home Amount
+
+		annotation SummarizationSetBy = Automatic
+
+	column PRICE_LOCAL_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: 326680ef-7a65-4e48-8a94-41f3f0eb5dd7
+		summarizeBy: sum
+		sourceColumn: PRICE_LOCAL_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PRICE_SOURCE_NAME
+		dataType: string
+		isHidden
+		lineageTag: f0a35016-7e01-4b4e-91f7-cada3f74ac2c
+		summarizeBy: none
+		sourceColumn: PRICE_SOURCE_NAME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'FX Rate'
+		dataType: double
+		isHidden
+		lineageTag: 6d8fe3b0-2046-48f3-8c42-c7d7c6911b86
+		summarizeBy: sum
+		sourceColumn: FX Rate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Portfolio Holding Percent'
+		dataType: double
+		lineageTag: 4b612b88-43b2-4b84-bfee-992a78db1d43
+		summarizeBy: sum
+		sourceColumn: Portfolio Holding Percent
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column REDEMPTION_FACTOR
+		dataType: double
+		isHidden
+		lineageTag: d3a4cd37-a435-4d6c-96dc-8b0d3c1eff38
+		summarizeBy: sum
+		sourceColumn: REDEMPTION_FACTOR
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SOURCE_SYSTEM_STATUS_IDENTIFIER
+		dataType: double
+		isHidden
+		lineageTag: 00245da4-6cf9-447d-99b9-25eaeb8466c9
+		summarizeBy: sum
+		sourceColumn: SOURCE_SYSTEM_STATUS_IDENTIFIER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ENDING_NAV_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: 70e3e747-c573-47dc-b87b-49a1090d57c2
+		summarizeBy: sum
+		sourceColumn: ENDING_NAV_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column BEGINNING_NAV_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: 615da00b-643d-4d53-8592-1566b6baad89
+		summarizeBy: sum
+		sourceColumn: BEGINNING_NAV_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column UNFUNDED_COMMITMENT_LOCAL
+		dataType: double
+		isHidden
+		lineageTag: 4f27fdb4-efb9-4db4-a5e5-727977d4fac5
+		summarizeBy: sum
+		sourceColumn: UNFUNDED_COMMITMENT_LOCAL
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CREATED_DATETIME
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 0d32bee2-d6a6-4c86-8044-53113d3309e8
+		summarizeBy: none
+		sourceColumn: CREATED_DATETIME
+
+		variation Variation
+			isDefault
+			relationship: b88b3ab9-2482-436e-89c5-fbd677f2fa63
+			defaultHierarchy: LocalDateTable_2ce8f860-205e-4ffe-a269-8b7ef5b86127.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_BY_NAME
+		dataType: string
+		isHidden
+		lineageTag: 26881c43-1b06-484b-b239-ef432fd9a800
+		summarizeBy: none
+		sourceColumn: CREATED_BY_NAME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_BY_COMMENTS
+		dataType: string
+		isHidden
+		lineageTag: 5a82a109-08fa-445d-a130-e53e153f48b3
+		summarizeBy: none
+		sourceColumn: CREATED_BY_COMMENTS
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_DATETIME
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 7bdfa0d8-9989-48b3-a187-dcafed945f7b
+		summarizeBy: none
+		sourceColumn: MODIFIED_DATETIME
+
+		variation Variation
+			isDefault
+			relationship: dd0ab8e8-d97e-48b2-ad47-5dcd460339c1
+			defaultHierarchy: LocalDateTable_c04fe8d1-7e99-4b60-91e9-c383066df4a5.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_BY_NAME
+		dataType: string
+		isHidden
+		lineageTag: 58f7929d-e001-4642-848f-e2d0efa982ae
+		summarizeBy: none
+		sourceColumn: MODIFIED_BY_NAME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_BY_COMMENTS
+		dataType: string
+		isHidden
+		lineageTag: b48ebde2-60e9-484f-8188-33d38c463817
+		summarizeBy: none
+		sourceColumn: MODIFIED_BY_COMMENTS
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID_DATE
+		dataType: string
+		isHidden
+		lineageTag: 10a6e37a-03a2-4b0c-af84-cf902d2393a7
+		summarizeBy: none
+		sourceColumn: ID_DATE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID_DATE_PORT
+		dataType: string
+		isHidden
+		lineageTag: 349de5d2-1ec8-4c03-a404-93ebb1e0edf5
+		summarizeBy: none
+		sourceColumn: ID_DATE_PORT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IBOXXS MV % (Dirty)' = ```
+			
+			IF(
+			    HOLDING_IBOXXS[IBOXXS MV (Dirty)] = BLANK(),
+			    BLANK(),
+			    DIVIDE(
+			      HOLDING_IBOXXS[IBOXXS MV (Dirty)],
+			      CALCULATE(
+			         SUMX(HOLDING_IBOXXS,HOLDING_IBOXXS[IBOXXS MV (Dirty)]),
+			         ALLSELECTED(HOLDING_IBOXXS)
+			        )+0
+			    )
+			)
+			
+			
+			
+			
+			
+			
+			
+			```
+		lineageTag: 9eb36bed-5766-4baf-aafe-11b51ebe1d27
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'IBOXXS MV + AI' = HOLDING_IBOXXS[IBOXXS MV (Dirty)] + HOLDING_IBOXXS[IBOXXS AI]
+		lineageTag: e2a8c87a-12f0-427c-b98c-d28b71d0ec1d
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'IBOXXS MV (Dirty) + AI %' =
+			
+			IF(
+			    HOLDING_IBOXXS[IBOXXS MV + AI Measure] = BLANK(),
+			    BLANK(),
+			    DIVIDE(
+			        HOLDING_IBOXXS[IBOXXS MV + AI Measure],
+			        CALCULATE(
+			            HOLDING_IBOXXS[IBOXXS MV + AI Measure],
+			            ALL(HOLDING_IBOXXS)
+			        ),
+			        BLANK()
+			    )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: e0027330-ee6c-4a13-90b6-51d7dcdfcf1c
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column POSITION_SETTLED_QUANTITY
+		dataType: double
+		lineageTag: f70925ed-5545-4975-b2d6-6142aa2435ea
+		summarizeBy: sum
+		sourceColumn: POSITION_SETTLED_QUANTITY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Is Select?' = if('HOLDING_IBOXXS'[IBOXXS Notional] >0, TRUE, FALSE())
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 4346f112-f4de-4713-adf4-91fa2a1d9413
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IBOXXS Notional %' =
+			
+			IF(
+			    HOLDING_IBOXXS[IBOXXS Notional] = BLANK(),
+			    BLANK(),
+			    DIVIDE(
+			        HOLDING_IBOXXS[IBOXXS Notional],
+			        CALCULATE(
+			            sum(HOLDING_IBOXXS[IBOXXS Notional]),
+			            ALL(HOLDING_IBOXXS)
+			        ),
+			        BLANK()
+			    )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 61894ea4-6897-4fde-88f9-99c82cd61a95
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column SENTRY_PORTFOLIO_IDENTIFIER
+		dataType: string
+		lineageTag: 3fc38a78-2973-45df-8c5f-77d06c828e7e
+		summarizeBy: none
+		sourceColumn: SENTRY_PORTFOLIO_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column DATA_PROVIDER_NAME
+		dataType: string
+		lineageTag: e659aebf-446b-4da4-8787-3577c82e4f69
+		summarizeBy: none
+		sourceColumn: DATA_PROVIDER_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column VANTAGE_PORTFOLIO_IDENTIFIER
+		dataType: string
+		lineageTag: 11f5707f-79a0-4844-8080-cea8ca8bab68
+		summarizeBy: none
+		sourceColumn: VANTAGE_PORTFOLIO_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column VANTAGE_CUSTODIAN_ACCOUNT_IDENTIFIER
+		dataType: string
+		lineageTag: bdf6bad1-beeb-4c35-85f3-9b687439db33
+		summarizeBy: none
+		sourceColumn: VANTAGE_CUSTODIAN_ACCOUNT_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IBOXXS vs IBOXX MV % Diff' = ```
+			
+			SUMX(
+			    HOLDING_IBOXXS, 
+			    HOLDING_IBOXXS[IBOXXS MV % (Dirty)] - 
+			    RELATED(HOLDING_IBOXX[IBOXX MV % (Dirty)])
+			)
+			
+			```
+		lineageTag: 781800cb-b233-432d-afe5-2ad747eb34d3
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'IBOXXS MV % (Dirty)_New Nidhi' =
+			
+			IF(
+			    HOLDING_IBOXXS[IBOXXS MV + AI] = BLANK(),
+			    BLANK(),
+			    DIVIDE(
+			      HOLDING_IBOXXS[IBOXXS MV + AI],
+			      CALCULATE(
+			         sum(HOLDING_IBOXXS[IBOXXS MV + AI]),
+			         ALLSELECTED(HOLDING_IBOXXS)
+			        )+0
+			    )
+			)
+		lineageTag: 63dd7860-30f9-4d80-a79b-821ba9a0bf60
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition HOLDING_IBOXXS = m
+		mode: import
+		source =
+				let
+				    Source = HOLDING,
+				    #"Filtered Rows1" = Table.SelectRows(Source, each ([PORTFOLIO_IDENTIFIER] = "IBOXX_SELECT")),
+				    #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows1",{{"Accrued", "IBOXXS AI"}, {"MV Home Amount", "IBOXXS MV (Dirty)"}, {"Position Quantity", "IBOXXS Notional"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

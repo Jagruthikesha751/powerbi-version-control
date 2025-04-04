@@ -1,0 +1,80 @@
+table HOQ_MESSAGE_PRICE_PIVOT
+	isHidden
+	lineageTag: 6115837a-26ac-4275-b105-343c3efb9607
+
+	column INSTRUMENT_IDENTIFIER
+		dataType: string
+		isHidden
+		lineageTag: d8bad9e1-477a-4550-82cc-564398f8216e
+		summarizeBy: none
+		sourceColumn: INSTRUMENT_IDENTIFIER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_DATE
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: b5b5550f-fe65-421f-83fb-76368f72dc28
+		summarizeBy: none
+		sourceColumn: CREATED_DATE
+
+		variation Variation
+			isDefault
+			relationship: 9fb828f4-9f3b-4119-a079-c3a7a6e13510
+			defaultHierarchy: LocalDateTable_bdc69867-2009-4f11-b1f5-9ec4df604bef.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column MISSING_SPGLOBAL_PRICES
+		dataType: string
+		isHidden
+		lineageTag: ce8ff6da-b768-4d71-8cd7-c6c45569b9b5
+		summarizeBy: none
+		sourceColumn: MISSING_SPGLOBAL_PRICES
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column MISSING_SENTRY_PRICE_FOR_HOLDINGS
+		dataType: string
+		isHidden
+		lineageTag: bfa39783-18dc-4984-a89f-6f02e7fceb5c
+		summarizeBy: none
+		sourceColumn: MISSING_SENTRY_PRICE_FOR_HOLDINGS
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PRICE_MISMATCH_BETWEEN_SENTRY_AND_SP_GLOBAL
+		dataType: string
+		isHidden
+		lineageTag: 17876f15-f1cf-4e1a-b105-f5704f8f8bf2
+		summarizeBy: none
+		sourceColumn: PRICE_MISMATCH_BETWEEN_SENTRY_AND_SP_GLOBAL
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition HOQ_MESSAGE_PRICE_PIVOT = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases("vtb24437.us-east-1.snowflakecomputing.com","ANALYST_WH_XS"),
+				    HUB_Database = Source{[Name="HUB",Kind="Database"]}[Data],
+				    JOB_Schema = HUB_Database{[Name="JOB",Kind="Schema"]}[Data],
+				    HOQ_MESSAGE_PRICE_PIVOT_View = JOB_Schema{[Name="HOQ_MESSAGE_PRICE_PIVOT",Kind="View"]}[Data]
+				in
+				    HOQ_MESSAGE_PRICE_PIVOT_View
+
+	changedProperty = IsHidden
+

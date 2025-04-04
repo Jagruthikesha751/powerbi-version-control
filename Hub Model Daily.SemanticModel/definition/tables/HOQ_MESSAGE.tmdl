@@ -1,0 +1,229 @@
+table HOQ_MESSAGE
+	lineageTag: c3c55ac0-0c4a-4efe-936f-048d426d2988
+
+	measure hoq_count_c = CALCULATE(DISTINCTCOUNT(HOQ_MESSAGE[HOQ Message Identifier]), HOQ_RULE_SEVERITY[Severity] = "Critical", FILTER(HOQ_MESSAGE, HOQ_MESSAGE[hoq_message_less_than_7_days] = TRUE()) )
+		formatString: 0
+		lineageTag: c195e6a3-8f6c-4ed7-8e15-c776d710b7fb
+
+	measure hoq_count_e = CALCULATE(DISTINCTCOUNT(HOQ_MESSAGE[HOQ Message Identifier]), HOQ_RULE_SEVERITY[Severity] = "Error", FILTER(HOQ_MESSAGE, HOQ_MESSAGE[hoq_message_less_than_7_days] = TRUE()))
+		formatString: 0
+		lineageTag: 20c403b9-1301-4914-a1a0-acb731382914
+
+	measure hoq_count_w = CALCULATE(DISTINCTCOUNT(HOQ_MESSAGE[HOQ Message Identifier]), HOQ_RULE_SEVERITY[Severity] = "Warning", FILTER(HOQ_MESSAGE, HOQ_MESSAGE[hoq_message_less_than_7_days] = TRUE()))
+		formatString: 0
+		lineageTag: 112b03f1-f62f-47f3-a60e-64aeef0a83f5
+
+	measure hoq_count_i = CALCULATE(DISTINCTCOUNT(HOQ_MESSAGE[HOQ Message Identifier]), HOQ_RULE_SEVERITY[Severity] = "Informational", FILTER(HOQ_MESSAGE, HOQ_MESSAGE[hoq_message_less_than_7_days] = TRUE()))
+		formatString: 0
+		lineageTag: 5c096fd9-829e-47d9-9fc6-1357ee045324
+
+	measure 'HOQ Message count color' =
+			
+			var _count = COUNTROWS(HOQ_MESSAGE)
+			
+			Return
+			
+			If(
+			_count=BLANK(), "#00000000" , "#FF0000" )
+		lineageTag: 11e86bac-298c-44c9-9141-f386380ff013
+
+	measure 'HOQ Message count' = ```
+			
+			VAR _count = COUNTROWS('HOQ_MESSAGE')
+			
+			RETURN 
+			IF(
+			    NOT(ISBLANK(_count)), 
+			    _count,
+			    ""
+			)
+			
+			```
+		formatString: 0
+		lineageTag: bb1fae5c-0047-48cb-89dd-7a075bd2a9f5
+
+	column 'HOQ Message Identifier'
+		dataType: double
+		formatString: 0
+		lineageTag: bf8fb54d-1893-415d-9b5d-a6491cc4c71a
+		summarizeBy: none
+		sourceColumn: HOQ Message Identifier
+
+		annotation SummarizationSetBy = Automatic
+
+	column SOURCE_SYSTEM_STATUS_IDENTIFIER
+		dataType: double
+		lineageTag: 9fe1240b-31d5-436e-a222-afc6fcd2b66b
+		summarizeBy: sum
+		sourceColumn: SOURCE_SYSTEM_STATUS_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column HOQ_RULE_IDENTIFIER
+		dataType: double
+		lineageTag: 7622e0a4-d506-49dd-8213-82edda486020
+		summarizeBy: none
+		sourceColumn: HOQ_RULE_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column OBJECT_INSTANCE_NAME
+		dataType: string
+		lineageTag: b18a6d0c-2a66-47f2-9743-0a1ea1508f2f
+		summarizeBy: none
+		sourceColumn: OBJECT_INSTANCE_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'HOQ Message'
+		dataType: string
+		lineageTag: 78630663-90ae-4df7-84d6-46ffc2bb1b69
+		summarizeBy: none
+		sourceColumn: HOQ Message
+
+		annotation SummarizationSetBy = Automatic
+
+	column HOQ_MESSAGE_URL
+		dataType: string
+		lineageTag: 427eff98-5d13-42ba-a3fe-f89e3863aa21
+		summarizeBy: none
+		sourceColumn: HOQ_MESSAGE_URL
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Created Date'
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: c613ddc2-223b-4a7d-9f2a-f279b457aa75
+		summarizeBy: none
+		sourceColumn: Created Date
+
+		variation Variation
+			isDefault
+			relationship: 1ec20696-4074-4d2d-a4c7-3e7a53aa2562
+			defaultHierarchy: LocalDateTable_39d2aad6-1b24-4f14-8cdf-3cb0f89678ba.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column CREATED_BY_NAME
+		dataType: string
+		lineageTag: 2c8411c5-28d0-4f45-8b48-d93c11d2b4e1
+		summarizeBy: none
+		sourceColumn: CREATED_BY_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_BY_COMMENTS
+		dataType: string
+		lineageTag: c4152a10-3a50-4fe5-a3bf-3c579441ecad
+		summarizeBy: none
+		sourceColumn: CREATED_BY_COMMENTS
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_DATETIME
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 6c16acd4-0d9f-4d34-98b1-b5c1e2cd492a
+		summarizeBy: none
+		sourceColumn: MODIFIED_DATETIME
+
+		variation Variation
+			isDefault
+			relationship: 9fed46ee-26ef-416e-81cc-ee05f822e07c
+			defaultHierarchy: LocalDateTable_d9f8fd62-5e12-4178-acda-753575982152.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_BY_NAME
+		dataType: string
+		lineageTag: bf02e3ba-d767-4816-a901-2238dbd8d85a
+		summarizeBy: none
+		sourceColumn: MODIFIED_BY_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_BY_COMMENTS
+		dataType: string
+		lineageTag: 76df725b-f4b6-473e-9a46-9c069113c1fa
+		summarizeBy: none
+		sourceColumn: MODIFIED_BY_COMMENTS
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID_DATE
+		dataType: string
+		lineageTag: 6537107b-5062-459c-8ed0-251039e6a72c
+		summarizeBy: none
+		sourceColumn: ID_DATE
+
+		annotation SummarizationSetBy = Automatic
+
+	column CURRENT_SYSTEM_DATE
+		dataType: string
+		lineageTag: 17f491d5-4dc0-49c4-a1e7-b7db24585483
+		summarizeBy: none
+		sourceColumn: CURRENT_SYSTEM_DATE
+
+		annotation SummarizationSetBy = Automatic
+
+	column hoq_message_days_count
+		dataType: int64
+		formatString: 0
+		lineageTag: fda5106c-1538-4e3f-8bf5-dc5e5dd8940c
+		summarizeBy: sum
+		sourceColumn: hoq_message_days_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column hoq_message_less_than_7_days
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 2b9a365c-2473-4644-873e-11147e9be020
+		summarizeBy: none
+		sourceColumn: hoq_message_less_than_7_days
+
+		annotation SummarizationSetBy = Automatic
+
+	column REVIEW_STATUS_CODE
+		dataType: string
+		lineageTag: 67bc59c4-d7f1-440a-b39a-33b46ebdaa7d
+		summarizeBy: none
+		sourceColumn: REVIEW_STATUS_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	partition HOQ_MESSAGE = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases(snowflake_url,"ANALYST_WH_XS"),
+				    HUB_Database = Source{[Name="HUB",Kind="Database"]}[Data],
+				    JOB_Schema = HUB_Database{[Name="JOB",Kind="Schema"]}[Data],
+				    HOQ_MESSAGE_Table = JOB_Schema{[Name="HOQ_MESSAGE",Kind="Table"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(HOQ_MESSAGE_Table,{{"HOQ_MESSAGE_DESCRIPTION", "Message"}, {"CREATED_DATETIME", "Created Datetime"}}),
+				    #"Extracted Date" = Table.TransformColumns(#"Renamed Columns",{{"Created Datetime", DateTime.Date, type date}}),
+				    #"Added Custom" = Table.AddColumn(#"Extracted Date", "ID_DATE", each [OBJECT_INSTANCE_NAME]&Date.ToText([Created Datetime], [Format="yyyy-MM-dd"])),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Added Custom",{{"Created Datetime", "Created Date"}, {"Message", "HOQ Message"}, {"HOQ_MESSAGE_IDENTIFIER", "HOQ Message Identifier"}}),
+				    #"Added Custom1" = Table.AddColumn(#"Renamed Columns1", "CURRENT_SYSTEM_DATE", each CURRENT_SYSTEM_DATE),
+				    #"Expanded CURRENT_SYSTEM_DATE" = Table.ExpandTableColumn(#"Added Custom1", "CURRENT_SYSTEM_DATE", {"Calendar Date"}, {"CURRENT_SYSTEM_DATE.Calendar Date"}),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Expanded CURRENT_SYSTEM_DATE",{{"CURRENT_SYSTEM_DATE.Calendar Date", "CURRENT_SYSTEM_DATE"}}),
+				    #"Added Custom2" = Table.AddColumn(#"Renamed Columns2", "hoq_message_days_count", each [CURRENT_SYSTEM_DATE] - [Created Date]),
+				    #"Extracted Days" = Table.TransformColumns(#"Added Custom2",{{"hoq_message_days_count", Duration.Days, Int64.Type}}),
+				    #"Added Custom3" = Table.AddColumn(#"Extracted Days", "hoq_message_less_than_7_days", each [hoq_message_days_count] <= 7),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Added Custom3",{{"hoq_message_less_than_7_days", type logical}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

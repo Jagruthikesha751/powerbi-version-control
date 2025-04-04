@@ -1,0 +1,466 @@
+table INSTRUMENT_RATING_MPC_MOODYS
+	lineageTag: 21976686-1893-49aa-89d7-d44c35285dd3
+
+	column 'Calendar Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 2e370bf9-cfd6-446f-b859-92355bd77407
+		summarizeBy: none
+		sourceColumn: Calendar Date
+
+		variation Variation
+			isDefault
+			relationship: 2d5ef05e-98a2-4777-912b-2c06350e3941
+			defaultHierarchy: LocalDateTable_b8ab7972-a0ae-4b88-ab01-00398c26be23.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column INSTRUMENT_IDENTIFIER
+		dataType: string
+		lineageTag: 7eed5ca0-b494-4e23-ba57-bd9e7c8bf9a0
+		summarizeBy: none
+		sourceColumn: INSTRUMENT_IDENTIFIER
+		sortByColumn: MoodysSortOrder
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column ISSUER_IDENTIFIER
+		dataType: string
+		lineageTag: 86a942a3-5af0-492e-833b-363b52aaf36a
+		summarizeBy: none
+		sourceColumn: ISSUER_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Data Provider Name'
+		dataType: string
+		lineageTag: 59775596-c33e-4e94-80d9-7997cc66999a
+		summarizeBy: none
+		sourceColumn: Data Provider Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Rating
+		dataType: string
+		lineageTag: 0caa1d52-0f42-4a5a-8f0a-1aa67ac0b815
+		summarizeBy: none
+		sourceColumn: Rating
+		sortByColumn: RATING_FACTOR
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Rating Date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 5045b04d-ba26-4c0c-880a-e230617e9c71
+		summarizeBy: none
+		sourceColumn: Rating Date
+
+		variation Variation
+			isDefault
+			relationship: 26dc644c-6f7c-4a38-b3e2-e86af56c7244
+			defaultHierarchy: LocalDateTable_5642c7b0-1faa-4d10-b6f9-65b2c40284ba.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Effective Start Date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 4b1d4073-6b67-4de7-a7b0-a301351f57ec
+		summarizeBy: none
+		sourceColumn: Effective Start Date
+
+		variation Variation
+			isDefault
+			relationship: 88ea0865-5119-4285-84bf-f4593ed35d7a
+			defaultHierarchy: LocalDateTable_b3d3a941-00d3-4893-a3ba-e164efdfd2e3.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Effective End Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 3efa05df-707d-4f32-88bc-37af71f91ace
+		summarizeBy: none
+		sourceColumn: Effective End Date
+
+		variation Variation
+			isDefault
+			relationship: d5dffe81-da17-417a-b5fa-c9f4ac331452
+			defaultHierarchy: LocalDateTable_fb7df7db-2635-4903-93ee-791c653b9ac6.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Rating Action'
+		dataType: string
+		lineageTag: 435e0138-6181-4926-bdb5-3361ad333642
+		summarizeBy: none
+		sourceColumn: Rating Action
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Credit Watch'
+		dataType: string
+		lineageTag: 0c2e7203-1550-4688-93bb-072d0e819ef3
+		summarizeBy: none
+		sourceColumn: Credit Watch
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Credit Watch Date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 32122774-349d-4046-b3ac-844fb809948d
+		summarizeBy: none
+		sourceColumn: Credit Watch Date
+
+		variation Variation
+			isDefault
+			relationship: 9ef3d2db-412f-4360-8f6a-49ab62e771b1
+			defaultHierarchy: LocalDateTable_00689684-3ec8-4352-8824-037713415f19.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Outlook
+		dataType: string
+		lineageTag: 816d93db-8de1-443e-a484-3e60735fd18e
+		summarizeBy: none
+		sourceColumn: Outlook
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Outlook Date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 242abbde-5086-4c66-b776-c62374a1b44f
+		summarizeBy: none
+		sourceColumn: Outlook Date
+
+		variation Variation
+			isDefault
+			relationship: 37bd6630-1805-4c05-84ea-d010c643a156
+			defaultHierarchy: LocalDateTable_fe570aac-8067-46eb-899d-0f72d8bbebc8.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Recovery Rating'
+		dataType: string
+		lineageTag: d60dc6d3-c3d4-4d88-a4d8-f0050e5573fc
+		summarizeBy: none
+		sourceColumn: Recovery Rating
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Recovery Rating Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 779fce38-e1e7-4fc5-88a3-0dcde54e57ff
+		summarizeBy: none
+		sourceColumn: Recovery Rating Date
+
+		variation Variation
+			isDefault
+			relationship: c9eb995d-ed38-4507-a3f7-cf327b8022a7
+			defaultHierarchy: LocalDateTable_fb16d04c-7224-459c-bc3c-7ed6367118d7.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Issuer Rating'
+		dataType: string
+		lineageTag: d882dce4-5051-4f22-8129-a3ae31b791a1
+		summarizeBy: none
+		sourceColumn: Issuer Rating
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Issuer Rating Date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b6c4a9ce-a654-4995-9fcc-ebe14d079180
+		summarizeBy: none
+		sourceColumn: Issuer Rating Date
+
+		variation Variation
+			isDefault
+			relationship: a124549a-99d9-4966-86c7-47412ad8ec26
+			defaultHierarchy: LocalDateTable_01b47d41-2c18-4eb5-a2a8-27bf80e011ca.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Issuer Rating Effective Start Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 66806a2e-3946-491f-be9e-149c1c8b7a29
+		summarizeBy: none
+		sourceColumn: Issuer Rating Effective Start Date
+
+		variation Variation
+			isDefault
+			relationship: 69b3c0fa-40b7-4b0e-ab75-67860cc7e506
+			defaultHierarchy: LocalDateTable_51482c9b-c2dc-452d-abd1-fd2375a5e81d.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ISSUER_RATING_EFFECTIVE_END_DATE
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: f77278e4-efab-428e-b23d-dd9709800d75
+		summarizeBy: none
+		sourceColumn: ISSUER_RATING_EFFECTIVE_END_DATE
+
+		variation Variation
+			isDefault
+			relationship: c7ade7e3-3100-428c-8f22-8f6586837adf
+			defaultHierarchy: LocalDateTable_4bfadcde-63e1-4c5c-af31-e5aac2c0c755.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Issuer Rating Action Description'
+		dataType: string
+		lineageTag: 0a8f1b77-c56a-494e-91f8-7b2314386739
+		summarizeBy: none
+		sourceColumn: Issuer Rating Action Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Issuer Credit Watch'
+		dataType: string
+		lineageTag: 04ebdc13-7995-47a0-a6ad-6457761ee37f
+		summarizeBy: none
+		sourceColumn: Issuer Credit Watch
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Issuer Credit Watch Date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: acf2d53e-737e-43bc-9b09-f4f22d870b64
+		summarizeBy: none
+		sourceColumn: Issuer Credit Watch Date
+
+		variation Variation
+			isDefault
+			relationship: c8f0927c-8e5d-4c03-a05d-694c548e9360
+			defaultHierarchy: LocalDateTable_0a921ff7-a08a-4094-8d28-9dd667c38499.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Issuer Outlook'
+		dataType: string
+		lineageTag: 6416dbb9-7c7e-4682-9030-6d50605762be
+		summarizeBy: none
+		sourceColumn: Issuer Outlook
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Issuer Outlook Date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 233858aa-a052-49f6-aaf2-9595c15abe2c
+		summarizeBy: none
+		sourceColumn: Issuer Outlook Date
+
+		variation Variation
+			isDefault
+			relationship: 59f48706-d902-44c6-9502-8f2455c6c671
+			defaultHierarchy: LocalDateTable_f73ba195-1f36-4773-9556-d97d1c53c523.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Rating Number'
+		dataType: double
+		lineageTag: bf6b6681-9f66-4920-adaf-44aa912395fb
+		summarizeBy: sum
+		sourceColumn: Rating Number
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column RATING_FACTOR
+		dataType: double
+		lineageTag: c9ebfa4b-53e0-418d-90ae-b03eb24f105f
+		summarizeBy: sum
+		sourceColumn: RATING_FACTOR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ISSUER_RATING_NUMBER
+		dataType: double
+		lineageTag: 3fb9755b-89eb-44c7-b1b6-f954dbd6eefc
+		summarizeBy: sum
+		sourceColumn: ISSUER_RATING_NUMBER
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ISSUER_RATING_FACTOR
+		dataType: double
+		lineageTag: fcdbfd53-e180-4f38-82b5-9bf2a4cefca7
+		summarizeBy: sum
+		sourceColumn: ISSUER_RATING_FACTOR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column RATING_CODE_DATA_PROVIDER_NAME
+		dataType: string
+		lineageTag: 51c3a1f2-017f-4011-904f-1fe1fd906ffa
+		summarizeBy: none
+		sourceColumn: RATING_CODE_DATA_PROVIDER_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column ISSUER_RATING_CODE_DATA_PROVIDER_NAME
+		dataType: string
+		lineageTag: e3dc620e-d41d-452c-9ed2-041a4168428d
+		summarizeBy: none
+		sourceColumn: ISSUER_RATING_CODE_DATA_PROVIDER_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID_DATE
+		dataType: string
+		lineageTag: ed3819c3-535d-45dc-bf30-eb6a86ae48ef
+		summarizeBy: none
+		sourceColumn: ID_DATE
+
+		annotation SummarizationSetBy = Automatic
+
+	column MoodysSortOrder = ```
+			
+			SWITCH(
+			TRUE(),
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "Aaa", 1,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "Aa1", 2,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "Aa2", 3,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "Aa3", 4,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "A1", 5,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "A2", 6,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "A3", 7,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "Baa1", 8,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "Baa2", 9,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "Baa3", 10,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "Ba1", 11,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "Ba2", 12,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "Ba3", 13,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "B1", 14,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "B2", 15,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "B3", 16,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "Caa1", 17,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "Caa2", 18,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "Caa3", 19,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "Ca", 20,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "C", 21,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "NR", 22,
+			999 -- Default for unknown values
+			)
+			
+			```
+		formatString: 0
+		lineageTag: db775b82-e34c-4015-870c-897813c16817
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column Column
+		type: calculated
+		lineageTag: ccc4d305-5265-4c20-9ed6-3d844048e3e5
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation 43dbc3e8-3a1c-4b6f-9923-b49ff7d6691c = True
+
+	column 'Rating Display' = ```
+			
+			COALESCE(INSTRUMENT_RATING_MPC_MOODYS[Rating], 
+			    "No Rating"
+			)
+			```
+		lineageTag: 6a00e2d8-c83a-403d-b55b-45f78039bfb5
+		summarizeBy: none
+		sortByColumn: 'Rating Number Display'
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Rating Number Display' = ```
+			
+			SWITCH(
+			TRUE(),
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "Aaa", 1,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "Aa1", 2,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "Aa2", 3,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "Aa3", 4,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "A1", 5,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "A2", 6,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "A3", 7,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "Baa1", 8,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "Baa2", 9,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "Baa3", 10,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "Ba1", 11,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "Ba2", 12,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "Ba3", 13,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "B1", 14,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "B2", 15,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "B3", 16,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "Caa1", 17,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "Caa2", 18,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "Caa3", 19,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "Ca", 20,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "C", 21,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "NR", 22,
+			'INSTRUMENT_RATING_MPC_MOODYS'[Rating] = "WR", 23,
+			999 -- Default for unknown values
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 4f7ea627-5e59-499a-b09a-558512289a84
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+	column 'Rating Display COLUMN' =
+			
+			COALESCE(INSTRUMENT_RATING_MPC_MOODYS[Rating],
+			"No Rating"
+			)
+		lineageTag: 44256159-4a6e-4da2-a53e-062fa8b9785d
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition INSTRUMENT_RATING_MPC_MOODYS = m
+		mode: import
+		source =
+				let
+				    Source = INSTRUMENT_RATING,
+				    #"Filtered Rows" = Table.SelectRows(Source, each ([Data Provider Name] = "MPC-MOODYS"))
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

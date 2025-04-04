@@ -1,0 +1,74 @@
+table BORROWING_BASE_CONFIG_DAILY
+	isHidden
+	lineageTag: c24ef919-6f52-48f3-8054-bab887fd77fc
+
+	column CALENDAR_DATE
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: 5bc0322c-13aa-4e91-939e-21344b47611c
+		summarizeBy: none
+		sourceColumn: CALENDAR_DATE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column COUNTERPARTY_IDENTIFIER
+		dataType: double
+		isHidden
+		lineageTag: ccff08c7-25ce-4817-a595-059e220e4582
+		summarizeBy: sum
+		sourceColumn: COUNTERPARTY_IDENTIFIER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CONFIG_CODE
+		dataType: string
+		isHidden
+		lineageTag: 744fad42-fab1-4de4-8b29-2bbb62b2cf21
+		summarizeBy: none
+		sourceColumn: CONFIG_CODE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CONFIG_VALUE
+		dataType: double
+		isHidden
+		lineageTag: cb34891a-73e4-4b82-8b46-9f327653ed26
+		summarizeBy: sum
+		sourceColumn: CONFIG_VALUE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition BORROWING_BASE_CONFIG_DAILY = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases(snowflake_url,"ANALYST_WH_XS"),
+				    HUB_Database = Source{[Name="HUB",Kind="Database"]}[Data],
+				    ASSET_Schema = HUB_Database{[Name="ASSET",Kind="Schema"]}[Data],
+				    BORROWING_BASE_CONFIG_TS_Table = ASSET_Schema{[Name="BORROWING_BASE_CONFIG_TS",Kind="Table"]}[Data],
+				    #"Merged Queries" = Table.NestedJoin(BORROWING_BASE_CONFIG_TS_Table, {"CALENDAR_DATE"}, CURRENT_SYSTEM_DATE, {"Calendar Date"}, "CURRENT_SYSTEM_DATE", JoinKind.Inner),
+				    #"Removed Columns" = Table.RemoveColumns(#"Merged Queries",{"CURRENT_SYSTEM_DATE"})
+				in
+				    #"Removed Columns"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

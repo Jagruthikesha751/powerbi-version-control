@@ -1,0 +1,32 @@
+table INSTRUMENT_PRICE_SPGLOBAL_DISTINCT_IDENTIFIERS
+	isHidden
+	lineageTag: 368dbcab-8ec0-49b1-a813-e8c6119abd4c
+
+	column INSTRUMENT_IDENTIFIER
+		dataType: string
+		isHidden
+		lineageTag: 9bafc4f8-6e41-4b71-a737-5b648017701f
+		summarizeBy: none
+		sourceColumn: INSTRUMENT_IDENTIFIER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition INSTRUMENT_PRICE_SPGLOBAL_DISTINCT_IDENTIFIERS = m
+		mode: import
+		source =
+				let
+				    Source = INSTRUMENT_PRICE_SPGLOBAL,
+				    #"Filtered Rows" = Table.SelectRows(Source, each [Bid Price] <> 0 and [Bid Price] <> null),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"INSTRUMENT_IDENTIFIER"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns")
+				in
+				    #"Removed Duplicates"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
