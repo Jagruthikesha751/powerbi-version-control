@@ -232,12 +232,14 @@
       "ordinal": 6,
       "visualContainers": [
         {
-          "config": "{\"name\":\"ea423fe5f671fd4ea604\",\"layouts\":[{\"id\":0,\"position\":{\"x\":926.0246913580247,\"y\":188.0493827160494,\"z\":0,\"width\":281.28395061728395,\"height\":279.7037037037037,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"GICS_MATRIX.GICS Industry\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"g\",\"Entity\":\"GICS_MATRIX\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"g\"}},\"Property\":\"GICS Industry\"},\"Name\":\"GICS_MATRIX.GICS Industry\",\"NativeReferenceName\":\"GICS Industry\"}]},\"drillFilterOtherVisuals\":true}}",
+
+          "config": "{\"name\":\"7ea3ebbabf1ff29ce26d\",\"layouts\":[{\"id\":0,\"position\":{\"x\":93.23456790123457,\"y\":148.54320987654322,\"z\":0,\"width\":281.28395061728395,\"height\":279.7037037037037,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"HOLDING.CREATED_DATETIME.Variation.Date Hierarchy.Year\"},{\"queryRef\":\"HOLDING.CREATED_DATETIME.Variation.Date Hierarchy.Quarter\"},{\"queryRef\":\"HOLDING.CREATED_DATETIME.Variation.Date Hierarchy.Month\"},{\"queryRef\":\"HOLDING.CREATED_DATETIME.Variation.Date Hierarchy.Day\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"h\",\"Entity\":\"HOLDING\",\"Type\":0}],\"Select\":[{\"HierarchyLevel\":{\"Expression\":{\"Hierarchy\":{\"Expression\":{\"PropertyVariationSource\":{\"Expression\":{\"SourceRef\":{\"Source\":\"h\"}},\"Name\":\"Variation\",\"Property\":\"CREATED_DATETIME\"}},\"Hierarchy\":\"Date Hierarchy\"}},\"Level\":\"Year\"},\"Name\":\"HOLDING.CREATED_DATETIME.Variation.Date Hierarchy.Year\",\"NativeReferenceName\":\"CREATED_DATETIME Year\"},{\"HierarchyLevel\":{\"Expression\":{\"Hierarchy\":{\"Expression\":{\"PropertyVariationSource\":{\"Expression\":{\"SourceRef\":{\"Source\":\"h\"}},\"Name\":\"Variation\",\"Property\":\"CREATED_DATETIME\"}},\"Hierarchy\":\"Date Hierarchy\"}},\"Level\":\"Quarter\"},\"Name\":\"HOLDING.CREATED_DATETIME.Variation.Date Hierarchy.Quarter\",\"NativeReferenceName\":\"CREATED_DATETIME Quarter\"},{\"HierarchyLevel\":{\"Expression\":{\"Hierarchy\":{\"Expression\":{\"PropertyVariationSource\":{\"Expression\":{\"SourceRef\":{\"Source\":\"h\"}},\"Name\":\"Variation\",\"Property\":\"CREATED_DATETIME\"}},\"Hierarchy\":\"Date Hierarchy\"}},\"Level\":\"Month\"},\"Name\":\"HOLDING.CREATED_DATETIME.Variation.Date Hierarchy.Month\",\"NativeReferenceName\":\"CREATED_DATETIME Month\"},{\"HierarchyLevel\":{\"Expression\":{\"Hierarchy\":{\"Expression\":{\"PropertyVariationSource\":{\"Expression\":{\"SourceRef\":{\"Source\":\"h\"}},\"Name\":\"Variation\",\"Property\":\"CREATED_DATETIME\"}},\"Hierarchy\":\"Date Hierarchy\"}},\"Level\":\"Day\"},\"Name\":\"HOLDING.CREATED_DATETIME.Variation.Date Hierarchy.Day\",\"NativeReferenceName\":\"CREATED_DATETIME Day\"}]},\"drillFilterOtherVisuals\":true}}",
           "filters": "[]",
           "height": 279.70,
           "width": 281.28,
-          "x": 926.02,
-          "y": 188.05,
+          "x": 93.23,
+          "y": 148.54,
+
           "z": 0.00
         }
       ],
