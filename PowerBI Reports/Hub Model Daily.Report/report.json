@@ -1,5 +1,5 @@
 {
-  "config": "{\"version\":\"5.55\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY24SU06\",\"version\":\"5.55\",\"type\":2}},\"activeSectionIndex\":1,\"defaultDrillFilterOtherVisuals\":true,\"slowDataSourceSettings\":{\"isCrossHighlightingDisabled\":false,\"isSlicerSelectionsButtonEnabled\":false,\"isFilterSelectionsButtonEnabled\":false,\"isFieldWellButtonEnabled\":false,\"isApplyAllButtonEnabled\":false},\"linguisticSchemaSyncVersion\":2,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true,\"useEnhancedTooltips\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}],\"outspacePane\":[{\"properties\":{\"expanded\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]}}",
+  "config": "{\"version\":\"5.55\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY24SU06\",\"version\":\"5.55\",\"type\":2}},\"activeSectionIndex\":10,\"defaultDrillFilterOtherVisuals\":true,\"slowDataSourceSettings\":{\"isCrossHighlightingDisabled\":false,\"isSlicerSelectionsButtonEnabled\":false,\"isFilterSelectionsButtonEnabled\":false,\"isFieldWellButtonEnabled\":false,\"isApplyAllButtonEnabled\":false},\"linguisticSchemaSyncVersion\":2,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true,\"useEnhancedTooltips\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}],\"outspacePane\":[{\"properties\":{\"expanded\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]}}",
   "filters": "[{\"name\":\"Filterebc2244d8bb476cf8643\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"SOURCE_SYSTEM_STATUS\"}},\"Property\":\"Active\"}},\"type\":\"Categorical\",\"howCreated\":1,\"objects\":{\"general\":[{\"properties\":{\"requireSingleSelect\":{\"expr\":{\"Literal\":{\"Value\":\"true\"}}}}}]}},{\"name\":\"Filter9966e9215cc17bb1696e\",\"expression\":{\"Column\":{\"Expression\":{\"SourceRef\":{\"Entity\":\"INSTRUMENT_OF_INTEREST\"}},\"Property\":\"LoanX\"}},\"type\":\"Advanced\",\"howCreated\":1}]",
   "layoutOptimization": 0,
   "pods": [
@@ -88,6 +88,17 @@
           "z": 1000.00
         }
       ],
+      "width": 1280.00
+    },
+    {
+      "config": "{}",
+      "displayName": "Test Page",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.00,
+      "name": "81b3e61b1fedb83c26fb",
+      "ordinal": 10,
+      "visualContainers": [],
       "width": 1280.00
     },
     {
