@@ -1,0 +1,95 @@
+table OBJECT_TYPE
+	lineageTag: 88e66f5b-80ca-4256-a8c9-df57d4378f45
+
+	column OBJECT_TYPE_CODE
+		dataType: string
+		lineageTag: cdb92c13-0c2a-4236-9b54-65ca9e340a1c
+		summarizeBy: none
+		sourceColumn: OBJECT_TYPE_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Object Type'
+		dataType: string
+		lineageTag: 0ca4fa60-732f-4385-85b9-6b3f3f58bf40
+		summarizeBy: none
+		sourceColumn: Object Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_DATETIME
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: b5487d11-0c13-4766-bf94-99f5004b24e4
+		summarizeBy: none
+		sourceColumn: CREATED_DATETIME
+
+		variation Variation
+			isDefault
+			relationship: 321668a0-a826-4d5b-9a19-4dda291a7852
+			defaultHierarchy: LocalDateTable_63849268-252c-4508-a74d-f42fd585face.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_BY_NAME
+		dataType: string
+		lineageTag: 70404f4b-ed2a-43bf-8458-535b039fe5ed
+		summarizeBy: none
+		sourceColumn: CREATED_BY_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_BY_COMMENTS
+		dataType: string
+		lineageTag: 63f5ad31-1500-4558-a1ce-1f9ec5857649
+		summarizeBy: none
+		sourceColumn: CREATED_BY_COMMENTS
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_DATETIME
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 670a163e-a451-48da-833e-5d369838f51c
+		summarizeBy: none
+		sourceColumn: MODIFIED_DATETIME
+
+		variation Variation
+			isDefault
+			relationship: 57c9b300-5a59-40bd-90cd-e41e9740b4c1
+			defaultHierarchy: LocalDateTable_a3cad809-2715-492e-addf-7f0547ce1da6.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_BY_NAME
+		dataType: string
+		lineageTag: 2fd8d735-e91c-4a12-976d-07ae1ea3005e
+		summarizeBy: none
+		sourceColumn: MODIFIED_BY_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_BY_COMMENTS
+		dataType: string
+		lineageTag: 02de1aff-2e57-4df7-a85f-5e46160b702f
+		summarizeBy: none
+		sourceColumn: MODIFIED_BY_COMMENTS
+
+		annotation SummarizationSetBy = Automatic
+
+	partition OBJECT_TYPE = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases(snowflake_url,"ANALYST_WH_XS"),
+				    HUB_Database = Source{[Name="HUB",Kind="Database"]}[Data],
+				    JOB_Schema = HUB_Database{[Name="JOB",Kind="Schema"]}[Data],
+				    OBJECT_TYPE_Table = JOB_Schema{[Name="OBJECT_TYPE",Kind="Table"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(OBJECT_TYPE_Table,{{"OBJECT_TYPE_NAME", "Object Type"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

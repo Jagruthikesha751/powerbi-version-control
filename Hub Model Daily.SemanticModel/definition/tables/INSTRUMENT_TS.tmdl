@@ -1,0 +1,1119 @@
+table INSTRUMENT_TS
+	lineageTag: 004f458a-5ec9-4de9-b40e-e3cf3c2f737b
+
+	measure Instrument_HOQ_Severity =
+			SWITCH(
+			    TRUE(),
+			    HOQ_MESSAGE[hoq_count_c] > 0, "Critical",
+			    HOQ_MESSAGE[hoq_count_e] > 0, "Error",
+			    HOQ_MESSAGE[hoq_count_w] > 0, "Warning",
+			    HOQ_MESSAGE[hoq_count_i] > 0, "Informational",
+			    BLANK()
+			)
+		lineageTag: fbd94258-ca70-463d-9070-1b6a7cba52ac
+
+	column INSTRUMENT_IDENTIFIER
+		dataType: string
+		isKey
+		sourceProviderType: nvarchar(32)
+		lineageTag: fa86f4fb-8ff0-43b2-a40c-19598d4548cb
+		summarizeBy: none
+		sourceColumn: INSTRUMENT_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Calendar Date'
+		dataType: dateTime
+		formatString: Short Date
+		sourceProviderType: date
+		lineageTag: 73b1dd26-7608-4377-949a-956ca1669a18
+		summarizeBy: none
+		sourceColumn: Calendar Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column SPGLOBAL_IDENTIFIER
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: e7ef2274-4b4f-418c-b6cd-f166a796e2b7
+		summarizeBy: none
+		sourceColumn: SPGLOBAL_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'LX ID'
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: f92fd53d-d051-431d-b1be-c2fd1add4881
+		summarizeBy: none
+		sourceColumn: LX ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column INSTRUMENT_PRIMARY_IDENTIFIER
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: 9cc7114c-ff7b-469a-8c63-f82b5aaf5fc7
+		summarizeBy: none
+		sourceColumn: INSTRUMENT_PRIMARY_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column CUSIP
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: f0cc4ee6-05e9-4023-a641-1847d3b66782
+		summarizeBy: none
+		sourceColumn: CUSIP
+
+		annotation SummarizationSetBy = Automatic
+
+	column ISIN
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: 39decffb-c801-4b74-9607-a6f1c936f7ff
+		summarizeBy: none
+		sourceColumn: ISIN
+
+		annotation SummarizationSetBy = Automatic
+
+	column FIGI
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: 92b61df2-2bb2-43d5-9fa9-171b50a25ec5
+		summarizeBy: none
+		sourceColumn: FIGI
+
+		annotation SummarizationSetBy = Automatic
+
+	column VANTAGE_IDENTIFIER
+		dataType: string
+		lineageTag: 3f1219d4-bf1a-47ab-9acf-5e077f40bc22
+		summarizeBy: none
+		sourceColumn: VANTAGE_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column BACKOFFICE_IDENTIFIER
+		dataType: double
+		lineageTag: c317266c-c650-46bb-85d7-7077121ab6f2
+		summarizeBy: sum
+		sourceColumn: BACKOFFICE_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SPGLOBAL_ISSUER_IDENTIFIER
+		dataType: double
+		formatString: 0
+		sourceProviderType: decimal(38, 0)
+		lineageTag: ded5bc5f-fd60-48e4-99fe-e1c62b465c28
+		summarizeBy: sum
+		sourceColumn: SPGLOBAL_ISSUER_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column SPGLOBAL_WSO_ISSUER_IDENTIFIER
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: be5f45d8-f40a-48d6-b954-b9def573b36b
+		summarizeBy: none
+		sourceColumn: SPGLOBAL_WSO_ISSUER_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column ISSUER_IDENTIFIER
+		dataType: string
+		sourceProviderType: nvarchar(32)
+		lineageTag: 41b529c8-52cb-40eb-8668-295500326761
+		summarizeBy: none
+		sourceColumn: ISSUER_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Issuer Name'
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: 14e35b35-b607-4020-853f-434b3c4f12bc
+		summarizeBy: none
+		sourceColumn: Issuer Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Facility Name'
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: 720a668f-862c-49a0-8549-299ec32aad66
+		isDefaultLabel
+		summarizeBy: none
+		sourceColumn: Facility Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column INSTRUMENT_TICKER
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: c86ba1dd-985a-492e-8484-65fe7bec4274
+		summarizeBy: none
+		sourceColumn: INSTRUMENT_TICKER
+
+		annotation SummarizationSetBy = Automatic
+
+	column INTEX_DEAL_NAME
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: 58be56e3-6816-4970-bf81-1a10736ef582
+		summarizeBy: none
+		sourceColumn: INTEX_DEAL_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column INTEX_TRANCHE_NAME
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: 11362421-7f8f-4429-9507-3589e7ac596a
+		summarizeBy: none
+		sourceColumn: INTEX_TRANCHE_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column INVESTMENT_TYPE_CODE
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: 6756f558-6a27-433b-a226-63dcb3e5b889
+		summarizeBy: none
+		sourceColumn: INVESTMENT_TYPE_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column SUBSTRATEGY_IDENTIFIER
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: 1af4084a-40e2-470c-8746-be36fb25648f
+		summarizeBy: none
+		sourceColumn: SUBSTRATEGY_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column FACILITY_REPLACED_DATE
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: b07a393d-086d-4027-af5b-30e5f01ab01c
+		summarizeBy: none
+		sourceColumn: FACILITY_REPLACED_DATE
+
+		annotation SummarizationSetBy = Automatic
+
+	column MOODYS_INSTRUMENT_RATINGS_IDENTIFIER
+		dataType: double
+		formatString: 0
+		lineageTag: a20a9cb7-0137-4f1c-9ba6-1677a14c02aa
+		summarizeBy: sum
+		sourceColumn: MOODYS_INSTRUMENT_RATINGS_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column MARKIT_ISSUER_IDENTIFIER
+		dataType: string
+		lineageTag: a7c9ec53-52fd-4ae4-aba1-f54415dbb3c5
+		summarizeBy: none
+		sourceColumn: MARKIT_ISSUER_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column MOODYS_ISSUER_IDENTIFIER
+		dataType: double
+		formatString: 0
+		lineageTag: 38c609e2-cac7-4a1b-b87b-21304bb1496f
+		summarizeBy: sum
+		sourceColumn: MOODYS_ISSUER_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column LIN
+		dataType: string
+		lineageTag: 00bac3b0-9278-4cfd-b195-85012b46a333
+		summarizeBy: none
+		sourceColumn: LIN
+
+		annotation SummarizationSetBy = Automatic
+
+	column SPGLOBAL_INSTRUMENT_RATINGS_IDENTIFIER
+		dataType: double
+		formatString: 0
+		lineageTag: 83895e8c-4768-4d92-9b6c-d8946d3f21ef
+		summarizeBy: sum
+		sourceColumn: SPGLOBAL_INSTRUMENT_RATINGS_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column BLOOMBERG_UNIQUE_IDENTIFIER
+		dataType: string
+		lineageTag: 6c772ee8-2b48-4bee-a012-e795151b5e36
+		summarizeBy: none
+		sourceColumn: BLOOMBERG_UNIQUE_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column FITCH_IDENTIFIER
+		dataType: string
+		lineageTag: 576e079b-75c2-49bc-ba0c-e0d8f7db5aa8
+		summarizeBy: none
+		sourceColumn: FITCH_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column MARKIT_ISSUER_TICKER
+		dataType: string
+		lineageTag: e756ac37-92cd-4e0f-b013-04da490bc9a9
+		summarizeBy: none
+		sourceColumn: MARKIT_ISSUER_TICKER
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Maturity Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: d8636faf-1947-45e9-bcfc-2b7cb9385568
+		summarizeBy: none
+		sourceColumn: Maturity Date
+
+		variation Variation
+			isDefault
+			relationship: a69972a7-6d79-484a-b493-a29b4fe96a97
+			defaultHierarchy: LocalDateTable_f125b1f7-3c14-46da-a47d-cb6b974906c1.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Floater Spread Rate'
+		dataType: double
+		formatString: #,0
+		lineageTag: 95cb4f4a-f3cf-4450-8570-88baffe70b22
+		summarizeBy: sum
+		sourceColumn: Floater Spread Rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column 'Floater Index'
+		dataType: string
+		lineageTag: c4577c30-5c51-4d75-9c63-7d22da0f10c4
+		summarizeBy: none
+		sourceColumn: Floater Index
+
+		annotation SummarizationSetBy = Automatic
+
+	column FITCH_ISSUER_IDENTIFIER
+		dataType: string
+		lineageTag: 4e56e75d-caf4-4818-85dc-aaf64cec7612
+		summarizeBy: none
+		sourceColumn: FITCH_ISSUER_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column ISSUER_EQUITY_TICKER_CODE
+		dataType: string
+		lineageTag: 85ddbb22-49d1-476f-86fc-448bc04ba26c
+		summarizeBy: none
+		sourceColumn: ISSUER_EQUITY_TICKER_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column ISSUE_COUNTRY_CODE
+		dataType: string
+		lineageTag: ee0ead25-5e75-4e60-b466-bea516f67c33
+		summarizeBy: none
+		sourceColumn: ISSUE_COUNTRY_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Issue Currency Code'
+		dataType: string
+		lineageTag: 3019928c-4d20-4dd5-a457-5cd46ac91c44
+		summarizeBy: none
+		sourceColumn: Issue Currency Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Issue Amount'
+		dataType: double
+		formatString: #,0
+		lineageTag: c7ac2b20-4af4-4bc0-81e0-99389b475a03
+		summarizeBy: sum
+		sourceColumn: Issue Amount
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Issue Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: b5ed8728-42de-4549-8029-e26f35c5c625
+		summarizeBy: none
+		sourceColumn: Issue Date
+
+		variation Variation
+			isDefault
+			relationship: a316c925-d87d-41f6-a3bb-f9b290fa36f7
+			defaultHierarchy: LocalDateTable_b56ba099-d177-4865-b6b9-3b1167e03526.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Effective Date'
+		dataType: string
+		lineageTag: 862a7360-fc47-4feb-9283-362dab23607b
+		summarizeBy: none
+		sourceColumn: Effective Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Agent Bank Name'
+		dataType: string
+		lineageTag: 2f0a6b9f-69d8-45a4-9d16-bc3459c29bcd
+		summarizeBy: none
+		sourceColumn: Agent Bank Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column AGENT_BANK_IDENTIFIER
+		dataType: string
+		lineageTag: e137c6eb-832c-426a-8cf2-97c3da7814fd
+		summarizeBy: none
+		sourceColumn: AGENT_BANK_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column AGENT_CONSENT_INDICATOR
+		dataType: string
+		lineageTag: 71927e4f-850f-40e2-8cda-572d685ffb8b
+		summarizeBy: none
+		sourceColumn: AGENT_CONSENT_INDICATOR
+
+		annotation SummarizationSetBy = Automatic
+
+	column ASSIGNMENT_FEE
+		dataType: string
+		lineageTag: 250119d8-1e7a-4a43-829a-9b0de9aad44b
+		summarizeBy: none
+		sourceColumn: ASSIGNMENT_FEE
+
+		annotation SummarizationSetBy = Automatic
+
+	column IS_DELAYED_DRAW
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 44f6819c-895c-4c99-888f-bd9fd4bee302
+		summarizeBy: none
+		sourceColumn: IS_DELAYED_DRAW
+
+		annotation SummarizationSetBy = Automatic
+
+	column IS_DIP
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: c334b669-2d61-487c-b019-4e973957333a
+		summarizeBy: none
+		sourceColumn: IS_DIP
+
+		annotation SummarizationSetBy = Automatic
+
+	column IS_FIXED
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 5d5ccc66-4de9-414f-9a22-511e736b03ca
+		summarizeBy: none
+		sourceColumn: IS_FIXED
+
+		annotation SummarizationSetBy = Automatic
+
+	column IS_GUARANTEED
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 018145a3-c916-4959-ace5-771ba95761fb
+		summarizeBy: none
+		sourceColumn: IS_GUARANTEED
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Lien Type'
+		dataType: string
+		lineageTag: 734e2fdc-85e5-4b4e-879b-6071341b06a4
+		summarizeBy: none
+		sourceColumn: Lien Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Seniority Type'
+		dataType: string
+		lineageTag: fc3eb8cd-31fe-4e1d-a291-2cd8f8959b4d
+		summarizeBy: none
+		sourceColumn: Seniority Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column MARKIT_ISSUER_TIER1_NAME
+		dataType: string
+		lineageTag: 97c65af9-1fec-4785-a2c3-01cc0b89b96d
+		summarizeBy: none
+		sourceColumn: MARKIT_ISSUER_TIER1_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column MARKIT_ISSUER_TIER1_CODE
+		dataType: string
+		lineageTag: 5a43cd96-90ab-4eb9-96fb-8dc97a0ad759
+		summarizeBy: none
+		sourceColumn: MARKIT_ISSUER_TIER1_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column MARKIT_ISSUER_TIER2_NAME
+		dataType: string
+		lineageTag: 2282c29b-52f8-4db8-b3d2-9acbe929276a
+		summarizeBy: none
+		sourceColumn: MARKIT_ISSUER_TIER2_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column MARKIT_ISSUER_TIER2_CODE
+		dataType: string
+		lineageTag: 26538410-e11a-4f2b-ba43-4347eccb03d4
+		summarizeBy: none
+		sourceColumn: MARKIT_ISSUER_TIER2_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column MARKIT_ISSUER_TIER3_NAME
+		dataType: string
+		lineageTag: 8ededb0f-ed8e-47d3-b856-ec8ae2174d9b
+		summarizeBy: none
+		sourceColumn: MARKIT_ISSUER_TIER3_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column MARKIT_ISSUER_TIER3_CODE
+		dataType: string
+		lineageTag: d3c9d042-88b1-4b37-a6d7-99bd529a30c3
+		summarizeBy: none
+		sourceColumn: MARKIT_ISSUER_TIER3_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column IS_PIK
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 2abb5716-89ba-4510-b95d-183e29d56289
+		summarizeBy: none
+		sourceColumn: IS_PIK
+
+		annotation SummarizationSetBy = Automatic
+
+	column IS_SUBSCRIBED
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 5a2fb61a-92ae-4c24-9999-2de59e77283d
+		summarizeBy: none
+		sourceColumn: IS_SUBSCRIBED
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is Covenant Light'
+		dataType: string
+		lineageTag: 51570e63-ebbb-4076-97e0-7fb973a0741f
+		summarizeBy: none
+		sourceColumn: Is Covenant Light
+
+		annotation SummarizationSetBy = Automatic
+
+	column IS_ASSET_QC
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 405117e7-75e3-407a-ad9a-de8700f590e2
+		summarizeBy: none
+		sourceColumn: IS_ASSET_QC
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'QC Date'
+		dataType: string
+		lineageTag: 98c3e8e0-471b-4afd-9b52-620dada57f1b
+		summarizeBy: none
+		sourceColumn: QC Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column IS_ASSET_BACKED_LOAN
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 322fcfa5-7c5e-4fc1-86ec-6cdc81357998
+		summarizeBy: none
+		sourceColumn: IS_ASSET_BACKED_LOAN
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID_DATE
+		dataType: string
+		lineageTag: f67c6394-3a5f-4b0d-9dfd-19868c17cc17
+		summarizeBy: none
+		sourceColumn: ID_DATE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Spread Bucket' =
+			SWITCH(TRUE,
+			
+			 if(ISBLANK( [Floater Spread Rate]), 0, [Floater Spread Rate])= 0, "  No Spread",
+			    [Floater Spread Rate] < 200, " <200",
+			    [Floater Spread Rate] < 250, " 200-250",
+			    [Floater Spread Rate] < 300, " 250-300",
+			    [Floater Spread Rate] < 350, " 300-350",
+			    [Floater Spread Rate] < 400, " 350-400",
+			    [Floater Spread Rate] < 450, " 400-450",
+			    [Floater Spread Rate] < 500, " 450-500",
+			    [Floater Spread Rate] < 550, " 500-550",
+			    [Floater Spread Rate] < 600, " 550-600",
+			    [Floater Spread Rate] < 650, " 600-650",
+			    [Floater Spread Rate] < 700, " 650-700",
+			    [Floater Spread Rate] < 750, " 700-750",
+			    [Floater Spread Rate] < 800, " 750-800",
+			     " 800+"
+			)
+		lineageTag: 5c33839a-891a-4a35-95de-29f445113791
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column SENTRY_INSTRUMENT_IDENTIFIER
+		dataType: double
+		formatString: 0
+		lineageTag: 89f61197-fa14-4ab3-98d8-0da91f7929ee
+		summarizeBy: sum
+		sourceColumn: SENTRY_INSTRUMENT_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column SENTRY_ISSUER_IDENTIFIER
+		dataType: double
+		lineageTag: 0c5fef01-bdba-46dd-a999-d495605add2e
+		summarizeBy: sum
+		sourceColumn: SENTRY_ISSUER_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column REPLACED_01_LOANX_IDENTIFIER
+		dataType: string
+		lineageTag: ab5e287f-d41f-406a-af42-2984dc185e2b
+		summarizeBy: none
+		sourceColumn: REPLACED_01_LOANX_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column REPLACED_02_LOANX_IDENTIFIER
+		dataType: string
+		lineageTag: bf826879-aa45-41c6-860c-2b7c4058f167
+		summarizeBy: none
+		sourceColumn: REPLACED_02_LOANX_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column REPLACED_03_LOANX_IDENTIFIER
+		dataType: string
+		lineageTag: 76728e78-7829-47e2-9de3-14015bd05c47
+		summarizeBy: none
+		sourceColumn: REPLACED_03_LOANX_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column REPLACED_04_LOANX_IDENTIFIER
+		dataType: string
+		lineageTag: 4b3a8953-bafb-4a2f-bad5-690d80ea3133
+		summarizeBy: none
+		sourceColumn: REPLACED_04_LOANX_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column REPLACED_05_LOANX_IDENTIFIER
+		dataType: string
+		lineageTag: 2f912d66-21b5-4571-9488-e7a66430361e
+		summarizeBy: none
+		sourceColumn: REPLACED_05_LOANX_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column BANK_DEAL_MARKIT_BANK_DEAL_IDENTIFIER
+		dataType: string
+		lineageTag: e17ad677-4341-48eb-8e96-10af4b1b791a
+		summarizeBy: none
+		sourceColumn: BANK_DEAL_MARKIT_BANK_DEAL_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column ISSUER_COUNTRY_NAME
+		dataType: string
+		lineageTag: 7d0ea0a5-2f2e-4bd7-966b-ca45a4894c25
+		summarizeBy: none
+		sourceColumn: ISSUER_COUNTRY_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column PAYMENT_FREQUENCY_NAME
+		dataType: string
+		lineageTag: 504df418-3847-463d-8f34-f2151f87a073
+		summarizeBy: none
+		sourceColumn: PAYMENT_FREQUENCY_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column LX_DATE
+		dataType: string
+		lineageTag: 8bb178a9-5d57-4e3c-b3d4-63ba74e3d0cc
+		summarizeBy: none
+		sourceColumn: LX_DATE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SPGLOBAL Bid Price' = CALCULATE(MAX(INSTRUMENT_PRICE[Bid Price]), INSTRUMENT_PRICE[Data Provider Name]=="SPGLOBAL")
+		lineageTag: bbc12879-b518-4f62-afc9-46389e497627
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Floater Spread Rate - BPs' = INSTRUMENT_TS[Floater Spread Rate] * 10000
+		formatString: #,0
+		lineageTag: 995ebe24-997e-4df5-b58f-0e765d10f160
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'BBG Industry Name'
+		dataType: string
+		lineageTag: 0534bcf8-2b60-4b35-9c25-4c08c35d7d54
+		summarizeBy: none
+		sourceColumn: BBG Industry Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IBOXX Industry Name'
+		dataType: string
+		lineageTag: ce06c421-1d6d-4262-a05e-7cca1331c4dd
+		summarizeBy: none
+		sourceColumn: IBOXX Industry Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SP Industry Name'
+		dataType: string
+		lineageTag: 7a10507e-bad2-40bf-acd0-37a1b86439a0
+		summarizeBy: none
+		sourceColumn: SP Industry Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column SPGLOBAL_INDUSTRY_CODE
+		dataType: string
+		lineageTag: c9c8ca49-b33e-4db0-afb7-971d9a67146e
+		summarizeBy: none
+		sourceColumn: SPGLOBAL_INDUSTRY_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column MOODYS_CLO_INDENTURE_INDUSTRY_NAME
+		dataType: string
+		lineageTag: 66426745-c47a-4499-9317-8b57264b92e2
+		summarizeBy: none
+		sourceColumn: MOODYS_CLO_INDENTURE_INDUSTRY_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column MOODYS_CLO_INDENTURE_INDUSTRY_CODE
+		dataType: string
+		lineageTag: 1c29add9-387a-4ecb-829c-81062bc74186
+		summarizeBy: none
+		sourceColumn: MOODYS_CLO_INDENTURE_INDUSTRY_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Moodys Corp Industry Name'
+		dataType: string
+		lineageTag: 17f9cadf-d3e0-4d04-8e6d-6866982e9a44
+		summarizeBy: none
+		sourceColumn: Moodys Corp Industry Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column MOODYS_CORP_INDUSTRY_CODE
+		dataType: string
+		lineageTag: f6846213-e4a5-4f73-9f52-2a8d7f67c838
+		summarizeBy: none
+		sourceColumn: MOODYS_CORP_INDUSTRY_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'GICS Industry Name'
+		dataType: string
+		lineageTag: 130456d2-ae90-46c1-8aa1-78bd95f8706b
+		summarizeBy: none
+		sourceColumn: GICS Industry Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column GICS_INDUSTRY_CODE
+		dataType: string
+		lineageTag: 4e8b2572-294f-4f47-82a8-caeca849988f
+		summarizeBy: none
+		sourceColumn: GICS_INDUSTRY_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column DATE_NUMBER = RANKX(ALL(INSTRUMENT_TS[Calendar Date]), INSTRUMENT_TS[Calendar Date], INSTRUMENT_TS[Calendar Date], ASC, Dense)
+		formatString: 0
+		lineageTag: 163526d5-654f-435a-9033-60ee081074f3
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column FFILL_EMPTY_DATES_INDICATOR
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: e8527de6-d263-4e8e-b4f8-307d0b4ecf3f
+		summarizeBy: none
+		sourceColumn: FFILL_EMPTY_DATES_INDICATOR
+
+		annotation SummarizationSetBy = Automatic
+
+	column SPGLOBAL_INDICATOR
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: d489ef4a-cc38-46fd-a397-d547a673a639
+		summarizeBy: none
+		sourceColumn: SPGLOBAL_INDICATOR
+
+		annotation SummarizationSetBy = Automatic
+
+	column IBOXX_EOD_INDICATOR
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 45efd09f-3d7d-48d0-a319-f3eb06517ee2
+		summarizeBy: none
+		sourceColumn: IBOXX_EOD_INDICATOR
+
+		annotation SummarizationSetBy = Automatic
+
+	column IBOXX_EOM_INDICATOR
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 4f35a9c3-9d33-4ab3-8424-253021c1921b
+		summarizeBy: none
+		sourceColumn: IBOXX_EOM_INDICATOR
+
+		annotation SummarizationSetBy = Automatic
+
+	column VANTAGE_INDICATOR
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 04accb18-ad4b-4aeb-965c-2fa543097429
+		summarizeBy: none
+		sourceColumn: VANTAGE_INDICATOR
+
+		annotation SummarizationSetBy = Automatic
+
+	column SENTRY_INDICATOR
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: ecf0c6d1-afb4-461f-94be-e0b47c25aeb9
+		summarizeBy: none
+		sourceColumn: SENTRY_INDICATOR
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is Cash' = if(INSTRUMENT_TS[INVESTMENT_TYPE_CODE] = "Fiat Currency", TRUE, FALSE)
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 264d541e-a1ca-4f7d-88c0-cbade1b42158
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column INSTRUMENT_FULL_NAME
+		dataType: string
+		lineageTag: 702f1e52-f76c-4a97-b041-c4d7e2ed098e
+		summarizeBy: none
+		sourceColumn: INSTRUMENT_FULL_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column SPGLOBAL_FFILL_EMPTY_DATES_INDICATOR
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 1e00bf94-abfd-4f7c-aea6-7885816e388f
+		summarizeBy: none
+		sourceColumn: SPGLOBAL_FFILL_EMPTY_DATES_INDICATOR
+
+		annotation SummarizationSetBy = Automatic
+
+	column SENTRY_FFILL_EMPTY_DATES_INDICATOR
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: def9ef05-87c9-4dac-a81d-0f9aa1a62f01
+		summarizeBy: none
+		sourceColumn: SENTRY_FFILL_EMPTY_DATES_INDICATOR
+
+		annotation SummarizationSetBy = Automatic
+
+	column VANTAGE_ISSUER_IDENTIFIER
+		dataType: double
+		lineageTag: 2952a01d-f935-4bb7-bde3-7578129d3bed
+		summarizeBy: sum
+		sourceColumn: VANTAGE_ISSUER_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ORIGINAL_FLOATER_SPREAD_RATE
+		dataType: double
+		lineageTag: bac275a9-3cd0-4380-adbd-f7b31e20865d
+		summarizeBy: sum
+		sourceColumn: ORIGINAL_FLOATER_SPREAD_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column OUTSTANDING_AMOUNT
+		dataType: double
+		lineageTag: 5fbd7060-5d69-42c7-9321-059642c13813
+		summarizeBy: sum
+		sourceColumn: OUTSTANDING_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Remaining Life Bucket' =
+			SWITCH(TRUE,
+			    [Remaining Life] < 1, " <1",
+			    [Remaining Life] < 2, " 2",
+			    [Remaining Life] < 3, " 3",
+			    [Remaining Life] < 4, " 4",
+			    [Remaining Life] < 5, " 5",
+			        [Remaining Life] < 6, " 6",
+			        [Remaining Life] < 7, " 7",
+			        [Remaining Life] < 8, " 8",
+			        [Remaining Life] < 9, " 9",
+			        [Remaining Life] < 10, " 10",
+			
+			    ">10"
+			)
+		lineageTag: b9371458-5a4b-485e-8834-0ec6a19c46ed
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Remaining Life' = DATEDIFF(TODAY(),INSTRUMENT_TS[Maturity Date],YEAR)
+		formatString: 0
+		lineageTag: b93c6abb-662d-49d0-aeeb-55f790037286
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column IS_IN_IBOXXS_MPSIF_ORDERS =
+			
+			IF(
+			    INSTRUMENT_TS[IS_IN_IBOXXS_MPSIF] = TRUE() || COUNTROWS(RELATEDTABLE(ORDERS)) > 0,
+			    TRUE(),
+			    FALSE()
+			)
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 58ebb607-e4e6-4c24-89bd-591b2d38890b
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column ISSUER_HAS_PUBLIC_EQUITY_INDICATOR
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: c3c6bebc-f87f-4c92-9cfc-b9f235bd138a
+		summarizeBy: none
+		sourceColumn: ISSUER_HAS_PUBLIC_EQUITY_INDICATOR
+
+		annotation SummarizationSetBy = Automatic
+
+	column SENTRY_EVER_IN_POSITION_INDICATOR
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 053d972c-936f-4b31-8f9b-67e540863986
+		summarizeBy: none
+		sourceColumn: SENTRY_EVER_IN_POSITION_INDICATOR
+
+		annotation SummarizationSetBy = Automatic
+
+	column SENTRY_POSITION_INDICATOR
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: b7647500-d6c3-47f9-9775-08dd589330a5
+		summarizeBy: none
+		sourceColumn: SENTRY_POSITION_INDICATOR
+
+		annotation SummarizationSetBy = Automatic
+
+	column SENTRY_SETTLED_POSITION_INDICATOR
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 42db799f-84b7-42f7-9342-a0ab11095046
+		summarizeBy: none
+		sourceColumn: SENTRY_SETTLED_POSITION_INDICATOR
+
+		annotation SummarizationSetBy = Automatic
+
+	column IS_IN_IBOXXS_MPSIF =
+			
+			IF(
+			    RELATED(HOLDING_IBOXXS[Instrument Identifier]) <> BLANK() || RELATED(HOLDING_MPSIF[Instrument Identifier]) <> BLANK(),
+			    TRUE(),
+			    FALSE()
+			)
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 79b18e16-c818-4dfc-906f-c8a9e761189d
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column IS_IN_IBOXXS_IBOXXSPLUS_MPSIF =
+			
+			IF(
+			    INSTRUMENT_TS[IS_IN_IBOXXS_MPSIF] || RELATED(HOLDING_IBOXXS_PLUS[Instrument Identifier]) <> BLANK(),
+			    TRUE(),
+			    FALSE()
+			)
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 1d8dc5c9-776b-4f05-88df-ad73ac3ea1e2
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column IS_IN_IBOXXS_IBOXXSPLUS_MPSIF_ORDERS =
+			
+			IF(
+			    INSTRUMENT_TS[IS_IN_IBOXXS_IBOXXSPLUS_MPSIF] = TRUE() || COUNTROWS(RELATEDTABLE(ORDERS)) > 0,
+			    TRUE(),
+			    FALSE()
+			)
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 443e011d-413a-488a-b617-a2784f639c08
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column LEVPRO_FFILL_EMPTY_DATES_INDICATOR
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 2d85125e-77fe-403d-ba40-e523633d6d3c
+		summarizeBy: none
+		sourceColumn: LEVPRO_FFILL_EMPTY_DATES_INDICATOR
+
+		annotation SummarizationSetBy = Automatic
+
+	column LEVPRO_INDICATOR
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 6845e519-8997-4024-a59c-b912a28e4c8d
+		summarizeBy: none
+		sourceColumn: LEVPRO_INDICATOR
+
+		annotation SummarizationSetBy = Automatic
+
+	column FILL_ISSUER_FROM_OLD_LOANX_INDICATOR
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 9cccefc5-ba46-40f0-9671-ca5125d13ac5
+		summarizeBy: none
+		sourceColumn: FILL_ISSUER_FROM_OLD_LOANX_INDICATOR
+
+		annotation SummarizationSetBy = Automatic
+
+	column LEVPRO_IDENTIFIER
+		dataType: string
+		lineageTag: 857344d0-0cc0-4896-93b5-4b0fbc427527
+		summarizeBy: none
+		sourceColumn: LEVPRO_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column LEVPRO_INSTRUMENT_IDENTIFIER
+		dataType: string
+		lineageTag: fd0c8e0d-dcc7-4e16-bc85-adc0a85e8a32
+		summarizeBy: none
+		sourceColumn: LEVPRO_INSTRUMENT_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column LEVPRO_ISSUER_IDENTIFIER
+		dataType: string
+		lineageTag: aa884bef-ddd1-4f93-ba42-2414aee04806
+		summarizeBy: none
+		sourceColumn: LEVPRO_ISSUER_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column LEVPRO_ISSUER_TICKER
+		dataType: string
+		lineageTag: 8e85113d-6fac-45e0-8b61-e264a2397697
+		summarizeBy: none
+		sourceColumn: LEVPRO_ISSUER_TICKER
+
+		annotation SummarizationSetBy = Automatic
+
+	column IS_IN_IBOXX_IBOXXSPLUS_MPSIF_ORDERS =
+			
+			IF(
+			    (RELATED(HOLDING_IBOXX[Instrument Identifier]) <> BLANK() || RELATED(HOLDING_IBOXXS_PLUS[Instrument Identifier]) <> BLANK()) || (RELATED(HOLDING_MPSIF[Instrument Identifier]) <> BLANK() || COUNTROWS(RELATEDTABLE(ORDERS)) > 0),
+			    TRUE(),
+			    FALSE()
+			)
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 034423bf-2d76-4421-874a-4dde134f0bb6
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition INSTRUMENT_TS = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases(snowflake_url,"ANALYST_WH_XS"),
+				    HUB_Database = Source{[Name="HUB",Kind="Database"]}[Data],
+				    ASSET_Schema = HUB_Database{[Name="ASSET",Kind="Schema"]}[Data],
+				    INSTRUMENT_TS_Table = ASSET_Schema{[Name="INSTRUMENT_DAILY",Kind="Table"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(INSTRUMENT_TS_Table,{{"LOANX_IDENTIFIER", "LoanX"}, {"CUSIP_CODE", "CUSIP"}, {"FIGI_IDENTIFIER", "FIGI"}, {"ISIN_CODE", "ISIN"}, {"ISSUER_NAME", "Issuer Name"}, {"INSTRUMENT_NAME", "Facility Name"}, {"ISSUE_DATE", "Issue Date"}, {"MATURITY_DATE", "Maturity Date"}, {"ASSET_EFFECTIVE_DATE", "Effective Date"}}),
+				    #"Added Custom" = Table.AddColumn(#"Renamed Columns", "ID_DATE", each [INSTRUMENT_IDENTIFIER]&Date.ToText([CALENDAR_DATE], [Format="yyyy-MM-dd"])),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Added Custom",{{"ASSET_QC_DATE", "QC Date"}, {"CALENDAR_DATE", "Calendar Date"}, {"FLOATER_SPREAD_RATE", "Floater Spread Rate"}, {"ISSUE_AMOUNT", "Issue Amount"}, {"LIEN_TYPE", "Lien Type"}, {"SENIORITY_TYPE", "Seniority Type"}, {"FLOATER_INDEX_NAME", "Floater Index"}, {"LIN_CODE", "LIN"}, {"ISSUE_CURRENCY_CODE", "Issue Currency Code"}, {"AGENT_BANK_NAME", "Agent Bank Name"}, {"IS_COV_LITE", "Is Covenant Light"}}),
+				    #"Added Custom1" = Table.AddColumn(#"Renamed Columns1", "LX_DATE", each [LoanX]&Date.ToText([Calendar Date])),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Added Custom1",{{"GICS_INDUSTRY_NAME", "GICS Industry Name"}, {"BLOOMBERG_INDUSTRY_NAME", "BBG Industry Name"}, {"IBOXX_INDUSTRY_NAME", "IBOXX Industry Name"}, {"MOODYS_CORP_INDUSTRY_NAME", "Moodys Corp Industry Name"}, {"SPGLOBAL_INDUSTRY_NAME", "SP Industry Name"}, {"LoanX", "LX ID"}})
+				in
+				    #"Renamed Columns2"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

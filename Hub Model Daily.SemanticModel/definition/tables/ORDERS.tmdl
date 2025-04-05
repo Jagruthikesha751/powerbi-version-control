@@ -1,0 +1,511 @@
+table ORDERS
+	lineageTag: 2fe5fff0-2e3b-4067-b2d1-8a97d57a3e25
+
+	measure OrderPrice = LOOKUPVALUE (INSTRUMENT_OFFICIAL_PRICE[EOD_PRICE], INSTRUMENT_OFFICIAL_PRICE[INSTRUMENT_IDENTIFIER], max(ORDERS[INSTRUMENT_IDENTIFIER]),INSTRUMENT_OFFICIAL_PRICE[CALENDAR DATE], max(ORDERS[ORDER_DATE]))
+		lineageTag: 626a28af-403e-4aff-bf12-c553a8e2adca
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'PF MPSIF Notional' =
+			
+			SUM('ORDERS'[Order Quantity]) + SUM('HOLDING_MPSIF'[MPSIF Notional])
+		formatString: #,0
+		lineageTag: 0aed07d9-8791-4047-a7f3-8d75bc8af168
+
+	measure 'PF B/S to 1x' =
+			
+			[MPSIF Target Notional] - [PF MPSIF Notional]
+		formatString: #,0
+		lineageTag: 53242a3b-aa7c-4b91-b234-6ff1aea3e904
+
+	measure 'PF MPSIF MV (Clean)' = [PF MPSIF Notional] * [Mid Price Measure] / 100
+		formatString: #,0
+		lineageTag: 775b3c4a-8046-489a-9e28-7537e514c3c6
+
+	measure 'Risk Bucket' = ```
+			
+			VAR RiskRank = 1
+			--    CALCULATE(
+			 --       MAX('INSTRUMENT_RISK_RANKING_DAILY'[Risk_Rank]),
+			 --       TREATAS(
+			  --          VALUES('Instrument_TS'[INSTRUMENT_IDENTIFIER]),
+			  --          'INSTRUMENT_RISK_RANKING_DAILY'[INSTRUMENT_IDENTIFIER]
+			  --      )
+			  --  )
+			-- VAR PFThreshold = [PF Threshold]
+			 VAR PFThreshold = .9
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        -- Risk Rank Blank
+			        RiskRank = BLANK(), "#FFFFF", -- White
+			        -- Risk Rank 1
+			        RiskRank = 1 && PFThreshold >= 0.90 && PFThreshold <= 1.10, "#00FF00", -- Green
+			        RiskRank = 1 && (PFThreshold >= 0.75 && PFThreshold < 0.90 || PFThreshold > 1.10 && PFThreshold <= 1.25), "#FFFF00", -- Yellow
+			        RiskRank = 1 && (PFThreshold > 0 && PFThreshold < 0.75 || PFThreshold > 1.25 && PFThreshold <= 1.5), "#FFA500", -- Orange
+			        RiskRank = 1 && PFThreshold > 1.5, "#FF0000", -- Red
+			 
+			        -- Risk Rank 2
+			        RiskRank = 2 && PFThreshold >= 0.6 && PFThreshold <= 0.7, "#00FF00", -- Green
+			        RiskRank = 2 && (PFThreshold >= 0.5 && PFThreshold < 0.6 || PFThreshold > 0.7 && PFThreshold <= 0.8), "#FFFF00", 
+			        RiskRank = 2 && (PFThreshold > 0 && PFThreshold < 0.5 || PFThreshold > 0.8 && PFThreshold <= 1), "#FFA500", 
+			        RiskRank = 2 && PFThreshold > 1, "#FF0000",
+			 
+			        -- Risk Rank 3
+			        RiskRank = 3 && PFThreshold > 0, "#FF0000",
+			 
+			        -- Default
+			        "#FFFFFF" -- White (No Risk)
+			    )
+			```
+		lineageTag: c8ad5cee-de4d-4a62-aa3d-59fa8e3c23e1
+
+	measure 'PF Threshold' =
+			
+			DIVIDE([PF MPSIF Notional], [MPSIF Target Notional])
+		lineageTag: 89629009-1b73-4d68-99ee-853083a1dcd0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Risk Bucket New' = ```
+			
+			VAR RiskRank = 
+			    CALCULATE(
+			        MAX('INSTRUMENT_RISK_RANKING_DAILY'[Risk_Rank]),
+			        TREATAS(
+			            VALUES('Instrument_TS'[INSTRUMENT_IDENTIFIER]),
+			            'INSTRUMENT_RISK_RANKING_DAILY'[INSTRUMENT_IDENTIFIER]
+			        )
+			    )
+			VAR PFThreshold = [PF Threshold]
+			 
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        -- Risk Rank 0
+			        RiskRank = "NI", "#47C2F3", --BLUE 
+			        -- Risk Rank 1
+			        RiskRank = "1" && ([PF MPSIF Notional] = BLANK() || [PF MPSIF Notional] = 0), "#FFA500", -- Orange
+			        RiskRank = "1" && PFThreshold >= 0.90 && PFThreshold <= 1.10, "#1FA92F", -- Green
+			        RiskRank = "1" && (PFThreshold >= 0.75 && PFThreshold < 0.90 || PFThreshold > 1.10 && PFThreshold <= 1.25), "#F0F389", -- Yellow
+			        RiskRank = "1" && (PFThreshold > 0 && PFThreshold < 0.75 || PFThreshold > 1.25 && PFThreshold <= 1.5), "#FFA500", -- Orange
+			        RiskRank = "1" && PFThreshold > 1.5, "#FF0000", -- Red
+			 
+			        -- Risk Rank 2
+			        RiskRank = "2" && ([PF MPSIF Notional] = BLANK() || [PF MPSIF Notional] = 0), "#FFA500", -- Orange
+			        RiskRank = "2" && PFThreshold >= 0.6 && PFThreshold <= 0.7, "#1FA92F", -- Green
+			        RiskRank = "2" && (PFThreshold >= 0.5 && PFThreshold < 0.6 || PFThreshold > 0.7 && PFThreshold <= 0.8), "#F0F389", 
+			        RiskRank = "2" && (PFThreshold > 0 && PFThreshold < 0.5 || PFThreshold > 0.8 && PFThreshold <= 1), "#FFA500", 
+			        RiskRank = "2" && PFThreshold > 1, "#FF0000", -- Red
+			 
+			        -- Risk Rank 3
+			        RiskRank = "3" && ([PF MPSIF Notional] = BLANK() || [PF MPSIF Notional] = 0), "#1FA92F", -- Green
+			        RiskRank = "3" && PFThreshold > 0, "#FF0000", --Red
+			        RiskRank = "3" && [PF MPSIF Notional] > 0, "#FF0000", --Red
+			 
+			        -- Default
+			        RiskRank IN {"NI", "1", "2", "3", "CCY"}, "#FFFFFF" -- White (No Risk)
+			    )
+			```
+		lineageTag: 0beec9bc-af7e-43f4-8484-b79b1d4f4ee0
+
+	measure 'Risk Bucket New - Holding' = ```
+			
+			VAR RiskRank = 
+			    MAX('INSTRUMENT_RISK_RANKING_DAILY'[Risk_Rank]) -- Direct lookup since it's 1:1
+			
+			VAR MPSIF_Notional = SUM('HOLDING_MPSIF'[MPSIF Notional])
+			VAR Threshold = DIVIDE(MPSIF_Notional, [MPSIF Target Notional])
+			
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        -- Risk Rank 0
+			        RiskRank = "NI", "#47C2F3", -- Blue 
+			        
+			        -- Risk Rank 1
+			        RiskRank = "1" && (MPSIF_Notional = 0 || ISBLANK(MPSIF_Notional)), "#FFA500", -- Orange
+			        RiskRank = "1" && Threshold >= 0.90 && Threshold <= 1.10, "#1FA92F", -- Green
+			        RiskRank = "1" && Threshold >= 0.75 && Threshold < 0.90 || Threshold > 1.10 && Threshold <= 1.25, "#F0F389", -- Yellow
+			        RiskRank = "1" && Threshold > 0 && Threshold < 0.75 || Threshold > 1.25 && Threshold <= 1.5, "#FFA500", -- Orange
+			        RiskRank = "1" && Threshold > 1.5, "#FF0000", -- Red
+			
+			        -- Risk Rank 2
+			        RiskRank = "2" && (MPSIF_Notional = 0 || ISBLANK(MPSIF_Notional)), "#FFA500", -- Orange
+			        RiskRank = "2" && Threshold >= 0.6 && Threshold <= 0.7, "#1FA92F", -- Green
+			        RiskRank = "2" && Threshold >= 0.5 && Threshold < 0.6 || Threshold > 0.7 && Threshold <= 0.8, "#F0F389", -- Yellow
+			        RiskRank = "2" && Threshold > 0 && Threshold < 0.5 || Threshold > 0.8 && Threshold <= 1, "#FFA500", -- Orange
+			        RiskRank = "2" && Threshold > 1, "#FF0000", -- Red
+			
+			        -- Risk Rank 3
+			        RiskRank = "3" && MPSIF_Notional <= 0, "#1FA92F", -- Green
+			        RiskRank = "3" && MPSIF_Notional > 0, "#FF0000", -- Red
+			
+			        -- Default
+			        RiskRank IN {"NI", "CCY", "1", "2", "3"}, "#FFFFFF" -- White (No Risk)
+			    )
+			
+			```
+		lineageTag: d30ffd18-52c8-432c-aad2-510175cd8b0e
+
+	measure 'Risk Bucket New - Holding SELECT PLUS' = ```
+			
+			VAR RiskRank = 
+			   
+			        MAX('INSTRUMENT_RISK_RANKING_DAILY'[Risk_Rank])
+			      
+			VAR Threshold = [MPSIF Threshold % SELECT PLUS]
+			VAR MPSIF_Notional = SUM('HOLDING_MPSIF'[MPSIF Notional])
+			 
+			RETURN
+			    SWITCH(
+			        TRUE(),
+			        -- Risk Rank 0
+			        RiskRank = "NI", "#47C2F3", --BLUE 
+			        -- Risk Rank 1
+			        RiskRank = "1" && (MPSIF_Notional = BLANK() || MPSIF_Notional = 0), "#FFA500", -- Orange
+			        RiskRank = "1" && Threshold >= 0.90 && Threshold <= 1.10, "#1FA92F", -- Green
+			        RiskRank = "1" && (Threshold >= 0.75 && Threshold < 0.90 || Threshold > 1.10 && Threshold <= 1.25), "#F0F389", -- Yellow
+			        RiskRank = "1" && (Threshold > 0 && Threshold < 0.75 || Threshold > 1.25 && Threshold <= 1.5), "#FFA500", -- Orange
+			        RiskRank = "1" && Threshold > 1.5, "#FF0000", -- Red
+			 
+			        -- Risk Rank 2
+			        RiskRank = "2" && (MPSIF_Notional = BLANK() || MPSIF_Notional = 0), "#FFA500", -- Orange
+			        RiskRank = "2" && Threshold >= 0.6 && Threshold <= 0.7, "#1FA92F", -- Green
+			        RiskRank = "2" && (Threshold >= 0.5 && Threshold < 0.6 || Threshold > 0.7 && Threshold <= 0.8), "#F0F389", 
+			        RiskRank = "2" && (Threshold > 0 && Threshold < 0.5 || Threshold > 0.8 && Threshold <= 1), "#FFA500", 
+			        RiskRank = "2" && Threshold > 1, "#FF0000", --Red
+			 
+			        -- Risk Rank 3
+			        RiskRank = "3" && (MPSIF_Notional = BLANK() || MPSIF_Notional = 0), "#1FA92F", -- Green
+			        RiskRank = "3" && Threshold > 0, "#FF0000", --Red
+			        RiskRank = "3" && MPSIF_Notional > 0, "#FF0000", --Red
+			 
+			        -- Default
+			        RiskRank IN {"NI", "CCY", "1", "2", "3"},"#FFFFFF" -- White (No Risk)
+			    )
+			```
+		lineageTag: 4c403ce5-4efe-4f51-90db-b5c47a232012
+
+	measure 'PF B/S to 1x Sum' =
+			
+			SUMX(
+			    DISTINCT('INSTRUMENT_TS'[LX ID]),  -- Get unique LX IDs
+			    [PF B/S to 1x]  -- Use the existing measure
+			)
+		formatString: #,0
+		lineageTag: b6edf5b2-1f82-4de1-9e47-aa00583e7d82
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'PF MPSIF MV (Clean) Sum' =
+			
+			SUMX(
+			    DISTINCT('INSTRUMENT_TS'[LX ID]),  -- Get unique LX IDs
+			    [PF MPSIF MV (Clean)]  -- Use the existing measure
+			)
+		formatString: #,0
+		lineageTag: 830cea42-9c89-4019-92d3-b1ad01a2f52b
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column ORDER_DATE_TEXT
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: 68e9fb7d-4313-4279-9b03-cac9abfc863c
+		summarizeBy: none
+		sourceColumn: ORDER_DATE_TEXT
+
+		annotation SummarizationSetBy = Automatic
+
+	column PORTFOLIO_IDENTIFIER
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: 141ed928-4f63-44eb-b163-8788cdc33181
+		summarizeBy: none
+		sourceColumn: PORTFOLIO_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column ORDER_IDENTIFIER
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: 5862b571-89aa-4f23-a264-9a14f3423189
+		summarizeBy: none
+		sourceColumn: ORDER_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column ORDER_ALLOCATION_IDENTIFIER
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: 2dadd4d6-e1b3-4b19-bec1-726644f252a9
+		summarizeBy: none
+		sourceColumn: ORDER_ALLOCATION_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column ORDER_EXTERNAL_IDENTIFIER
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: d1bee2f3-0653-4941-b94d-1d136df426bd
+		summarizeBy: none
+		sourceColumn: ORDER_EXTERNAL_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column ORDER_ALLOCATION_EXTERNAL_IDENTIFIER
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: 9c98a525-7526-46b5-9015-18c0d117ad89
+		summarizeBy: none
+		sourceColumn: ORDER_ALLOCATION_EXTERNAL_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column INSTRUMENT_IDENTIFIER
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: 66a47cf0-2d1f-480a-b3b7-6497b53a4fd9
+		summarizeBy: none
+		sourceColumn: INSTRUMENT_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column ORDER_DATE
+		dataType: dateTime
+		formatString: Short Date
+		sourceProviderType: date
+		lineageTag: c1ed4e84-3d62-4a03-9240-f19476c4c509
+		summarizeBy: none
+		sourceColumn: ORDER_DATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ORDER_STATUS
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: d51b4f16-d587-4362-b27c-250dd0952cfa
+		summarizeBy: none
+		sourceColumn: ORDER_STATUS
+
+		annotation SummarizationSetBy = Automatic
+
+	column ORDER_ALLOCATION_QUANTITY
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 0087c656-361f-4c81-8875-1cb63f1029f5
+		summarizeBy: sum
+		sourceColumn: ORDER_ALLOCATION_QUANTITY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Order Quantity'
+		dataType: double
+		formatString: #,0
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 58ec797d-12aa-44ea-b832-159906aa1845
+		summarizeBy: sum
+		sourceColumn: Order Quantity
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column EXECUTED_QUANTITY
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: c8b016d0-6e64-4dc4-92d6-838936227f42
+		summarizeBy: sum
+		sourceColumn: EXECUTED_QUANTITY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column LEAVES_QUANTITY
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 4b4e6fbc-7afa-4566-98e2-b91c10231939
+		summarizeBy: sum
+		sourceColumn: LEAVES_QUANTITY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column AVERAGE_PRICE
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: e49a6272-304b-4dc4-b436-e9bbd7a7e89f
+		summarizeBy: sum
+		sourceColumn: AVERAGE_PRICE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ORDER_TYPE
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: 0f9ba9a4-bc80-4eb3-bd9b-6f0519f08ab2
+		summarizeBy: none
+		sourceColumn: ORDER_TYPE
+
+		annotation SummarizationSetBy = Automatic
+
+	column LIMIT_PRICE
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 0e275f19-8c28-494f-b583-9f0564a58f21
+		summarizeBy: sum
+		sourceColumn: LIMIT_PRICE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TARGET_PRICE
+		dataType: double
+		sourceProviderType: decimal(38, 12)
+		lineageTag: 619a0d5b-85c0-4ae8-8e73-305cd3c46b87
+		summarizeBy: sum
+		sourceColumn: TARGET_PRICE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TIME_IN_FORCE
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: 1b15c1a3-947c-4af0-96d9-5eed9fe4d0b6
+		summarizeBy: none
+		sourceColumn: TIME_IN_FORCE
+
+		annotation SummarizationSetBy = Automatic
+
+	column EXPIRE_DATE
+		dataType: dateTime
+		formatString: Short Date
+		sourceProviderType: date
+		lineageTag: 096a3910-fefe-4246-9f00-c76022733c8b
+		summarizeBy: none
+		sourceColumn: EXPIRE_DATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column PORTFOLIO_MANAGER_NAME
+		dataType: string
+		sourceProviderType: nvarchar(255)
+		lineageTag: 89dc117f-1cff-4a17-b2e0-f05423f7516c
+		summarizeBy: none
+		sourceColumn: PORTFOLIO_MANAGER_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column TRADER_NAME
+		dataType: string
+		sourceProviderType: nvarchar(255)
+		lineageTag: 24b15ff9-2580-4338-8355-86f030691753
+		summarizeBy: none
+		sourceColumn: TRADER_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column SOURCE_SYSTEM_STATUS_IDENTIFIER
+		dataType: double
+		sourceProviderType: decimal(38, 0)
+		lineageTag: d601e87c-5330-4465-aad7-e0326c09d7e0
+		summarizeBy: sum
+		sourceColumn: SOURCE_SYSTEM_STATUS_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PORTFOLIO_IDENTIFIER_TEXT
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: d360f9cd-24ae-40e7-a3c5-0920a9a33083
+		summarizeBy: none
+		sourceColumn: PORTFOLIO_IDENTIFIER_TEXT
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID_DATE_PORT
+		dataType: string
+		lineageTag: 23ccb74c-f379-4c38-b298-2e30206642e3
+		summarizeBy: none
+		sourceColumn: ID_DATE_PORT
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cost
+		type: calculated
+		lineageTag: 13059372-a4fc-458e-a041-eb252a5daf23
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column TRANSACTION_TYPE_NAME
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: 2b982c84-ed51-445b-9941-0212bf1fa88c
+		summarizeBy: none
+		sourceColumn: TRANSACTION_TYPE_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_DATETIME
+		dataType: string
+		sourceProviderType: nvarchar(max)
+		lineageTag: 3ec9cf3d-0a9b-479a-abab-f73b065a5e73
+		summarizeBy: none
+		sourceColumn: CREATED_DATETIME
+
+		annotation SummarizationSetBy = Automatic
+
+	column ORDER_ALLOCATION_SIGNED_QUANTITY
+		dataType: double
+		sourceProviderType: double
+		lineageTag: 6cd95f88-4058-444a-99d7-d1201015757d
+		summarizeBy: sum
+		sourceColumn: ORDER_ALLOCATION_SIGNED_QUANTITY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ORDER_SIGNED_QUANTITY
+		dataType: double
+		sourceProviderType: double
+		lineageTag: b6619d3e-7b3b-4d48-a966-f006691eb263
+		summarizeBy: sum
+		sourceColumn: ORDER_SIGNED_QUANTITY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition ORDERS = m
+		mode: directQuery
+		source =
+				let
+				    Source = Value.NativeQuery(Snowflake.Databases(snowflake_url,"ANALYST_WH_XS",[Role="ANALYST"]){[Name="HUB"]}[Data], "SELECT#(lf)    TO_VARCHAR(ORDER_DATE) AS ORDER_DATE_TEXT,#(lf)    TO_VARCHAR(PORTFOLIO_IDENTIFIER) AS PORTFOLIO_IDENTIFIER_TEXT,#(lf)    *#(lf)FROM HUB.POSITION.ORDERS_DAILY", null, [EnableFolding=true]),
+				    #"Added Custom" = Table.AddColumn(Source, "ID_DATE_PORT", each [INSTRUMENT_IDENTIFIER]&[ORDER_DATE_TEXT]&[PORTFOLIO_IDENTIFIER_TEXT]),
+				    #"Renamed Columns" = Table.RenameColumns(#"Added Custom",{{"ORDER_QUANTITY", "Order Quantity"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"CREATED_DATETIME", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

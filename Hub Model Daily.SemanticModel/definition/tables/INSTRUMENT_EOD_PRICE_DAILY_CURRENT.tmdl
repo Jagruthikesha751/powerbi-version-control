@@ -1,0 +1,303 @@
+table INSTRUMENT_EOD_PRICE_DAILY_CURRENT
+	lineageTag: 7b9b59ab-9968-47f1-99bd-1ca1c6c95c28
+
+	column CALENDAR_DATE
+		dataType: dateTime
+		formatString: Short Date
+		sourceProviderType: date
+		lineageTag: 8d885ae2-f35d-461f-a6f2-badb8693ac32
+		summarizeBy: none
+		sourceColumn: CALENDAR_DATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column PRICE_DATE
+		dataType: dateTime
+		formatString: Short Date
+		sourceProviderType: date
+		lineageTag: 577d035f-b850-45cb-ade8-7696cb3d9307
+		summarizeBy: none
+		sourceColumn: PRICE_DATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column INSTRUMENT_IDENTIFIER
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: 450b5e6b-8189-42fe-b32e-1fcaf2ab6ef4
+		summarizeBy: none
+		sourceColumn: INSTRUMENT_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column OFFICIAL_DATA_PROVIDER_NAME
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: 2c2d9ee0-2216-411d-bc3e-550a35621147
+		summarizeBy: none
+		sourceColumn: OFFICIAL_DATA_PROVIDER_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column PRICE_OFFICIAL
+		dataType: double
+		formatString: 0.000
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 2f8186be-b279-4166-88a5-c8626a0c9270
+		summarizeBy: sum
+		sourceColumn: PRICE_OFFICIAL
+
+		annotation SummarizationSetBy = Automatic
+
+	column PRIOR_PRICE_DATE
+		dataType: dateTime
+		formatString: Short Date
+		sourceProviderType: date
+		lineageTag: d931c52c-e735-44fb-9e44-6401d78d6a94
+		summarizeBy: none
+		sourceColumn: PRIOR_PRICE_DATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column PRIOR_OFFICIAL_PRICE
+		dataType: double
+		formatString: 0.000
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 072fd2d6-dda3-43c6-b4cc-1c1f89697917
+		summarizeBy: sum
+		sourceColumn: PRIOR_OFFICIAL_PRICE
+
+		annotation SummarizationSetBy = Automatic
+
+	column PRIOR_OFFICIAL_DATA_PROVIDER_NAME
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: e4de41a0-124f-4ba2-9a02-73e7d2a98db9
+		summarizeBy: none
+		sourceColumn: PRIOR_OFFICIAL_DATA_PROVIDER_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column '$ Change'
+		dataType: double
+		formatString: #,0.00
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 5564ed35-2e28-4c4f-8e84-23bb5f18a31d
+		summarizeBy: sum
+		sourceColumn: $ Change
+
+		annotation SummarizationSetBy = Automatic
+
+	column '% Change'
+		dataType: double
+		formatString: 0.00%;-0.00%;0.00%
+		sourceProviderType: decimal(38, 20)
+		lineageTag: b5440576-5db6-465a-9ca6-88ce53d46142
+		summarizeBy: sum
+		sourceColumn: % Change
+
+		annotation SummarizationSetBy = Automatic
+
+	column SENTRY_HOLDING_OFFICIAL_PRICE
+		dataType: double
+		formatString: 0.000
+		sourceProviderType: decimal(38, 12)
+		lineageTag: 5e0d658f-0f07-45f5-bad2-7a6ff4606f51
+		summarizeBy: sum
+		sourceColumn: SENTRY_HOLDING_OFFICIAL_PRICE
+
+		annotation SummarizationSetBy = Automatic
+
+	column SENTRY_OFFICIAL_PRICE
+		dataType: double
+		formatString: 0.000
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 4f4e840b-fa80-44fe-a0a9-17b5663b110d
+		summarizeBy: sum
+		sourceColumn: SENTRY_OFFICIAL_PRICE
+
+		annotation SummarizationSetBy = Automatic
+
+	column SPGLOBAL_BID_PRICE
+		dataType: double
+		formatString: 0.000
+		sourceProviderType: decimal(38, 20)
+		lineageTag: ee7e5511-f148-484d-bb86-e205b644323f
+		summarizeBy: sum
+		sourceColumn: SPGLOBAL_BID_PRICE
+
+		annotation SummarizationSetBy = Automatic
+
+	column SPGLOBAL_ASK_PRICE
+		dataType: double
+		formatString: 0.000
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 1148ba34-6c68-49ee-9a06-9c02ffba4784
+		summarizeBy: sum
+		sourceColumn: SPGLOBAL_ASK_PRICE
+
+		annotation SummarizationSetBy = Automatic
+
+	column IBOXX_INDEX_PRICE
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 5ed50055-4922-4439-a559-c293b7338580
+		summarizeBy: sum
+		sourceColumn: IBOXX_INDEX_PRICE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column IBOXX_BID_PRICE
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 7a1709d5-ed9c-448f-aa1c-bf8e68dc0995
+		summarizeBy: sum
+		sourceColumn: IBOXX_BID_PRICE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column IBOXX_ASK_PRICE
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: bfb773e5-ffb4-4ccc-a46a-e2b79ebdfca2
+		summarizeBy: sum
+		sourceColumn: IBOXX_ASK_PRICE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PRIOR_WEEK_PRICE_DATE
+		dataType: dateTime
+		formatString: Short Date
+		sourceProviderType: date
+		lineageTag: ff606b21-7c93-4ed5-a92e-ad9d22750e23
+		summarizeBy: none
+		sourceColumn: PRIOR_WEEK_PRICE_DATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column PRIOR_WEEK_OFFICIAL_PRICE
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 17852d96-7037-44b7-a9c2-af34f52e0ca5
+		summarizeBy: sum
+		sourceColumn: PRIOR_WEEK_OFFICIAL_PRICE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PRIOR_WEEK_OFFICIAL_DATA_PROVIDER_NAME
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: 8fb96a36-43cb-4244-99cd-d3a116177a17
+		summarizeBy: none
+		sourceColumn: PRIOR_WEEK_OFFICIAL_DATA_PROVIDER_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column PRICE_CHANGE_1_WEEK_AMOUNT
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 6aff186a-bf3f-4993-9889-46319032f9a9
+		summarizeBy: sum
+		sourceColumn: PRICE_CHANGE_1_WEEK_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PRICE_RETURN_1_WEEK_RATE
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: da6692c7-6c27-4e65-9444-7c785d2677f3
+		summarizeBy: sum
+		sourceColumn: PRICE_RETURN_1_WEEK_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PRIOR_MONTH_PRICE_DATE
+		dataType: dateTime
+		formatString: Short Date
+		sourceProviderType: date
+		lineageTag: 0865fdc1-5bfb-47c4-8184-554a6951b8fc
+		summarizeBy: none
+		sourceColumn: PRIOR_MONTH_PRICE_DATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column PRIOR_MONTH_OFFICIAL_PRICE
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: dccb32b2-f8cd-4905-87a7-986631c39e76
+		summarizeBy: sum
+		sourceColumn: PRIOR_MONTH_OFFICIAL_PRICE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PRIOR_MONTH_OFFICIAL_DATA_PROVIDER_NAME
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: eb01b641-801e-43e4-ba08-01bf1f3ff7a5
+		summarizeBy: none
+		sourceColumn: PRIOR_MONTH_OFFICIAL_DATA_PROVIDER_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column PRICE_CHANGE_1_MONTH_AMOUNT
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 26e69a34-7a85-4a0a-ab3f-3a4ee177c0cb
+		summarizeBy: sum
+		sourceColumn: PRICE_CHANGE_1_MONTH_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PRICE_RETURN_1_MONTH_RATE
+		dataType: double
+		sourceProviderType: decimal(38, 20)
+		lineageTag: d9f8a78d-5a02-4c93-9e72-20120662f0eb
+		summarizeBy: sum
+		sourceColumn: PRICE_RETURN_1_MONTH_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition INSTRUMENT_EOD_PRICE_DAILY_CURRENT = m
+		mode: directQuery
+		source =
+				let
+				    Source = Snowflake.Databases(snowflake_url,"ANALYST_WH_XS"),
+				    HUB_Database = Source{[Name="HUB",Kind="Database"]}[Data],
+				    PRICE_Schema = HUB_Database{[Name="PRICE",Kind="Schema"]}[Data],
+				    INSTRUMENT_EOD_PRICE_DAILY_CURRENT_View = PRICE_Schema{[Name="INSTRUMENT_EOD_PRICE_DAILY_CURRENT",Kind="View"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(INSTRUMENT_EOD_PRICE_DAILY_CURRENT_View,{{"PRICE_CHANGE_1_DAY_AMOUNT", "$ Change"}, {"PRICE_RETURN_1_DAY_RATE", "% Change"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

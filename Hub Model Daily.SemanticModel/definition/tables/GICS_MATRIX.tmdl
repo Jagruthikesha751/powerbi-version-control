@@ -1,0 +1,85 @@
+table GICS_MATRIX
+	lineageTag: 1d553be3-f503-42d6-8f34-22109928266d
+
+	column GICS_SECTOR_CODE
+		dataType: double
+		lineageTag: 142ab963-8e52-4ef7-b5fe-81d64341b372
+		summarizeBy: none
+		sourceColumn: GICS_SECTOR_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'GICS Sector'
+		dataType: string
+		lineageTag: 53cd05a7-23de-480b-8693-aa5910fb8900
+		summarizeBy: none
+		sourceColumn: GICS Sector
+
+		annotation SummarizationSetBy = Automatic
+
+	column GICS_INDUSTRY_GROUP_CODE
+		dataType: double
+		lineageTag: adec1f45-ceb3-4e03-9a7b-a39eab83f7c3
+		summarizeBy: none
+		sourceColumn: GICS_INDUSTRY_GROUP_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'GICS Industry Group'
+		dataType: string
+		lineageTag: 374457a5-4f13-4a8b-901f-2b977e809bea
+		summarizeBy: none
+		sourceColumn: GICS Industry Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column GICS_INDUSTRY_CODE
+		dataType: double
+		lineageTag: 2ef5834a-d3a5-4635-86b8-f6c65913bd9a
+		summarizeBy: none
+		sourceColumn: GICS_INDUSTRY_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'GICS Industry'
+		dataType: string
+		lineageTag: 101bb55d-1790-4521-99b5-18938dd4f718
+		summarizeBy: none
+		sourceColumn: GICS Industry
+
+		annotation SummarizationSetBy = Automatic
+
+	column TC_GICS_INDUSTRY_CODE
+		dataType: double
+		lineageTag: cd63f5c9-5573-47e1-a02d-04c6774e8b74
+		summarizeBy: none
+		sourceColumn: TC_GICS_INDUSTRY_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition GICS_MATRIX = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases(snowflake_url,"ANALYST_WH_XS"),
+				    HUB_Database = Source{[Name="HUB",Kind="Database"]}[Data],
+				    ASSET_Schema = HUB_Database{[Name="ASSET",Kind="Schema"]}[Data],
+				    GICS_MATRIX_Table = ASSET_Schema{[Name="GICS_MATRIX",Kind="Table"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(GICS_MATRIX_Table,{{"GICS_INDUSTRY_GROUP_NAME", "GICS Industry Group"}, {"GICS_INDUSTRY_NAME", "GICS Industry"}, {"GICS_SECTOR_NAME", "GICS Sector"}, {"GICS_SUB_INDUSTRY_NAME", "GICS Sub Industry"}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns",{"GICS Sub Industry", "GICS_SUB_INDUSTRY_CODE"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Columns", {"GICS Industry"})
+				in
+				    #"Removed Duplicates"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

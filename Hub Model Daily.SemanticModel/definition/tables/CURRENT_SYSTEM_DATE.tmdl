@@ -1,0 +1,733 @@
+table CURRENT_SYSTEM_DATE
+	isHidden
+	lineageTag: 9108c3b4-c0c0-45af-89d8-232fd8c2e60e
+
+	column 'Calendar Date'
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 56e39611-9097-4894-b8da-b7f45caa0cd0
+		summarizeBy: none
+		sourceColumn: Calendar Date
+
+		variation Variation
+			isDefault
+			relationship: 72cf79b0-d760-4288-9aaa-39229589b845
+			defaultHierarchy: LocalDateTable_77ee5a67-06c8-4e8a-8550-b0067a1e8482.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column IS_BUSINESS_DAY
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: a4f7bc3b-deb7-47ac-a95c-768b37dc7b1c
+		summarizeBy: none
+		sourceColumn: IS_BUSINESS_DAY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PRIOR_BUSINESS_DATE
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 4c24847d-1ceb-4825-9596-05945370dc44
+		summarizeBy: none
+		sourceColumn: PRIOR_BUSINESS_DATE
+
+		variation Variation
+			isDefault
+			relationship: d57311d4-2569-490b-999e-374bd2175fe3
+			defaultHierarchy: LocalDateTable_abe46f39-dd36-401f-b1af-9907a337cc85.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column DAYS_FROM_PRIOR_BUSINESS_DATE
+		dataType: double
+		isHidden
+		lineageTag: 55dbb5dc-a426-445b-8103-8a849b9b92c7
+		summarizeBy: sum
+		sourceColumn: DAYS_FROM_PRIOR_BUSINESS_DATE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column NEXT_BUSINESS_DATE
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 24e3e67e-daab-435f-8cb1-bf2f94caf408
+		summarizeBy: none
+		sourceColumn: NEXT_BUSINESS_DATE
+
+		variation Variation
+			isDefault
+			relationship: 828338e0-ca44-4671-a374-f7a9a6dbd7ba
+			defaultHierarchy: LocalDateTable_b51cea28-942f-4c79-b7c9-7057fe727501.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column DAYS_TO_NEXT_BUSINESS_DATE
+		dataType: double
+		isHidden
+		lineageTag: c072a122-b206-495b-ab00-c55e00be9906
+		summarizeBy: sum
+		sourceColumn: DAYS_TO_NEXT_BUSINESS_DATE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CALENDAR_YEAR
+		dataType: double
+		isHidden
+		lineageTag: 14809cb6-87ae-4139-82e0-683b8f9a601e
+		summarizeBy: sum
+		sourceColumn: CALENDAR_YEAR
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CALENDAR_MONTH
+		dataType: double
+		isHidden
+		lineageTag: 727d88c1-841d-48c8-acad-cde395a66a96
+		summarizeBy: sum
+		sourceColumn: CALENDAR_MONTH
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CALENDAR_DAY
+		dataType: double
+		isHidden
+		lineageTag: 599dda09-bff8-4a63-bbf3-390e940b5267
+		summarizeBy: sum
+		sourceColumn: CALENDAR_DAY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CALENDAR_QUARTER
+		dataType: double
+		isHidden
+		lineageTag: ee4a2922-b2fe-4114-992b-2fb842f26f69
+		summarizeBy: sum
+		sourceColumn: CALENDAR_QUARTER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CALENDAR_WEEK
+		dataType: double
+		isHidden
+		lineageTag: e0158ab9-92c6-4830-9702-33bef96cf3d0
+		summarizeBy: sum
+		sourceColumn: CALENDAR_WEEK
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MONTH_NAME
+		dataType: string
+		isHidden
+		lineageTag: e453ddfa-5bff-4429-b4e6-dcc809f2d3c5
+		summarizeBy: none
+		sourceColumn: MONTH_NAME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column DAY_NAME
+		dataType: string
+		isHidden
+		lineageTag: 3073cf2d-6796-4b3f-b787-0d5a9a4cb715
+		summarizeBy: none
+		sourceColumn: DAY_NAME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column DAY_OF_MONTH
+		dataType: double
+		isHidden
+		lineageTag: 4f0cdba3-bb60-40db-a7a3-8ce6ebd97c39
+		summarizeBy: sum
+		sourceColumn: DAY_OF_MONTH
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DAY_OF_WEEK
+		dataType: double
+		isHidden
+		lineageTag: 3824d22c-9b51-49aa-a19f-6ee60d1460d2
+		summarizeBy: sum
+		sourceColumn: DAY_OF_WEEK
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DAY_OF_YEAR
+		dataType: double
+		isHidden
+		lineageTag: 15b5a45b-df49-44a2-9f87-12f107ebf0a7
+		summarizeBy: sum
+		sourceColumn: DAY_OF_YEAR
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PRIOR_MONTH_FIRST_DATE
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: a64d2c3b-eea1-4261-8070-e48118c0c3d9
+		summarizeBy: none
+		sourceColumn: PRIOR_MONTH_FIRST_DATE
+
+		variation Variation
+			isDefault
+			relationship: f2751c8c-3be9-46e7-8c11-bb8e841614e7
+			defaultHierarchy: LocalDateTable_1837f43c-d71f-4a87-bc56-bc212873f39b.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column PRIOR_MONTH_LAST_DATE
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 40b63a9e-52ce-475e-9503-77235f2a1910
+		summarizeBy: none
+		sourceColumn: PRIOR_MONTH_LAST_DATE
+
+		variation Variation
+			isDefault
+			relationship: f783fcd7-6509-4260-b6b2-c24a6d2fbad3
+			defaultHierarchy: LocalDateTable_75b5b8e7-f0fc-4bb6-b254-05496d18fb96.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column CURRENT_MONTH_FIRST_DATE
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 9dbf3b07-4036-4bc3-88e5-3bb373967aa2
+		summarizeBy: none
+		sourceColumn: CURRENT_MONTH_FIRST_DATE
+
+		variation Variation
+			isDefault
+			relationship: aeddda69-ebd9-4c4f-8852-c259373f56be
+			defaultHierarchy: LocalDateTable_c22886ed-87f7-4775-95b0-5006afb7d647.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column CURRENT_MONTH_LAST_DATE
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: aefaaf13-09b5-43fa-ab29-ebdcad98e7c0
+		summarizeBy: none
+		sourceColumn: CURRENT_MONTH_LAST_DATE
+
+		variation Variation
+			isDefault
+			relationship: 4eb287cb-bd8b-43dd-a0d1-fdbd9f431eab
+			defaultHierarchy: LocalDateTable_968250d1-e19c-46de-91d2-83090baa736f.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column NEXT_MONTH_FIRST_DATE
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 56e60bb5-3e4b-489b-920c-6c204bd14c80
+		summarizeBy: none
+		sourceColumn: NEXT_MONTH_FIRST_DATE
+
+		variation Variation
+			isDefault
+			relationship: fe5dd502-4fd2-4273-bb4b-aa12523ffe5e
+			defaultHierarchy: LocalDateTable_7fe566c2-78b0-4721-bca1-1fed2a10da03.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column NEXT_MONTH_LAST_DATE
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: f7c4a9dd-1e1b-40ce-b8f1-7517899fea06
+		summarizeBy: none
+		sourceColumn: NEXT_MONTH_LAST_DATE
+
+		variation Variation
+			isDefault
+			relationship: f283de82-e70c-4232-ab39-ac9225198bae
+			defaultHierarchy: LocalDateTable_d3387b86-f2eb-497a-9b05-b7e522876d44.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column LAST_DATE_OF_MONTH
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 185c54fd-4b26-4f00-8ea3-0c44b07d59d2
+		summarizeBy: none
+		sourceColumn: LAST_DATE_OF_MONTH
+
+		variation Variation
+			isDefault
+			relationship: 510184ac-300b-420a-8bb7-c8052cefacb6
+			defaultHierarchy: LocalDateTable_2f1f06fd-2afb-44ac-8e70-204e303f8048.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column LAST_DATE_OF_QUARTER
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: dc40157f-d736-4bf6-8e1e-ffc84ae81da5
+		summarizeBy: none
+		sourceColumn: LAST_DATE_OF_QUARTER
+
+		variation Variation
+			isDefault
+			relationship: 99ff7184-a733-4ab6-b3b7-a36722aeb9e8
+			defaultHierarchy: LocalDateTable_72ecd187-922b-4664-bccb-7de2bd514036.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column LAST_DATE_OF_YEAR
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 398d50f8-913d-4356-9865-8f1cd6a68dce
+		summarizeBy: none
+		sourceColumn: LAST_DATE_OF_YEAR
+
+		variation Variation
+			isDefault
+			relationship: 05e89730-9522-4356-a039-87a6ae30c31b
+			defaultHierarchy: LocalDateTable_85642f39-32dc-41a4-b078-0854a2a86050.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column LAST_DATE_OF_WEEK
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: d6dfa953-c3d8-4d31-866f-a9c1188e08fe
+		summarizeBy: none
+		sourceColumn: LAST_DATE_OF_WEEK
+
+		variation Variation
+			isDefault
+			relationship: ffabeb57-918d-429a-9144-5420963b68ab
+			defaultHierarchy: LocalDateTable_1e6c22d3-4823-4b12-8def-8571a76c4540.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column WEEK_OF_YEAR
+		dataType: double
+		isHidden
+		lineageTag: 3f46c57d-710a-4dc4-aade-2d31e77632ce
+		summarizeBy: sum
+		sourceColumn: WEEK_OF_YEAR
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column YEAR_OF_WEEK
+		dataType: double
+		isHidden
+		lineageTag: 1bc68f23-a52a-40ea-b5c4-f8136c54c08a
+		summarizeBy: sum
+		sourceColumn: YEAR_OF_WEEK
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column YEAR_OF_WEEK_ISO
+		dataType: double
+		isHidden
+		lineageTag: 5c34fbbc-687f-4787-bd25-38c857d9e176
+		summarizeBy: sum
+		sourceColumn: YEAR_OF_WEEK_ISO
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column WEEK_ISO
+		dataType: double
+		isHidden
+		lineageTag: 223a7bde-f95f-4670-be88-947eeb947809
+		summarizeBy: sum
+		sourceColumn: WEEK_ISO
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DAY_OF_WEEK_ISO
+		dataType: double
+		isHidden
+		lineageTag: 42211747-8076-4e9c-a6de-ec2f00ffa04b
+		summarizeBy: sum
+		sourceColumn: DAY_OF_WEEK_ISO
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column WEEK_OF_MONTH
+		dataType: double
+		isHidden
+		lineageTag: 96b073f2-ec1e-4ea1-8cc8-e6ce0660e2f4
+		summarizeBy: sum
+		sourceColumn: WEEK_OF_MONTH
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column FIRST_DATE_OF_QUARTER
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 31810f08-4eaf-45b6-96c9-19d42e6a4b0b
+		summarizeBy: none
+		sourceColumn: FIRST_DATE_OF_QUARTER
+
+		variation Variation
+			isDefault
+			relationship: 184cdd2f-91ab-4a38-af7b-26e2ef5ea74b
+			defaultHierarchy: LocalDateTable_675da842-548a-48c5-9dd8-e7f5ae6bcfc7.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column DAY_OF_QUARTER
+		dataType: double
+		isHidden
+		lineageTag: 0a0864db-2a71-4691-a29a-bb270d71c67d
+		summarizeBy: sum
+		sourceColumn: DAY_OF_QUARTER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DAYS_IN_QUARTER
+		dataType: double
+		isHidden
+		lineageTag: 38830c32-6eb5-44b0-ab40-84ad7b92585c
+		summarizeBy: sum
+		sourceColumn: DAYS_IN_QUARTER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column WEEK_OF_QUARTER
+		dataType: double
+		isHidden
+		lineageTag: c7aa2a9d-e40b-46cd-b13b-fd37618793b9
+		summarizeBy: sum
+		sourceColumn: WEEK_OF_QUARTER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column IS_IBOXX_HOLIDAY
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: fa618ab7-af34-425b-8698-3e530c6fcc42
+		summarizeBy: none
+		sourceColumn: IS_IBOXX_HOLIDAY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column IS_HOLIDAY
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 02ddf3f4-8035-4ec8-a4b0-1c46633c3e82
+		summarizeBy: none
+		sourceColumn: IS_HOLIDAY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column IS_WEEKEND
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 317b9424-9af9-4b94-97bf-6ca67f07d202
+		summarizeBy: none
+		sourceColumn: IS_WEEKEND
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column IS_WEEKDAY
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 1d0769b4-5552-4d23-8f6b-1176780e7071
+		summarizeBy: none
+		sourceColumn: IS_WEEKDAY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CURRENT_MONTH_FIRST_BUSINESS_DATE
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 37d915db-0f09-4b1a-b1fa-f65691734c86
+		summarizeBy: none
+		sourceColumn: CURRENT_MONTH_FIRST_BUSINESS_DATE
+
+		variation Variation
+			isDefault
+			relationship: 26b58f9f-7e7c-4293-8860-3af75945faea
+			defaultHierarchy: LocalDateTable_338ce2a3-776d-4e57-96e9-3be825207854.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column CURRENT_MONTH_LAST_BUSINESS_DATE
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: bc7c95d0-16d7-46fd-8f5e-ebf1d73a0a09
+		summarizeBy: none
+		sourceColumn: CURRENT_MONTH_LAST_BUSINESS_DATE
+
+		variation Variation
+			isDefault
+			relationship: 0648d8e8-b4ae-494b-b872-deab1faeec6c
+			defaultHierarchy: LocalDateTable_2b8b462b-312e-463c-b2ea-d2be2d644a33.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column PRIOR_MONTH_FIRST_BUSINESS_DATE
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: e744dc36-746b-4f8d-ba88-47ced3e7a29d
+		summarizeBy: none
+		sourceColumn: PRIOR_MONTH_FIRST_BUSINESS_DATE
+
+		variation Variation
+			isDefault
+			relationship: 1e846eae-cf62-4878-a8f8-dfc21997b178
+			defaultHierarchy: LocalDateTable_0051acdd-ee15-4282-a3e1-52f426c8b4ac.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column PRIOR_MONTH_LAST_BUSINESS_DATE
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 2847e91b-85dd-4cc1-b625-d93aabfa8ff9
+		summarizeBy: none
+		sourceColumn: PRIOR_MONTH_LAST_BUSINESS_DATE
+
+		variation Variation
+			isDefault
+			relationship: 9c7456e0-87ca-4866-b79f-809ef22d33a4
+			defaultHierarchy: LocalDateTable_224c6159-9ecb-4278-a527-58eacc5783f3.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column NEXT_MONTH_FIRST_BUSINESS_DATE
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 7b78c612-11bc-451b-a9a7-7b98f7b8a754
+		summarizeBy: none
+		sourceColumn: NEXT_MONTH_FIRST_BUSINESS_DATE
+
+		variation Variation
+			isDefault
+			relationship: 8069b952-3374-4ad7-866d-fc0e1a86e152
+			defaultHierarchy: LocalDateTable_a4ee553a-7282-4bc7-8713-5973158839cc.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column NEXT_MONTH_LAST_BUSINESS_DATE
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: d9747149-d4cf-41d4-a817-3ffc3f218e1d
+		summarizeBy: none
+		sourceColumn: NEXT_MONTH_LAST_BUSINESS_DATE
+
+		variation Variation
+			isDefault
+			relationship: beda04da-d6d7-4792-8ba6-37242f5580d1
+			defaultHierarchy: LocalDateTable_91fbddcb-93af-484a-8dcc-cc9fca7d1c8a.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition CURRENT_SYSTEM_DATE = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases(snowflake_url,"ANALYST_WH_XS"),
+				    HUB_Database = Source{[Name="HUB",Kind="Database"]}[Data],
+				    JOB_Schema = HUB_Database{[Name="JOB",Kind="Schema"]}[Data],
+				    CALENDAR_View = JOB_Schema{[Name="CALENDAR_DAILY",Kind="View"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(CALENDAR_View,{{"CALENDAR_DATE", "Calendar Date"}}),
+				    #"Sorted Rows" = Table.Sort(#"Renamed Columns",{{"Calendar Date", Order.Descending}}),
+				    #"Removed Bottom Rows" = Table.RemoveLastN(#"Sorted Rows",1)
+				in
+				    #"Removed Bottom Rows"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
