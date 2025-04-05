@@ -1,0 +1,463 @@
+table PNL_ITD_DAILY_IBOXXS
+	lineageTag: 087fb509-0443-4d90-815a-42af28681fc1
+
+	measure 'DTD PNL Sum' = ```
+			
+			CALCULATE(
+			    SUM('PNL_ITD_DAILY_IBOXXS'[DTD_PNL]),  
+			    TREATAS(VALUES('INSTRUMENT_TS'[INSTRUMENT_IDENTIFIER]), 'PNL_ITD_DAILY_IBOXXS'[INSTRUMENT_IDENTIFIER])
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: f313b661-a7b8-4d68-b377-f7708f0916ca
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'MTD PNL Sum' = ```
+			
+			CALCULATE(
+			    SUM('PNL_ITD_DAILY_IBOXXS'[MTD_PNL]),  
+			    TREATAS(VALUES('INSTRUMENT_TS'[INSTRUMENT_IDENTIFIER]), 'PNL_ITD_DAILY_IBOXXS'[INSTRUMENT_IDENTIFIER])
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: 6235a43a-fed4-461e-be1c-50de9919c45c
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'YTD PNL Sum' = ```
+			
+			CALCULATE(
+			    SUM('PNL_ITD_DAILY_IBOXXS'[YTD_PNL]),  
+			    TREATAS(VALUES('INSTRUMENT_TS'[INSTRUMENT_IDENTIFIER]), 'PNL_ITD_DAILY_IBOXXS'[INSTRUMENT_IDENTIFIER])
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: 0eb418c7-3b1c-4bd8-82f9-e5bd0083378b
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column PERIOD_END_DATE
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 4478c3c4-f4e9-4e47-804a-d3657b12fcd3
+		summarizeBy: none
+		sourceColumn: PERIOD_END_DATE
+
+		variation Variation
+			isDefault
+			relationship: a3f225b9-365d-40ad-838e-c23e5ade84b1
+			defaultHierarchy: LocalDateTable_fa0f7e8a-c139-4e8b-96bd-12f913420817.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column PORTFOLIO_IDENTIFIER
+		dataType: string
+		lineageTag: f5f4ee3c-dfdb-476f-bc71-bbba3695110a
+		summarizeBy: none
+		sourceColumn: PORTFOLIO_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column INSTRUMENT_IDENTIFIER
+		dataType: string
+		lineageTag: aa186396-6aca-410a-ac35-56036f11c13b
+		summarizeBy: none
+		sourceColumn: INSTRUMENT_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column SOURCE_SYSTEM_CODE
+		dataType: string
+		lineageTag: 2dcd1f24-719a-49ed-a9b6-f593bb72e1ed
+		summarizeBy: none
+		sourceColumn: SOURCE_SYSTEM_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column SOURCE_SYSTEM_NAME
+		dataType: string
+		lineageTag: d049e2a5-97c5-450f-9477-993d961c58d4
+		summarizeBy: none
+		sourceColumn: SOURCE_SYSTEM_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column DTD_PNL
+		dataType: double
+		formatString: #,0
+		lineageTag: e4ec9c56-3ba5-4e3a-be95-a69145c5ef4b
+		summarizeBy: sum
+		sourceColumn: DTD_PNL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column DTD_MTM_PNL
+		dataType: double
+		lineageTag: 69625812-075d-410a-9c01-2e894cb813d6
+		summarizeBy: sum
+		sourceColumn: DTD_MTM_PNL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DTD_TRADING_PNL
+		dataType: double
+		lineageTag: 511905e8-4510-481e-a3f4-c3db4ee2693d
+		summarizeBy: sum
+		sourceColumn: DTD_TRADING_PNL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DTD_MTM_FX_PNL
+		dataType: double
+		lineageTag: bee43fe6-3c60-4f9d-8436-8758c905b12c
+		summarizeBy: sum
+		sourceColumn: DTD_MTM_FX_PNL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DTD_TRADING_FX_PNL
+		dataType: double
+		lineageTag: 7b7db6e7-fa89-41ab-a502-757fb64629d9
+		summarizeBy: sum
+		sourceColumn: DTD_TRADING_FX_PNL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DTD_INCOME_PNL
+		dataType: double
+		lineageTag: fd3d9dfb-1d2b-46ba-ae2f-5c61e4720f9b
+		summarizeBy: sum
+		sourceColumn: DTD_INCOME_PNL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MTD_PNL
+		dataType: double
+		formatString: #,0
+		lineageTag: 7caf4810-353f-4163-b36a-3e50fdb80940
+		summarizeBy: sum
+		sourceColumn: MTD_PNL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column MTD_MTM_PNL
+		dataType: double
+		lineageTag: 9b57cd88-c43d-4d27-901e-77f469820855
+		summarizeBy: sum
+		sourceColumn: MTD_MTM_PNL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MTD_TRADING_PNL
+		dataType: double
+		lineageTag: 1a93fa14-d461-4976-ab6f-b17edd713524
+		summarizeBy: sum
+		sourceColumn: MTD_TRADING_PNL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MTD_MTM_FX_PNL
+		dataType: double
+		lineageTag: 928420ac-2076-4f73-ad2f-be1f8b93fe59
+		summarizeBy: sum
+		sourceColumn: MTD_MTM_FX_PNL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MTD_TRADING_FX_PNL
+		dataType: double
+		lineageTag: 2643f337-82ea-4416-a155-727bf9fa008a
+		summarizeBy: sum
+		sourceColumn: MTD_TRADING_FX_PNL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MTD_INCOME_PNL
+		dataType: double
+		lineageTag: 287fc077-8780-4b71-8742-b7bf1aa32a6e
+		summarizeBy: sum
+		sourceColumn: MTD_INCOME_PNL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column YTD_PNL
+		dataType: double
+		formatString: #,0
+		lineageTag: 7b5d57cc-09f1-4695-a430-3061f678efc5
+		summarizeBy: sum
+		sourceColumn: YTD_PNL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column YTD_MTM_PNL
+		dataType: double
+		lineageTag: 91ba7c27-6206-41b2-b3b6-a1f6762b179e
+		summarizeBy: sum
+		sourceColumn: YTD_MTM_PNL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column YTD_TRADING_PNL
+		dataType: double
+		lineageTag: eb3049d5-7d4b-46e9-a77d-8915db81ea94
+		summarizeBy: sum
+		sourceColumn: YTD_TRADING_PNL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column YTD_MTM_FX_PNL
+		dataType: double
+		lineageTag: cde20f50-1fe3-40e9-af4e-dbffc5be10a3
+		summarizeBy: sum
+		sourceColumn: YTD_MTM_FX_PNL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column YTD_TRADING_FX_PNL
+		dataType: double
+		lineageTag: 30bf14a0-4821-4172-929b-56659f9a02f6
+		summarizeBy: sum
+		sourceColumn: YTD_TRADING_FX_PNL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column YTD_INCOME_PNL
+		dataType: double
+		lineageTag: f238a18b-7873-4bf3-afa8-bbad6cef8932
+		summarizeBy: sum
+		sourceColumn: YTD_INCOME_PNL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DTD_PNL_RETURN_RATE
+		dataType: double
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 7b0c80ca-f710-4914-96f0-ea939c89ef31
+		summarizeBy: sum
+		sourceColumn: DTD_PNL_RETURN_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+	column DTD_MTM_PNL_RETURN_RATE
+		dataType: double
+		lineageTag: ecd08729-18f6-43cc-8061-93ab6319ee08
+		summarizeBy: sum
+		sourceColumn: DTD_MTM_PNL_RETURN_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DTD_TRADING_PNL_RETURN_RATE
+		dataType: double
+		lineageTag: c7b1e6d1-0940-4962-8563-f6f20a628fef
+		summarizeBy: sum
+		sourceColumn: DTD_TRADING_PNL_RETURN_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DTD_MTM_FX_PNL_RETURN_RATE
+		dataType: double
+		lineageTag: f9971b7b-f9f3-4a30-afd4-f365a0760be5
+		summarizeBy: sum
+		sourceColumn: DTD_MTM_FX_PNL_RETURN_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DTD_TRADING_FX_PNL_RETURN_RATE
+		dataType: double
+		lineageTag: 14b97b98-ba09-47a3-9f86-b097fe5f86c7
+		summarizeBy: sum
+		sourceColumn: DTD_TRADING_FX_PNL_RETURN_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DTD_INCOME_PNL_RETURN_RATE
+		dataType: double
+		lineageTag: f8163e6c-456d-4fa6-834a-3de1d738f099
+		summarizeBy: sum
+		sourceColumn: DTD_INCOME_PNL_RETURN_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MTD_PNL_RETURN_RATE
+		dataType: double
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 2dbee6e2-f33d-4ae8-a25a-cd852cbb7f47
+		summarizeBy: sum
+		sourceColumn: MTD_PNL_RETURN_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+	column MTD_MTM_PNL_RETURN_RATE
+		dataType: double
+		lineageTag: bfdfe6d7-912d-4b0e-9ac8-32fd92856ff1
+		summarizeBy: sum
+		sourceColumn: MTD_MTM_PNL_RETURN_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MTD_TRADING_PNL_RETURN_RATE
+		dataType: double
+		lineageTag: dfb4a5da-f9ad-40de-8e8b-62523486e268
+		summarizeBy: sum
+		sourceColumn: MTD_TRADING_PNL_RETURN_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MTD_MTM_FX_PNL_RETURN_RATE
+		dataType: double
+		lineageTag: e7a3a180-6acc-42fd-b3b9-9c1a54af367d
+		summarizeBy: sum
+		sourceColumn: MTD_MTM_FX_PNL_RETURN_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MTD_TRADING_FX_PNL_RETURN_RATE
+		dataType: double
+		lineageTag: 213315ce-7912-4121-8718-4be59e9004c7
+		summarizeBy: sum
+		sourceColumn: MTD_TRADING_FX_PNL_RETURN_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MTD_INCOME_PNL_RETURN_RATE
+		dataType: double
+		lineageTag: 0ab52cdf-3f68-4def-85c9-f09de088b710
+		summarizeBy: sum
+		sourceColumn: MTD_INCOME_PNL_RETURN_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column YTD_PNL_RETURN_RATE
+		dataType: double
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 1945ca76-d9a0-453e-817c-5319506b30de
+		summarizeBy: sum
+		sourceColumn: YTD_PNL_RETURN_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+	column YTD_MTM_PNL_RETURN_RATE
+		dataType: double
+		lineageTag: 19ff87c6-09ed-470b-92fd-bc29adbc56cb
+		summarizeBy: sum
+		sourceColumn: YTD_MTM_PNL_RETURN_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column YTD_TRADING_PNL_RETURN_RATE
+		dataType: double
+		lineageTag: c7ee962e-52c0-4740-a128-7b147212aedb
+		summarizeBy: sum
+		sourceColumn: YTD_TRADING_PNL_RETURN_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column YTD_MTM_FX_PNL_RETURN_RATE
+		dataType: double
+		lineageTag: d51f3a2b-3dc8-4f77-885d-5b8fa67aeaac
+		summarizeBy: sum
+		sourceColumn: YTD_MTM_FX_PNL_RETURN_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column YTD_TRADING_FX_PNL_RETURN_RATE
+		dataType: double
+		lineageTag: 12be7e6a-48f1-4805-a3d8-fdd20ac398b3
+		summarizeBy: sum
+		sourceColumn: YTD_TRADING_FX_PNL_RETURN_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column YTD_INCOME_PNL_RETURN_RATE
+		dataType: double
+		lineageTag: 90df5060-5a3f-46ab-ab50-1ca01aff12e1
+		summarizeBy: sum
+		sourceColumn: YTD_INCOME_PNL_RETURN_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition PNL_ITD_DAILY_IBOXXS = m
+		mode: import
+		source =
+				let
+				    Source = PNL_ITD_DAILY,
+				    #"Filtered Rows" = Table.SelectRows(Source, each ([PORTFOLIO_IDENTIFIER] = "IBOXX_SELECT"))
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

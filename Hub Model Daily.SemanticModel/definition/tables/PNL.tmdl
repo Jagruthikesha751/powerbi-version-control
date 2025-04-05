@@ -1,0 +1,1028 @@
+table PNL
+	isHidden
+	lineageTag: 8e11bb73-6fb6-4db1-af1b-52474169c09b
+
+	column 'Instrument Identifier'
+		dataType: string
+		isHidden
+		sourceProviderType: nvarchar(32)
+		lineageTag: b1442881-88d4-4927-b640-d371f2593a21
+		summarizeBy: none
+		sourceColumn: Instrument Identifier
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Portfolio Identifier'
+		dataType: string
+		isHidden
+		lineageTag: 28f5ca1a-b802-4420-b882-f8869387eb14
+		summarizeBy: none
+		sourceColumn: Portfolio Identifier
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CUSTODIAN_ACCOUNT_IDENTIFIER
+		dataType: string
+		isHidden
+		lineageTag: 733cb621-4195-44b5-9985-8e79ff05284f
+		summarizeBy: none
+		sourceColumn: CUSTODIAN_ACCOUNT_IDENTIFIER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Period End Date'
+		dataType: dateTime
+		isHidden
+		formatString: yyyy-mm-dd
+		sourceProviderType: date
+		lineageTag: f385281e-7d39-43fc-8482-c75e9da6db15
+		summarizeBy: none
+		sourceColumn: Period End Date
+
+		variation Variation
+			isDefault
+			relationship: 79828ec2-8495-4917-b637-ee95067e24d8
+			defaultHierarchy: LocalDateTable_181f809a-1e08-4361-9506-af93b919a1f7.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'PNL Home Amount'
+		dataType: double
+		isHidden
+		formatString: " 0,000;(0,000)"
+		sourceProviderType: decimal(38, 20)
+		lineageTag: f78b634e-c0f2-4a6a-a887-4e1a8873555b
+		summarizeBy: sum
+		sourceColumn: PNL Home Amount
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column PNL_LOCAL_AMOUNT
+		dataType: double
+		isHidden
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 5e395935-b6ec-497e-8204-b6d27ed594b7
+		summarizeBy: sum
+		sourceColumn: PNL_LOCAL_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'MTM PNL Home Amount'
+		dataType: double
+		isHidden
+		formatString: "  0,000;(0,000)"
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 1f1a834a-042f-4da5-a112-bc3f255b6a03
+		summarizeBy: sum
+		sourceColumn: MTM PNL Home Amount
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column MTM_PNL_LOCAL_AMOUNT
+		dataType: double
+		isHidden
+		sourceProviderType: decimal(38, 20)
+		lineageTag: a167ffd4-9e1b-4120-aa85-b655dee38ef0
+		summarizeBy: sum
+		sourceColumn: MTM_PNL_LOCAL_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Trading PNL Home Amount'
+		dataType: double
+		isHidden
+		formatString: " 0,000;(0,000)"
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 8302a186-630d-4724-9303-caa26226448d
+		summarizeBy: sum
+		sourceColumn: Trading PNL Home Amount
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column TRADING_PNL_LOCAL_AMOUNT
+		dataType: double
+		isHidden
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 93318536-cbac-4240-99f0-ddef3b3e899e
+		summarizeBy: sum
+		sourceColumn: TRADING_PNL_LOCAL_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PAYDOWN_PNL_HOME_AMOUNT
+		dataType: double
+		isHidden
+		sourceProviderType: decimal(38, 20)
+		lineageTag: feba2326-4e91-4277-adce-839af18048f0
+		summarizeBy: sum
+		sourceColumn: PAYDOWN_PNL_HOME_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PAYDOWN_PNL_LOCAL_AMOUNT
+		dataType: double
+		isHidden
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 69d82869-6c50-4f50-afb2-7baf087a4649
+		summarizeBy: sum
+		sourceColumn: PAYDOWN_PNL_LOCAL_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Income PNL Home Amount'
+		dataType: double
+		isHidden
+		formatString: "  0,000;(0,000)"
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 41aaa98a-6fa0-4fa0-9869-afc5dc55363b
+		summarizeBy: sum
+		sourceColumn: Income PNL Home Amount
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column INCOME_PNL_LOCAL_AMOUNT
+		dataType: double
+		isHidden
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 11f32622-6319-45f6-9cc5-f2d9b275b1a9
+		summarizeBy: sum
+		sourceColumn: INCOME_PNL_LOCAL_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Accrued PNL Home Amount'
+		dataType: double
+		isHidden
+		formatString: "  0,000;(0,000)"
+		sourceProviderType: decimal(38, 20)
+		lineageTag: a7a10c30-f01a-49a5-83ce-0394ef02c989
+		summarizeBy: sum
+		sourceColumn: Accrued PNL Home Amount
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	column ACCRUED_PNL_LOCAL_AMOUNT
+		dataType: double
+		isHidden
+		sourceProviderType: decimal(38, 20)
+		lineageTag: ef5533c6-ff7a-4fde-8220-2bf8e7df4f67
+		summarizeBy: sum
+		sourceColumn: ACCRUED_PNL_LOCAL_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MTM_INITIAL_FX_HOME_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: 325fe21a-23a1-43ee-bb66-883389df9072
+		summarizeBy: sum
+		sourceColumn: MTM_INITIAL_FX_HOME_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MTM_CHANGE_FX_HOME_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: cbda3ae4-df62-4b4a-8998-1fc6ff9c60d1
+		summarizeBy: sum
+		sourceColumn: MTM_CHANGE_FX_HOME_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column UNEXPLAINED_PNL_HOME_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: 03b6f8dc-cfb9-40f2-a209-cec13a03b53f
+		summarizeBy: sum
+		sourceColumn: UNEXPLAINED_PNL_HOME_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column UNEXPLAINED_PNL_LOCAL_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: 68be54f8-cef5-4ef5-8119-b5d6c5b81060
+		summarizeBy: sum
+		sourceColumn: UNEXPLAINED_PNL_LOCAL_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MV_ACCRUED_CHANGE_HOME_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: 3c0dd78b-1b8a-4c70-b96f-22cbfdafd0dc
+		summarizeBy: sum
+		sourceColumn: MV_ACCRUED_CHANGE_HOME_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MV_ACCRUED_CHANGE_LOCAL_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: cf67cf76-2048-4081-a665-91740d0f7610
+		summarizeBy: sum
+		sourceColumn: MV_ACCRUED_CHANGE_LOCAL_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column NET_TRADE_PROCEEDS_HOME_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: ce3d8e9b-3a66-4103-a99b-4de034a79d32
+		summarizeBy: sum
+		sourceColumn: NET_TRADE_PROCEEDS_HOME_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column NET_TRADE_PROCEEDS_LOCAL_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: 01a85f4e-cf1e-4890-9b71-b08083fb0f3a
+		summarizeBy: sum
+		sourceColumn: NET_TRADE_PROCEEDS_LOCAL_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PRINCIPAL_CASHFLOWS_HOME_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: 0fe2a500-27db-495e-9d4d-4cdcba1e0b16
+		summarizeBy: sum
+		sourceColumn: PRINCIPAL_CASHFLOWS_HOME_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PRINCIPAL_CASHFLOWS_LOCAL_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: 53e94d53-941d-4246-bb2f-575aba3ced7d
+		summarizeBy: sum
+		sourceColumn: PRINCIPAL_CASHFLOWS_LOCAL_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column FINANCING_COST_HOME_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: 3db382ca-26d9-4191-bc9c-0b4c90619b66
+		summarizeBy: sum
+		sourceColumn: FINANCING_COST_HOME_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column FINANCING_COST_LOCAL_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: ef55ffd3-a17e-492f-b18e-bd36e9b470cd
+		summarizeBy: sum
+		sourceColumn: FINANCING_COST_LOCAL_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column INTEREST_CASHFLOWS_HOME_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: 69c1be75-be5e-4cb1-9cf6-ed0465e6da45
+		summarizeBy: sum
+		sourceColumn: INTEREST_CASHFLOWS_HOME_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column INTEREST_CASHFLOWS_LOCAL_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: 8aafe3ae-25ce-4ef8-b1f0-11ede65266cc
+		summarizeBy: sum
+		sourceColumn: INTEREST_CASHFLOWS_LOCAL_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column FINANCING_FX_HOME_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: b4ed9e90-481c-4221-acae-0630aeb5962a
+		summarizeBy: sum
+		sourceColumn: FINANCING_FX_HOME_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column FINANCING_FX_LOCAL_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: 84c9a401-bbb4-42a7-9e39-ed6ba9698a3b
+		summarizeBy: sum
+		sourceColumn: FINANCING_FX_LOCAL_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CURRENCY_CODE
+		dataType: string
+		isHidden
+		sourceProviderType: nvarchar(3)
+		lineageTag: 0f5c0d6c-43fa-4c6b-8ce4-068116ef4a9c
+		summarizeBy: none
+		sourceColumn: CURRENCY_CODE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column BEGINNING_PRICE_DATE
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		sourceProviderType: date
+		lineageTag: 46029ae9-c5b2-4167-8371-b989e89ca341
+		summarizeBy: none
+		sourceColumn: BEGINNING_PRICE_DATE
+
+		variation Variation
+			isDefault
+			relationship: 3474ea6f-7092-44a5-823f-ec190d2a037d
+			defaultHierarchy: LocalDateTable_ab5098a5-cd6e-4b1b-aee7-a899c9d53330.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column BEGINNING_PRICE_HOME_AMOUNT
+		dataType: double
+		isHidden
+		sourceProviderType: decimal(38, 20)
+		lineageTag: da13562b-82a2-4c1b-b445-080185afab9f
+		summarizeBy: sum
+		sourceColumn: BEGINNING_PRICE_HOME_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column BEGINNING_PRICE_LOCAL_AMOUNT
+		dataType: double
+		isHidden
+		sourceProviderType: decimal(38, 20)
+		lineageTag: e595a978-7c00-4203-bbbf-3fbc3563f0c3
+		summarizeBy: sum
+		sourceColumn: BEGINNING_PRICE_LOCAL_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column BEGINNING_PRICE_SOURCE_NAME
+		dataType: string
+		isHidden
+		sourceProviderType: nvarchar(255)
+		lineageTag: a1365efd-6c49-442e-9c77-bfdad5f03b3e
+		summarizeBy: none
+		sourceColumn: BEGINNING_PRICE_SOURCE_NAME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Beginning FX Rate'
+		dataType: double
+		isHidden
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 36724d86-f7ad-4201-87d1-b85b46047dff
+		summarizeBy: sum
+		sourceColumn: Beginning FX Rate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ENDING_PRICE_DATE
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		sourceProviderType: date
+		lineageTag: d95d1380-0b00-482c-987b-77598c7f4b78
+		summarizeBy: none
+		sourceColumn: ENDING_PRICE_DATE
+
+		variation Variation
+			isDefault
+			relationship: f58a65cd-dc87-49fb-8f7d-7c0c4f9e33d1
+			defaultHierarchy: LocalDateTable_b0e5dccd-0dba-4e51-af58-5aa28848c0c8.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ENDING_PRICE_HOME_AMOUNT
+		dataType: double
+		isHidden
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 741fa886-307f-4887-b2c3-9f7f13ddf771
+		summarizeBy: sum
+		sourceColumn: ENDING_PRICE_HOME_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ENDING_PRICE_LOCAL_AMOUNT
+		dataType: double
+		isHidden
+		sourceProviderType: decimal(38, 20)
+		lineageTag: a1a3a930-ee4b-4ea9-b089-146e8bbe01ee
+		summarizeBy: sum
+		sourceColumn: ENDING_PRICE_LOCAL_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ENDING_PRICE_SOURCE_NAME
+		dataType: string
+		isHidden
+		sourceProviderType: nvarchar(255)
+		lineageTag: 9511becc-9e20-4269-8f27-3b96a49a4d9d
+		summarizeBy: none
+		sourceColumn: ENDING_PRICE_SOURCE_NAME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ending FX Rate'
+		dataType: double
+		isHidden
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 5b5dce72-b943-4edf-ac89-ac00e347e1db
+		summarizeBy: sum
+		sourceColumn: Ending FX Rate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column RETURN_RATE
+		dataType: double
+		isHidden
+		lineageTag: e75b8011-f17a-4ee7-b8cc-1f24615c7004
+		summarizeBy: sum
+		sourceColumn: RETURN_RATE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TOTAL_RETURN_RATE
+		dataType: double
+		isHidden
+		lineageTag: 17ea8620-7c45-492c-8a9b-294a4ef0235e
+		summarizeBy: sum
+		sourceColumn: TOTAL_RETURN_RATE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SOURCE_SYSTEM_STATUS_IDENTIFIER
+		dataType: double
+		isHidden
+		sourceProviderType: decimal(38, 0)
+		lineageTag: 8937881a-84ae-48cd-b932-4a23a89139e7
+		summarizeBy: none
+		sourceColumn: SOURCE_SYSTEM_STATUS_IDENTIFIER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CREATED_DATETIME
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: b749e77a-e9d9-40de-bf95-d8098a860b5d
+		summarizeBy: none
+		sourceColumn: CREATED_DATETIME
+
+		variation Variation
+			isDefault
+			relationship: 68dc8e64-29d8-4210-ad14-a23db9442b35
+			defaultHierarchy: LocalDateTable_d2127610-e244-4cb4-b764-85b381e37ac3.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_BY_NAME
+		dataType: string
+		isHidden
+		sourceProviderType: nvarchar(255)
+		lineageTag: ae543a62-2844-4f82-b4a8-5cc0385261a8
+		summarizeBy: none
+		sourceColumn: CREATED_BY_NAME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_BY_COMMENTS
+		dataType: string
+		isHidden
+		sourceProviderType: nvarchar(1000)
+		lineageTag: e072948d-4315-4529-92cf-1c1e55f9c8f2
+		summarizeBy: none
+		sourceColumn: CREATED_BY_COMMENTS
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_DATETIME
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		sourceProviderType: datetime2
+		lineageTag: 372c6682-b54c-40b9-ad99-cd5c71e04ad9
+		summarizeBy: none
+		sourceColumn: MODIFIED_DATETIME
+
+		variation Variation
+			isDefault
+			relationship: b65b351a-5ba0-4b02-80c6-97e63f0d0592
+			defaultHierarchy: LocalDateTable_02036acb-f9c7-4ba5-ac53-2f24a5f288f2.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_BY_NAME
+		dataType: string
+		isHidden
+		sourceProviderType: nvarchar(255)
+		lineageTag: 3efe592f-0e67-41de-8453-f54bb3dc2256
+		summarizeBy: none
+		sourceColumn: MODIFIED_BY_NAME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_BY_COMMENTS
+		dataType: string
+		isHidden
+		sourceProviderType: nvarchar(1000)
+		lineageTag: 2a047e46-4419-48b1-8228-9d5361f3771d
+		summarizeBy: none
+		sourceColumn: MODIFIED_BY_COMMENTS
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID_DATE
+		dataType: string
+		isHidden
+		lineageTag: 68c42386-db07-4be1-baeb-fb2f5aad171d
+		summarizeBy: none
+		sourceColumn: ID_DATE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column DATE_NUMBER = RANKX(ALL(PNL[Period End Date]), PNL[Period End Date], PNL[Period End Date], ASC, Dense)
+		isHidden
+		formatString: 0
+		lineageTag: a42e8030-b87f-4176-9fbc-6efdff7f3dd5
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Prior PNL Home Amount' = ```
+			
+			CALCULATE(
+			    SUM(PNL[PNL Home Amount]),
+			    FILTER( 
+			        ALL(PNL),
+			        PNL[Instrument Identifier] = EARLIER(PNL[Instrument Identifier]) &&
+			        PNL[Portfolio Identifier] = EARLIER(PNL[Portfolio Identifier]) &&
+			        PNL[DATE_NUMBER] = EARLIER(PNL[DATE_NUMBER])-1
+			    )
+			)
+			```
+		isHidden
+		formatString: #,0
+		lineageTag: 4fdb34a9-bb56-40e2-9b6d-77e49e68815f
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column SOURCE_SYSTEM_CODE
+		dataType: string
+		isHidden
+		lineageTag: 99079573-26cd-4642-b2cb-fdd5a43bb674
+		summarizeBy: none
+		sourceColumn: SOURCE_SYSTEM_CODE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KNOWLEDGE_START_DATETIME
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: b67adc11-4363-49d3-8848-5b9184d0209d
+		summarizeBy: none
+		sourceColumn: KNOWLEDGE_START_DATETIME
+
+		variation Variation
+			isDefault
+			relationship: 9a70b5fa-fda7-49d9-9857-e0fdf46dc928
+			defaultHierarchy: LocalDateTable_8182ce48-0767-4553-a676-6cfa6eee4491.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KNOWLEDGE_END_DATETIME
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 63b9b68c-564c-4836-95cb-ccc12d530107
+		summarizeBy: none
+		sourceColumn: KNOWLEDGE_END_DATETIME
+
+		variation Variation
+			isDefault
+			relationship: 08386909-a09b-4914-8c56-8682f713faeb
+			defaultHierarchy: LocalDateTable_8465a6a8-615e-476b-bd79-c96d2f935869.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TRADING_FX_PNL_HOME_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: 0b213480-098f-42a8-ad4c-ec010e4bfbec
+		summarizeBy: sum
+		sourceColumn: TRADING_FX_PNL_HOME_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MTM_FX_PNL_HOME_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: 0d3efdcd-1619-4df2-a1c6-587239e81299
+		summarizeBy: sum
+		sourceColumn: MTM_FX_PNL_HOME_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SOURCE_SYSTEM_SHORT_NAME
+		dataType: string
+		isHidden
+		lineageTag: c7fbd2af-1411-4fec-b54b-d64983fff9cc
+		summarizeBy: none
+		sourceColumn: SOURCE_SYSTEM_SHORT_NAME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column SOURCE_SYSTEM_NAME
+		dataType: string
+		isHidden
+		lineageTag: e3883069-04ed-48a9-8295-bd217f945069
+		summarizeBy: none
+		sourceColumn: SOURCE_SYSTEM_NAME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column SUBSCRIPTION_AND_REDEMPTION_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: 3ea5dd1b-04ef-4449-929e-e1307590e860
+		summarizeBy: sum
+		sourceColumn: SUBSCRIPTION_AND_REDEMPTION_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ENDING_NAV_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: a64207e2-25ef-4de2-a8d1-6ef4afb762b5
+		summarizeBy: sum
+		sourceColumn: ENDING_NAV_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column BEGINNING_NAV_AMOUNT
+		dataType: double
+		isHidden
+		lineageTag: 2ed109a3-6e90-4580-9fc1-c4df45965869
+		summarizeBy: sum
+		sourceColumn: BEGINNING_NAV_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MTM_RETURN_RATE
+		dataType: double
+		isHidden
+		lineageTag: e3781274-0214-4561-8584-711da7557812
+		summarizeBy: sum
+		sourceColumn: MTM_RETURN_RATE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TRADING_RETURN_RATE
+		dataType: double
+		isHidden
+		lineageTag: 29556747-36f6-4326-bd8b-a7247b58d645
+		summarizeBy: sum
+		sourceColumn: TRADING_RETURN_RATE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MTM_FX_RETURN_RATE
+		dataType: double
+		isHidden
+		lineageTag: 3fb290d6-12e9-4ef8-bb17-653f5bd39005
+		summarizeBy: sum
+		sourceColumn: MTM_FX_RETURN_RATE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TRADING_FX_RETURN_RATE
+		dataType: double
+		isHidden
+		lineageTag: 45513c0a-6304-44fa-b31b-28b84c6c5230
+		summarizeBy: sum
+		sourceColumn: TRADING_FX_RETURN_RATE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column INCOME_RETURN_RATE
+		dataType: double
+		isHidden
+		lineageTag: d5809989-e9f7-4c72-9f7f-a7e84ad178c9
+		summarizeBy: sum
+		sourceColumn: INCOME_RETURN_RATE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SENTRY_PORTFOLIO_IDENTIFIER
+		dataType: string
+		isHidden
+		lineageTag: 1abfc1f4-a462-4d10-86c2-01ff3967a015
+		summarizeBy: none
+		sourceColumn: SENTRY_PORTFOLIO_IDENTIFIER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column DATA_PROVIDER_NAME
+		dataType: string
+		isHidden
+		lineageTag: 94ecabaa-db91-47ed-a62b-28bd5920779c
+		summarizeBy: none
+		sourceColumn: DATA_PROVIDER_NAME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column VANTAGE_PORTFOLIO_IDENTIFIER
+		dataType: string
+		isHidden
+		lineageTag: 26e2e382-01e3-40d7-8c88-ee862ccc5b9f
+		summarizeBy: none
+		sourceColumn: VANTAGE_PORTFOLIO_IDENTIFIER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column VANTAGE_CUSTODIAN_ACCOUNT_IDENTIFIER
+		dataType: string
+		isHidden
+		lineageTag: c22e33c1-49b0-4712-a777-59fa87754257
+		summarizeBy: none
+		sourceColumn: VANTAGE_CUSTODIAN_ACCOUNT_IDENTIFIER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition PNL = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases(snowflake_url,"ANALYST_WH_XS"),
+				    HUB_Database = Source{[Name="HUB",Kind="Database"]}[Data],
+				    POSITION_Schema = HUB_Database{[Name="POSITION",Kind="Schema"]}[Data],
+				    PNL_DAILY_Table = POSITION_Schema{[Name="PNL_DAILY",Kind="Table"]}[Data],
+				    #"Added Custom" = Table.AddColumn(PNL_DAILY_Table, "ID_DATE", each [INSTRUMENT_IDENTIFIER]&Date.ToText([PERIOD_END_DATE], [Format="yyyy-MM-dd"])),
+				    #"Renamed Columns" = Table.RenameColumns(#"Added Custom",{{"PORTFOLIO_IDENTIFIER", "Portfolio Identifier"}, {"PNL_HOME_AMOUNT", "PNL Home Amount"}, {"PERIOD_END_DATE", "Period End Date"}}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Renamed Columns",{{"BEGINNING_FX_RATE", "Beginning FX Rate"}, {"ENDING_FX_RATE", "Ending FX Rate"}, {"ACCRUED_PNL_HOME_AMOUNT", "Accrued PNL Home Amount"}, {"MTM_PNL_HOME_AMOUNT", "MTM PNL Home Amount"}, {"INCOME_PNL_HOME_AMOUNT", "Income PNL Home Amount"}, {"TRADING_PNL_HOME_AMOUNT", "Trading PNL Home Amount"}, {"INSTRUMENT_IDENTIFIER", "Instrument Identifier"}})
+				in
+				    #"Renamed Columns1"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

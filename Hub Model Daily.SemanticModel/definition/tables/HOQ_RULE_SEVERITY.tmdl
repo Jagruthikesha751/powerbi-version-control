@@ -1,0 +1,95 @@
+table HOQ_RULE_SEVERITY
+	lineageTag: 9f9f1ea5-1cd3-48c2-bc92-c4eec5ca6e6e
+
+	column HOQ_RULE_SEVERITY_CODE
+		dataType: string
+		lineageTag: 6f19159d-3316-4b78-8c8e-193851de7605
+		summarizeBy: none
+		sourceColumn: HOQ_RULE_SEVERITY_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column Severity
+		dataType: string
+		lineageTag: 68347d22-f5e3-49bd-a8d3-7a577b7e6541
+		summarizeBy: none
+		sourceColumn: Severity
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_DATETIME
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 2afbc5f0-22b7-4a5b-96f1-52ad34fd459b
+		summarizeBy: none
+		sourceColumn: CREATED_DATETIME
+
+		variation Variation
+			isDefault
+			relationship: 75913316-a917-4402-bb4c-02f37c529e86
+			defaultHierarchy: LocalDateTable_f39a91ce-ce82-4089-9067-caf096c59ed8.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_BY_NAME
+		dataType: string
+		lineageTag: 596762eb-2301-41e0-8f34-9679fe8796c1
+		summarizeBy: none
+		sourceColumn: CREATED_BY_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_BY_COMMENTS
+		dataType: string
+		lineageTag: 5181bff6-1416-4e66-8ed3-5f67ca9bb74d
+		summarizeBy: none
+		sourceColumn: CREATED_BY_COMMENTS
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_DATETIME
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1532f5ed-d88c-4836-a927-24f3a4daea89
+		summarizeBy: none
+		sourceColumn: MODIFIED_DATETIME
+
+		variation Variation
+			isDefault
+			relationship: e126955c-cca7-4b92-9c18-e97326c24f11
+			defaultHierarchy: LocalDateTable_e86f3f66-815b-43c3-b7fe-7ba09aea4bfe.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_BY_NAME
+		dataType: string
+		lineageTag: df50931f-d951-431f-a7e7-5526f47c6004
+		summarizeBy: none
+		sourceColumn: MODIFIED_BY_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_BY_COMMENTS
+		dataType: string
+		lineageTag: d93e3733-3d07-4025-8cae-05845709803c
+		summarizeBy: none
+		sourceColumn: MODIFIED_BY_COMMENTS
+
+		annotation SummarizationSetBy = Automatic
+
+	partition HOQ_RULE_SEVERITY = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases(snowflake_url,"ANALYST_WH_XS"),
+				    HUB_Database = Source{[Name="HUB",Kind="Database"]}[Data],
+				    JOB_Schema = HUB_Database{[Name="JOB",Kind="Schema"]}[Data],
+				    HOQ_RULE_SEVERITY_Table = JOB_Schema{[Name="HOQ_RULE_SEVERITY",Kind="Table"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(HOQ_RULE_SEVERITY_Table,{{"HOQ_RULE_SEVERITY_NAME", "Severity"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
