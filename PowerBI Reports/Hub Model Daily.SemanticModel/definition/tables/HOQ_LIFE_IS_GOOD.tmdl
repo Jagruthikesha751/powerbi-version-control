@@ -1,0 +1,107 @@
+table HOQ_LIFE_IS_GOOD
+	lineageTag: cab8e8fc-07e9-4dea-8b7a-3d1a427aa7c3
+
+	measure LIFE_IS_GOOD_COLOR = ```
+			IF(FIRSTNONBLANK('HOQ_LIFE_IS_GOOD'[LIFE_IS_GOOD_INDICATOR], FALSE) = TRUE, "GREEN", "RED")
+			
+			```
+		lineageTag: c7d57659-27f9-4bd3-b155-c9b86e090cb0
+
+		changedProperty = IsHidden
+
+	measure OverallStatusColor = ```
+			
+			IF(
+			    COUNTROWS(FILTER(HOQ_LIFE_IS_GOOD, HOQ_LIFE_IS_GOOD[Status Icon] = "Red")) > 0,
+			      UNICHAR(128308),  
+			    UNICHAR(128994) 
+			)
+			```
+		lineageTag: c4bf2f1f-9d30-4540-9fae-c55ad9b47c82
+
+	column CURRENT_SYSTEM_DATE
+		dataType: string
+		lineageTag: e109e04d-62f6-4739-9866-62c2fb2b6a16
+		summarizeBy: none
+		sourceColumn: CURRENT_SYSTEM_DATE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PRIOR_SYSTEM_DATE
+		dataType: string
+		lineageTag: e309d6c9-bc3a-47a4-81fb-9b5cd6c2d8bd
+		summarizeBy: none
+		sourceColumn: PRIOR_SYSTEM_DATE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column HOQ_RULE_NAME
+		dataType: string
+		lineageTag: b17fb256-d0e9-432a-ae22-86e44cdb9adb
+		summarizeBy: none
+		sourceColumn: HOQ_RULE_NAME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column HOQ_RULE_CODE
+		dataType: string
+		lineageTag: babb979c-48ef-409a-a33b-ae4a1e20fc8b
+		summarizeBy: none
+		sourceColumn: HOQ_RULE_CODE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column LIFE_IS_GOOD_INDICATOR
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 2d8b03bb-c5cd-470d-a85f-d318daef5199
+		summarizeBy: none
+		sourceColumn: LIFE_IS_GOOD_INDICATOR
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column HOQ_MESSAGE_DESCRIPTION
+		dataType: string
+		lineageTag: 2a5fa052-0fcf-453a-b768-dfa8cda360fc
+		summarizeBy: none
+		sourceColumn: HOQ_MESSAGE_DESCRIPTION
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Status Icon' = unichar(11044)
+		lineageTag: 11a526de-888e-41f8-a9fe-413b0f09b5bd
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition HOQ_LIFE_IS_GOOD = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases(snowflake_url,"ANALYST_WH_XS"),
+				    HUB_Database = Source{[Name="HUB",Kind="Database"]}[Data],
+				    JOB_Schema = HUB_Database{[Name="JOB",Kind="Schema"]}[Data],
+				    HOQ_LIFE_IS_GOOD_View = JOB_Schema{[Name="HOQ_LIFE_IS_GOOD",Kind="View"]}[Data]
+				in
+				    HOQ_LIFE_IS_GOOD_View
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

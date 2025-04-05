@@ -1,0 +1,329 @@
+table INSTRUMENT_PRICE
+	lineageTag: 98901ab7-99fd-40d0-b769-8084d63f4b05
+
+	measure 'Prior Date' = ```
+			0
+			// CALCULATE(
+			//     MAX(INSTRUMENT_PRICE[Calendar Date]),
+			//     FILTER( 
+			//         ALL(INSTRUMENT_PRICE),
+			//         INSTRUMENT_PRICE[INSTRUMENT_IDENTIFIER] = EARLIER(INSTRUMENT_PRICE[INSTRUMENT_IDENTIFIER]) &&
+			//         INSTRUMENT_PRICE[DATE_NUMBER] = EARLIER(INSTRUMENT_PRICE[DATE_NUMBER])-1
+			//     )
+			// )
+			```
+		formatString: 0
+		lineageTag: 16759a54-57d1-41b3-8ac3-d28136e5c78b
+
+	column INSTRUMENT_IDENTIFIER
+		dataType: string
+		sourceProviderType: nvarchar(32)
+		lineageTag: 56b1a3c1-4130-4eb3-839d-cdd04f65d3bd
+		summarizeBy: none
+		sourceColumn: INSTRUMENT_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Calendar Date'
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		sourceProviderType: date
+		lineageTag: 16820983-c21f-4b75-a35c-cd40588750f7
+		summarizeBy: none
+		sourceColumn: Calendar Date
+
+		variation Variation
+			isDefault
+			relationship: e843eb03-ce7c-40a0-81d2-78188bb59cb5
+			defaultHierarchy: LocalDateTable_42ba3750-b09a-4e7a-8e5e-85a9a3172e78.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'Data Provider Name'
+		dataType: string
+		sourceProviderType: nvarchar(8)
+		lineageTag: 612e2fdf-17eb-46f7-a9f4-3a49a2a046e9
+		summarizeBy: none
+		sourceColumn: Data Provider Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column COUNTERPARTY_PRICE_IDENTIFIER
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: 616d2858-8d0f-40d4-9af6-b93b288d7e18
+		summarizeBy: none
+		sourceColumn: COUNTERPARTY_PRICE_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column FINAL_PRICE_INDICATOR
+		dataType: double
+		sourceProviderType: decimal(1, 0)
+		lineageTag: b4e17c2e-2bbe-4212-9d30-ae86af8c1dfa
+		summarizeBy: sum
+		sourceColumn: FINAL_PRICE_INDICATOR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Bid Price'
+		dataType: double
+		formatString: 0.000
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 9e0e39d6-0894-4e8c-a16c-31df9fe1bcae
+		summarizeBy: sum
+		sourceColumn: Bid Price
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ask Price'
+		dataType: double
+		formatString: 0.000
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 71dc9681-64d0-485a-a683-5c613f8bafb9
+		summarizeBy: sum
+		sourceColumn: Ask Price
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Mid Price'
+		dataType: double
+		formatString: 0.000
+		sourceProviderType: decimal(38, 20)
+		lineageTag: 30d1a51b-9a15-4a16-b20c-b6f038ee1c30
+		summarizeBy: sum
+		sourceColumn: Mid Price
+
+		annotation SummarizationSetBy = Automatic
+
+	column QUOTE_DEPTH
+		dataType: double
+		sourceProviderType: decimal(38, 0)
+		lineageTag: f1b2086d-ce68-4977-8cb6-5f8ca53abfe6
+		summarizeBy: sum
+		sourceColumn: QUOTE_DEPTH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_DEPTH_TEXT
+		dataType: string
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: 4dd590b1-9abd-436d-bb1d-266f1f9382e3
+		summarizeBy: none
+		sourceColumn: QUOTE_DEPTH_TEXT
+
+		annotation SummarizationSetBy = Automatic
+
+	column '|Change - $|' = ABS(INSTRUMENT_PRICE[Change - $])
+		lineageTag: 8793a257-8114-45fc-9728-09c2648bd34e
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column '|Change - BPS|' = ABS(INSTRUMENT_PRICE[Change - BPS])
+		lineageTag: 30e5b533-c951-42b5-95be-58e140997d6f
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 3_DAY_BID_PRICE = ```
+			
+			CALCULATE(
+			    MAX(INSTRUMENT_PRICE[Bid Price]),
+			    FILTER( 
+			        ALL(INSTRUMENT_PRICE),
+			        INSTRUMENT_PRICE[INSTRUMENT_IDENTIFIER] = EARLIER(INSTRUMENT_PRICE[INSTRUMENT_IDENTIFIER]) &&
+			        INSTRUMENT_PRICE[DATE_NUMBER] = EARLIER(INSTRUMENT_PRICE[DATE_NUMBER])-3
+			    )
+			)
+			```
+		formatString: 0.000
+		lineageTag: 45809d3a-7825-47bc-9196-9a1bc02b1952
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 3_DAY_BID_PRICE_CHANGE_DELTA = INSTRUMENT_PRICE[Bid Price]-INSTRUMENT_PRICE[3_DAY_BID_PRICE]
+		lineageTag: 8ea93a38-8ffc-4d82-9c84-c7b0ba11c588
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 3_DAY_BID_PRICE_CHANGE_PERCENT = IFERROR(((INSTRUMENT_PRICE[Bid Price]-INSTRUMENT_PRICE[3_DAY_BID_PRICE])/INSTRUMENT_PRICE[3_DAY_BID_PRICE])*100, BLANK())
+		isHidden
+		lineageTag: 7612575a-f073-4a7f-a243-268a192b6fa6
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Change - $' = IFERROR(INSTRUMENT_PRICE[Bid Price]-INSTRUMENT_PRICE[Prior Bid],BLANK())
+		lineageTag: c2ef853a-2c21-42c5-ac8e-0b46a25e541e
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Change - BPS' = IFERROR(((INSTRUMENT_PRICE[Bid Price]-INSTRUMENT_PRICE[Prior Bid])/INSTRUMENT_PRICE[Prior Bid])*10000, BLANK())
+		formatString: 0
+		lineageTag: 48e21d64-cdc6-4def-b2a8-cc07ec13fbdd
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column DATE_NUMBER = RANKX(ALL(INSTRUMENT_PRICE[Calendar Date]), INSTRUMENT_PRICE[Calendar Date], [Calendar Date], ASC, Dense)
+		formatString: 0
+		lineageTag: c7f54953-3321-4f8d-bdca-6d441fa85f57
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Non-zero Change' = IF(INSTRUMENT_PRICE[Change - $] = 0, FALSE, TRUE)
+		lineageTag: 4267c352-2046-4548-911a-426898d05772
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Prior Bid' = ```
+			
+			VAR OUT = CALCULATE(
+			    MAX(INSTRUMENT_PRICE[Bid Price]),
+			    FILTER( 
+			        ALL(INSTRUMENT_PRICE),
+			        INSTRUMENT_PRICE[INSTRUMENT_IDENTIFIER] = EARLIER(INSTRUMENT_PRICE[INSTRUMENT_IDENTIFIER]) &&
+			        INSTRUMENT_PRICE[DATE_NUMBER] = EARLIER(INSTRUMENT_PRICE[DATE_NUMBER])-1 &&
+			        INSTRUMENT_PRICE[Data Provider Name] = EARLIER(INSTRUMENT_PRICE[Data Provider Name])
+			    )
+			)
+			RETURN OUT
+			```
+		formatString: 0.000
+		lineageTag: c53ca42b-a37f-4313-9e73-c68e76926a6f
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID_DATE
+		dataType: string
+		lineageTag: a215c3af-1441-42ba-ad33-79798ce848a7
+		summarizeBy: none
+		sourceColumn: ID_DATE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Rounded Bid Price' = MROUND([Bid Price], 10)
+		formatString: 0
+		lineageTag: 97883f63-acd0-4755-950f-e8426ebf274d
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column EOD_PRICE
+		dataType: double
+		formatString: 0.000
+		lineageTag: b1cbc491-0982-4560-9c33-6302274d7e74
+		summarizeBy: sum
+		sourceColumn: EOD_PRICE
+
+		annotation SummarizationSetBy = Automatic
+
+	column BID_SIZE
+		dataType: double
+		lineageTag: bc3dcae8-ed96-43ec-a40c-e08bbea6f509
+		summarizeBy: sum
+		sourceColumn: BID_SIZE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ASK_SIZE
+		dataType: double
+		formatString: 0.000
+		lineageTag: 87825592-2c47-40a8-81d4-30bf09db12d5
+		summarizeBy: sum
+		sourceColumn: ASK_SIZE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Bid Ask Spread' = ```
+			IF( 
+			    ((INSTRUMENT_PRICE[Ask Price]<=0) || (INSTRUMENT_PRICE[Bid Price]<=0)) || 
+			    (ISBLANK(INSTRUMENT_PRICE[Ask Price]) || ISBLANK(INSTRUMENT_PRICE[Bid Price])), 
+			        BLANK(),
+			        INSTRUMENT_PRICE[Ask Price] - INSTRUMENT_PRICE[Bid Price]        
+			    )
+			```
+		lineageTag: 3919d0d8-4af1-4389-a192-5bfbc6d66a4e
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Jack Spread' = ```
+			INSTRUMENT_PRICE[Bid Price] - INSTRUMENT_PRICE[Ask Price]
+			
+			
+			
+			```
+		lineageTag: 2a68e33b-9a81-406c-9810-79ff99a81385
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Price Bucket' = ROUNDDOWN(INSTRUMENT_PRICE[Bid Price],-1)
+		lineageTag: e4eef7c1-0cdd-4ded-b36d-64e0b8d9abe9
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PRICE_DATE
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: f5834c5d-4aaf-44be-81a7-83cad8ef1758
+		summarizeBy: none
+		sourceColumn: PRICE_DATE
+
+		variation Variation
+			isDefault
+			relationship: fb6e3e40-d306-478f-8916-0c43549ce5f6
+			defaultHierarchy: LocalDateTable_28cd2707-d222-4ee3-a559-9c32b8ae4161.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition INSTRUMENT_PRICE = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases(snowflake_url,"ANALYST_WH_XS"),
+				    HUB_Database = Source{[Name="HUB",Kind="Database"]}[Data],
+				    PRICE_Schema = HUB_Database{[Name="PRICE",Kind="Schema"]}[Data],
+				    INSTRUMENT_PRICE_View = PRICE_Schema{[Name="INSTRUMENT_PRICE_DAILY",Kind="View"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(INSTRUMENT_PRICE_View,{{"CALENDAR_DATE", "Calendar Date"}, {"BID_PRICE", "Bid Price"}}),
+				    #"Added Custom" = Table.AddColumn(#"Renamed Columns", "ID_DATE", each [INSTRUMENT_IDENTIFIER]&Date.ToText([Calendar Date], [Format="yyyy-MM-dd"])),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Added Custom",{{"MID_PRICE", "Mid Price"}, {"ASK_PRICE", "Ask Price"}, {"DATA_PROVIDER_NAME", "Data Provider Name"}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Renamed Columns1", each Date.IsInYearToDate([Calendar Date]))
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

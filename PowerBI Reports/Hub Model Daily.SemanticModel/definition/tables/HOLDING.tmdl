@@ -1,0 +1,1082 @@
+table HOLDING
+	lineageTag: a1f95dac-e64d-4c15-bbb4-b1f87a24138f
+
+	measure 'NOTIONAL TO PURCHASE OR SELL' = ```
+			
+			VAR PERCENTCHANGE  = MAX(HOLDING[MPSIF - IBOXX Notional %])
+			VAR TOTALQUANTITY= CALCULATE(SUM(HOLDING[MPSIF Quantity]), ALLSELECTED()) 
+			RETURN PERCENTCHANGE * TOTALQUANTITY
+			```
+		lineageTag: c86f40ae-a44c-4ab5-b3b9-ac7c318d351e
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure WAL = ```
+			
+			CALCULATE(
+			    SUMX(HOLDING, DATEDIFF(TODAY(), RELATED(INSTRUMENT_TS[Maturity Date]), YEAR) * HOLDING[Notional Holding %] / SUM([Notional Holding %])), 
+			    HOLDING[Instrument Identifier] <> "96c3f10ecbc02bf14bdee5a10eebf998"
+			)
+			```
+		lineageTag: 291b9de2-2bed-4186-8587-fd8b20bf3e01
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure WAP = ```
+			
+			// VAR OCT_PRICE = SELECTCOLUMNS(FILTER(INSTRUMENT_PRICE, [Data Provider Name]="OCTAURA"),"ID_DATE",[ID_DATE],"Bid Price", [Bid Price])
+			// VAR HOLDING_FILT = SELECTCOLUMNS(HOLDING,"ID_DATE",[ID_DATE],"PORTFOLIO_HOLDING_PERCENT", [Portfolio Holding Percent])
+			// VAR JOINED = NATURALLEFTOUTERJOIN(HOLDING_FILT, OCT_PRICE)
+			CALCULATE(
+			    SUMX(
+			        HOLDING, 
+			        IF(
+			            HOLDING[portfolio_identifier] = "MPC_IBOXX_SELECT_PLUS" && ISBLANK(RELATED(INSTRUMENT_TS[SPGLOBAL Bid Price])), 
+			            100, 
+			            RELATED(INSTRUMENT_TS[SPGLOBAL Bid Price])
+			        ) * HOLDING[Notional Holding %] / SUM(HOLDING[Notional Holding %])
+			    ), 
+			    INSTRUMENT_PRICE_SPGLOBAL_DISTINCT_IDENTIFIERS[INSTRUMENT_IDENTIFIER] <> BLANK()
+			)
+			```
+		lineageTag: 73cedb65-2f16-44c0-a85c-8130f2ca26c5
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure WARF = ```
+			
+			    CALCULATE(
+			        SUMX(
+			            HOLDING, 
+			            IF(
+			                -- Check if Moody's rating_code_data_provider_name does not end with "-ISSUER-RATING" and Rating is not blank and not in ('NR', 'WR)
+			                RIGHT(RELATED(INSTRUMENT_RATING_MPC_MOODYS[rating_code_data_provider_name]), 14) <> "-ISSUER-RATING" &&
+			                NOT(ISBLANK(RELATED(INSTRUMENT_RATING_MPC_MOODYS[Rating]))) &&
+			                NOT(RELATED(INSTRUMENT_RATING_MPC_MOODYS[Rating]) IN {"NR", "WR"}),
+			                -- Use Moody's RATING_FACTOR
+			                RELATED(INSTRUMENT_RATING_MPC_MOODYS[RATING_FACTOR]),
+			                IF(
+			                    -- Check if S&P Global rating_code_data_provider_name does not end with "-ISSUER-RATING" and Rating is not blank and not in ('NR', 'WR)
+			                    RIGHT(RELATED(INSTRUMENT_RATING_MPC_SPGLOBAL[rating_code_data_provider_name]), 14) <> "-ISSUER-RATING" &&
+			                    NOT(ISBLANK(RELATED(INSTRUMENT_RATING_MPC_SPGLOBAL[Rating]))) &&
+			                    NOT(RELATED(INSTRUMENT_RATING_MPC_SPGLOBAL[Rating]) IN {"NR", "WR"}),
+			                    -- Use S&P Global RATING_FACTOR
+			                    RELATED(INSTRUMENT_RATING_MPC_SPGLOBAL[RATING_FACTOR]),
+			                    IF(
+			                        -- Check if Moody's rating_code_data_provider_name ends with "-ISSUER-RATING" and Rating is not blank and not in ('NR', 'WR)
+			                        RIGHT(RELATED(INSTRUMENT_RATING_MPC_MOODYS[rating_code_data_provider_name]), 14) = "-ISSUER-RATING" &&
+			                        NOT(ISBLANK(RELATED(INSTRUMENT_RATING_MPC_MOODYS[Rating]))) &&
+			                        NOT(RELATED(INSTRUMENT_RATING_MPC_MOODYS[Rating]) IN {"NR", "WR"}),
+			                        -- Use Moody's RATING_FACTOR
+			                        RELATED(INSTRUMENT_RATING_MPC_MOODYS[RATING_FACTOR]),
+			                        -- Default to S&P Global RATING_FACTOR
+			                        RELATED(INSTRUMENT_RATING_MPC_SPGLOBAL[RATING_FACTOR])
+			                    )
+			                )
+			            ) * HOLDING[Notional Holding %] / SUM([Notional Holding %])
+			        ), 
+			        -- Exclude the specific Instrument Identifier
+			        HOLDING[Instrument Identifier] <> "96c3f10ecbc02bf14bdee5a10eebf998"
+			    )
+			```
+		formatString: 0
+		lineageTag: 6ccc6749-c940-46a4-9721-5447db92bd72
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure WAS = ```
+			
+			CALCULATE(
+			    SUMX(HOLDING, RELATED(INSTRUMENT_TS[Floater Spread Rate]) * HOLDING[Notional Holding %] / SUM([Notional Holding %])), 
+			    HOLDING[Instrument Identifier] <> "96c3f10ecbc02bf14bdee5a10eebf998"
+			)
+			```
+		lineageTag: a3e708af-ec98-4edb-8161-0974f48a7ad0
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Notional(T) = divide(sum(HOLDING[Position Quantity]), 1e12,0)
+		lineageTag: e2713a1b-fd61-4de1-90de-378cc1894fb6
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Notional(B) = divide(sum(HOLDING[Position Quantity]), 1e9,0)
+		formatString: #,0.000
+		lineageTag: f61d1c5c-5212-44a5-a6c0-db0d4d8fb8bc
+
+		changedProperty = IsHidden
+
+	column SOURCE_SYSTEM_CODE
+		dataType: string
+		lineageTag: 9284bb9b-ee60-42f1-ba5f-1e7231bab506
+		summarizeBy: none
+		sourceColumn: SOURCE_SYSTEM_CODE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column SOURCE_SYSTEM_SHORT_NAME
+		dataType: string
+		lineageTag: 99082985-4470-4284-9b54-3631fe2618a4
+		summarizeBy: none
+		sourceColumn: SOURCE_SYSTEM_SHORT_NAME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column SOURCE_SYSTEM_NAME
+		dataType: string
+		lineageTag: e6b88403-0b57-4d8a-ab4b-42900d27e5c8
+		summarizeBy: none
+		sourceColumn: SOURCE_SYSTEM_NAME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column SOURCE_SYSTEM_STATUS_IDENTIFIER
+		dataType: double
+		lineageTag: 3d93f233-f78e-4422-acd6-44b54897cd9a
+		summarizeBy: sum
+		sourceColumn: SOURCE_SYSTEM_STATUS_IDENTIFIER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Instrument Identifier'
+		dataType: string
+		lineageTag: 4903bfdf-1935-4e25-afa0-dd51457acd2a
+		summarizeBy: none
+		sourceColumn: Instrument Identifier
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PORTFOLIO_IDENTIFIER
+		dataType: string
+		lineageTag: 419a3ff1-b5a0-411a-b5dc-4fb25ae5eba7
+		summarizeBy: none
+		sourceColumn: PORTFOLIO_IDENTIFIER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CUSTODIAN_ACCOUNT_IDENTIFIER
+		dataType: string
+		lineageTag: a99b5cfd-6e5d-4df4-9ebe-28c928a445be
+		summarizeBy: none
+		sourceColumn: CUSTODIAN_ACCOUNT_IDENTIFIER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Period End Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 0f1bf124-3c91-4445-a741-05230d278aba
+		summarizeBy: none
+		sourceColumn: Period End Date
+
+		variation Variation
+			isDefault
+			relationship: 2b8cdc85-bf4c-47ca-8e0c-c096afc94f16
+			defaultHierarchy: LocalDateTable_8ee88410-4381-4530-8a48-135fe21df07d.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Position Quantity'
+		dataType: double
+		formatString: #,0
+		lineageTag: 72fc22af-8a37-4159-954e-3266f036416c
+		summarizeBy: sum
+		sourceColumn: Position Quantity
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column ORIGINAL_FACE_AMOUNT
+		dataType: double
+		lineageTag: 8237b731-8044-4de9-a75c-c5fb701c35a1
+		summarizeBy: sum
+		sourceColumn: ORIGINAL_FACE_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CURRENT_FACE_AMOUNT
+		dataType: double
+		lineageTag: 6521cc56-c130-40c8-8d2d-95f5c0ddc231
+		summarizeBy: sum
+		sourceColumn: CURRENT_FACE_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'MV Home Amount'
+		dataType: double
+		formatString: #,0
+		lineageTag: afab3b9b-66c7-429f-8641-b17a7b33e74f
+		summarizeBy: sum
+		sourceColumn: MV Home Amount
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column MV_LOCAL_AMOUNT
+		dataType: double
+		lineageTag: 47e97272-1419-4e2b-ad61-680ce4ddc613
+		summarizeBy: sum
+		sourceColumn: MV_LOCAL_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Accrued
+		dataType: double
+		formatString: #,0
+		lineageTag: 190cd7bf-3c71-4dc1-bb4e-0ccaf943fb4b
+		summarizeBy: sum
+		sourceColumn: Accrued
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column ACCRUED_LOCAL_AMOUNT
+		dataType: double
+		lineageTag: 9dc1d58f-b973-495c-85a9-b0b35343d7ca
+		summarizeBy: sum
+		sourceColumn: ACCRUED_LOCAL_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column COST_BASIS_HOME_AMOUNT
+		dataType: double
+		lineageTag: 9cdc2799-41d8-4845-9f7b-ee8d99c472c9
+		summarizeBy: sum
+		sourceColumn: COST_BASIS_HOME_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column COST_BASIS_LOCAL_AMOUNT
+		dataType: double
+		lineageTag: 4549f4bf-4fe9-45b4-aa98-d1185e33ae6f
+		summarizeBy: sum
+		sourceColumn: COST_BASIS_LOCAL_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CURRENCY_CODE
+		dataType: string
+		lineageTag: f464a4ac-0cf7-40d6-a068-2340b3379597
+		summarizeBy: none
+		sourceColumn: CURRENCY_CODE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PRICE_DATE
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: d741ed77-51cd-4a34-ba73-3a4d3847af01
+		summarizeBy: none
+		sourceColumn: PRICE_DATE
+
+		variation Variation
+			isDefault
+			relationship: ff4c39cb-d4b7-4ffd-bd31-042a5804c5e2
+			defaultHierarchy: LocalDateTable_ba3f80ca-b421-4cf5-afb0-3001e6839f74.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Price Home Amount'
+		dataType: double
+		formatString: 0.000
+		lineageTag: 5542c942-c681-42ae-872d-0dfbcf5c1330
+		summarizeBy: sum
+		sourceColumn: Price Home Amount
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PRICE_LOCAL_AMOUNT
+		dataType: double
+		formatString: 0.000
+		lineageTag: a3a1a2e1-6b23-41dc-8188-8fe1fc45c36b
+		summarizeBy: sum
+		sourceColumn: PRICE_LOCAL_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PRICE_SOURCE_NAME
+		dataType: string
+		lineageTag: 59bcdc75-b86c-48a4-951d-24a73a073f48
+		summarizeBy: none
+		sourceColumn: PRICE_SOURCE_NAME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'FX Rate'
+		dataType: double
+		lineageTag: 0d2a964f-c678-4b77-a27c-a04912a19830
+		summarizeBy: sum
+		sourceColumn: FX Rate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Portfolio Holding Percent'
+		dataType: double
+		formatString: 0.000%;-0.000%;0.000%
+		lineageTag: 445c4421-c75d-4af1-b211-8fbdfa15e5a7
+		summarizeBy: sum
+		sourceColumn: Portfolio Holding Percent
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_DATETIME
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 683774fc-1e32-440e-acd0-ebfccda4f113
+		summarizeBy: none
+		sourceColumn: CREATED_DATETIME
+
+		variation Variation
+			isDefault
+			relationship: 39ecef88-2ff5-44dd-833e-93652db9afc3
+			defaultHierarchy: LocalDateTable_3b64fe21-f815-468e-8e62-7ad1e569776c.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_BY_NAME
+		dataType: string
+		lineageTag: 22bc4aa5-9c70-41d7-9093-c28d304d9b76
+		summarizeBy: none
+		sourceColumn: CREATED_BY_NAME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_BY_COMMENTS
+		dataType: string
+		lineageTag: 13878130-4e6d-4af2-aa20-87e9cf8a88b6
+		summarizeBy: none
+		sourceColumn: CREATED_BY_COMMENTS
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_DATETIME
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 7db8ea6b-6f7b-43b0-ac8a-af1ba03139a3
+		summarizeBy: none
+		sourceColumn: MODIFIED_DATETIME
+
+		variation Variation
+			isDefault
+			relationship: 52fc3123-cdc5-4b71-869e-e8d660087cf0
+			defaultHierarchy: LocalDateTable_70f46957-a480-4671-949f-20c327b97b97.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_BY_NAME
+		dataType: string
+		lineageTag: a21fc19c-b8ba-424f-8705-8abb98fb6188
+		summarizeBy: none
+		sourceColumn: MODIFIED_BY_NAME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_BY_COMMENTS
+		dataType: string
+		lineageTag: a3027d35-91d1-493e-8c5b-3313ca17fc7a
+		summarizeBy: none
+		sourceColumn: MODIFIED_BY_COMMENTS
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column UNFUNDED_COMMITMENT_LOCAL
+		dataType: double
+		lineageTag: 953b8d63-8575-43c7-9652-2292fd23d91b
+		summarizeBy: sum
+		sourceColumn: UNFUNDED_COMMITMENT_LOCAL
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ID_DATE
+		dataType: string
+		lineageTag: 9c373ee0-d5a4-4dfb-bfc7-eb5591c3dcef
+		summarizeBy: none
+		sourceColumn: ID_DATE
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'MPSIF MV' = ```
+			
+			VAR II = HOLDING[Instrument Identifier]
+			VAR PERIOD_END_DATE = HOLDING[Period End Date]
+			VAR CUSTODIAN_ACCOUNT_IDENTIFIER = HOLDING[CUSTODIAN_ACCOUNT_IDENTIFIER]
+			VAR RESULT = MAXX(
+			    FILTER(ALL(HOLDING),
+			        [PORTFOLIO_IDENTIFIER]=="MPINV1" &&
+			        [Period End Date]==PERIOD_END_DATE && 
+			        [Instrument Identifier]==II &&
+			        [CUSTODIAN_ACCOUNT_IDENTIFIER]==CUSTODIAN_ACCOUNT_IDENTIFIER),
+			    [MV Home Amount])
+			RETURN IF(ISBLANK(RESULT), 0, RESULT)
+			```
+		formatString: #,0
+		lineageTag: 7c981e41-ef59-4fe3-8d9e-3f31acf7af85
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column 'MV Holding %' =
+			
+			VAR MV = HOLDING[MV Home Amount]
+			VAR PORTFOLIO_IDENTIFIER = HOLDING[PORTFOLIO_IDENTIFIER]
+			VAR PERIOD_END_DATE = HOLDING[Period End Date]
+			VAR RESULT = SUMX(
+			    FILTER(ALL(HOLDING),
+			        [PORTFOLIO_IDENTIFIER]==PORTFOLIO_IDENTIFIER &&
+			        [Period End Date]==PERIOD_END_DATE),
+			    [MV Home Amount])
+			RETURN MV/RESULT
+			// RETURN IF(ISBLANK(MV/RESULT), 0, MV/RESULT)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: c8529e7d-4453-405a-9648-ae0c728ba68e
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'MPSIF MV %' = ```
+			
+			VAR II = HOLDING[Instrument Identifier]
+			VAR PERIOD_END_DATE = HOLDING[Period End Date]
+			VAR CUSTODIAN_ACCOUNT_IDENTIFIER = HOLDING[CUSTODIAN_ACCOUNT_IDENTIFIER]
+			VAR RESULT = MAXX(
+			    FILTER(ALL(HOLDING),
+			        [PORTFOLIO_IDENTIFIER]=="xyz" &&
+			        [Period End Date]==PERIOD_END_DATE && 
+			        [Instrument Identifier]==II &&
+			        [CUSTODIAN_ACCOUNT_IDENTIFIER]==CUSTODIAN_ACCOUNT_IDENTIFIER),
+			    [MV Holding %])
+			RETURN IF(ISBLANK(RESULT), 0, RESULT)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 5db74004-ae00-48c6-b2f6-6073a4b61535
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'MPSIF - IBOXXS MV %' = HOLDING[MPSIF MV %] - HOLDING[IBOXXS MV %]
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: d4fbacae-8e31-46e2-aa00-9ef803e37995
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'MPSIF Quantity' = ```
+			
+			VAR II = HOLDING[Instrument Identifier]
+			VAR PERIOD_END_DATE = HOLDING[Period End Date]
+			VAR CUSTODIAN_ACCOUNT_IDENTIFIER = HOLDING[CUSTODIAN_ACCOUNT_IDENTIFIER]
+			VAR RESULT = MAXX(
+			    FILTER(ALL(HOLDING),
+			        [PORTFOLIO_IDENTIFIER]=="MPINV1" &&
+			        [Period End Date]==PERIOD_END_DATE && 
+			        [Instrument Identifier]==II &&
+			        [CUSTODIAN_ACCOUNT_IDENTIFIER]==CUSTODIAN_ACCOUNT_IDENTIFIER),
+			    [Position Quantity])
+			RETURN IF(ISBLANK(RESULT), 0, RESULT)
+			```
+		formatString: #,0
+		lineageTag: 44eeb446-9b06-4b6c-883f-32508a365d1d
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column 'IBOXX MV' = ```
+			
+			VAR II = HOLDING[Instrument Identifier]
+			VAR PERIOD_END_DATE = HOLDING[Period End Date]
+			VAR RESULT = MAXX(
+			    FILTER(ALL(HOLDING),
+			        [PORTFOLIO_IDENTIFIER]=="IBOXLTRI" &&
+			        [Period End Date]==PERIOD_END_DATE && 
+			        [Instrument Identifier]==II),
+			    [MV Home Amount])
+			RETURN IF(ISBLANK(RESULT), 0, RESULT)
+			```
+		formatString: #,0
+		lineageTag: 89bb57dd-ed5e-4ac0-986f-5a5e7a66e5ad
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column 'IBOXX MV %' = ```
+			
+			VAR II = HOLDING[Instrument Identifier]
+			VAR PERIOD_END_DATE = HOLDING[Period End Date]
+			VAR RESULT = MAXX(
+			    FILTER(ALL(HOLDING),
+			        [PORTFOLIO_IDENTIFIER]=="IBOXLTRI" &&
+			        [Period End Date]==PERIOD_END_DATE && 
+			        [Instrument Identifier]==II),
+			    [MV Holding %])
+			RETURN IF(ISBLANK(RESULT), 0, RESULT)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 26be243b-5591-42a8-b358-5f0a1dc4f8c6
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IBOXX Quantity' = ```
+			
+			VAR II = HOLDING[Instrument Identifier]
+			VAR PERIOD_END_DATE = HOLDING[Period End Date]
+			VAR RESULT = MAXX(
+			    FILTER(ALL(HOLDING),
+			        [PORTFOLIO_IDENTIFIER]=="IBOXLTRI"&&
+			        [Period End Date]==PERIOD_END_DATE && 
+			        [Instrument Identifier]==II),
+			    [Position Quantity])
+			RETURN IF(ISBLANK(RESULT), 0, RESULT)
+			```
+		formatString: #,0
+		lineageTag: 4b446c7a-df58-4ac3-bdfe-0e7a5a2abbdb
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column 'MPSIF - IBOXX MV %' = HOLDING[MPSIF MV %] - HOLDING[IBOXX MV %]
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 702f7eba-1541-4390-ac8f-6d08828d3f5e
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IBOXXS MV' = ```
+			
+			VAR II = HOLDING[Instrument Identifier]
+			VAR PERIOD_END_DATE = HOLDING[Period End Date]
+			VAR RESULT = MAXX(
+			    FILTER(ALL(HOLDING),
+			        [PORTFOLIO_IDENTIFIER]=="IBOXX_SELECT" &&
+			        [Period End Date]==PERIOD_END_DATE && 
+			        [Instrument Identifier]==II),
+			    [MV Home Amount])
+			RETURN IF(ISBLANK(RESULT), 0, RESULT)
+			```
+		lineageTag: 22dff895-26e1-4070-97e1-36af742d0e84
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'IBOXXS MV %' = ```
+			
+			VAR II = HOLDING[Instrument Identifier]
+			VAR PERIOD_END_DATE = HOLDING[Period End Date]
+			VAR RESULT = MAXX(
+			    FILTER(ALL(HOLDING),
+			        [PORTFOLIO_IDENTIFIER]=="IBOXX_SELECT" &&
+			        [Period End Date]==PERIOD_END_DATE && 
+			        [Instrument Identifier]==II),
+			    [MV Holding %])
+			RETURN IF(ISBLANK(RESULT), 0, RESULT)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 30bb4464-fac5-43bc-91f3-480da27bda6a
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IBOXXS Quantity' = ```
+			
+			VAR II = HOLDING[Instrument Identifier]
+			VAR PERIOD_END_DATE = HOLDING[Period End Date]
+			VAR RESULT = MAXX(
+			    FILTER(ALL(HOLDING),
+			        [PORTFOLIO_IDENTIFIER]=="IBOXX_SELECT" &&
+			        [Period End Date]==PERIOD_END_DATE && 
+			        [Instrument Identifier]==II),
+			    [Position Quantity])
+			RETURN IF(ISBLANK(RESULT), 0, RESULT)
+			```
+		formatString: #,0
+		lineageTag: 0c08f179-c2c2-4ad8-b43d-a57e868cea0c
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column 'Notional Holding %' =
+			
+			VAR NOTIONAL = HOLDING[Position Quantity]
+			VAR PORTFOLIO_IDENTIFIER = HOLDING[PORTFOLIO_IDENTIFIER]
+			VAR PERIOD_END_DATE = HOLDING[Period End Date]
+			VAR RESULT = SUMX(
+			    FILTER(ALL(HOLDING),
+			        [PORTFOLIO_IDENTIFIER]==PORTFOLIO_IDENTIFIER &&
+			        [Period End Date]==PERIOD_END_DATE),
+			    [Position Quantity])
+			RETURN NOTIONAL/RESULT
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: e5b5eecd-bf22-4155-bdc8-7c259cd53385
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'MPSIF Notional %' = ```
+			
+			VAR II = HOLDING[Instrument Identifier]
+			VAR PERIOD_END_DATE = HOLDING[Period End Date]
+			VAR CUSTODIAN_ACCOUNT_IDENTIFIER = HOLDING[CUSTODIAN_ACCOUNT_IDENTIFIER]
+			VAR RESULT = MAXX(
+			    FILTER(ALL(HOLDING),
+			        [PORTFOLIO_IDENTIFIER]=="MPINV1" &&
+			        [Period End Date]==PERIOD_END_DATE && 
+			        [Instrument Identifier]==II &&
+			        [CUSTODIAN_ACCOUNT_IDENTIFIER]==CUSTODIAN_ACCOUNT_IDENTIFIER),
+			    [Notional Holding %])
+			RETURN IF(ISBLANK(RESULT), 0, RESULT)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 3a6ba914-fcf5-429d-8544-956b681ba9eb
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID_DATE_PORT
+		dataType: string
+		lineageTag: f980741f-e5c4-4494-b9a6-241ee142d292
+		summarizeBy: none
+		sourceColumn: ID_DATE_PORT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Difference TROUBLESHOOT' = [MPSIF MV %] - [MV Holding %]
+		lineageTag: acdc5c20-63ca-4f0a-bf61-08e0dc5b1407
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Hypo Quantity' =
+			
+			VAR OUT = SUMX(RELATEDTABLE(ORDERS),
+			    [Order Quantity] + HOLDING[Position Quantity]
+			)
+			RETURN IF(ISBLANK(OUT), HOLDING[Position Quantity], OUT)
+		lineageTag: f3de3b2a-c852-4bc1-bd78-ba99984e1094
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Hypo Notional %' =
+			
+			VAR NOTIONAL = HOLDING[Hypo Quantity]
+			VAR PORTFOLIO_IDENTIFIER = HOLDING[PORTFOLIO_IDENTIFIER]
+			VAR PERIOD_END_DATE = HOLDING[Period End Date]
+			VAR RESULT = SUMX(
+			    FILTER(ALL(HOLDING),
+			        [PORTFOLIO_IDENTIFIER]==PORTFOLIO_IDENTIFIER &&
+			        [Period End Date]==PERIOD_END_DATE),
+			    [Hypo Quantity])
+			RETURN NOTIONAL/RESULT
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 0caf29cf-0f24-4912-a4b6-fcf3d2489ea1
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IBOXX Notional %' = ```
+			
+			VAR II = HOLDING[Instrument Identifier]
+			VAR PERIOD_END_DATE = HOLDING[Period End Date]
+			VAR RESULT = MAXX(
+			    FILTER(ALL(HOLDING),
+			        [PORTFOLIO_IDENTIFIER]=="IBOXLTRI" &&
+			        [Period End Date]==PERIOD_END_DATE && 
+			        [Instrument Identifier]==II),
+			    [Notional Holding %])
+			RETURN IF(ISBLANK(RESULT), 0, RESULT)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: c4c347b1-415a-4ac0-a676-8689ea031b4d
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hypo - IBOXXS Notional %' = HOLDING[Hypo Notional %] - HOLDING[IBOXXS Notional %]
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 24ba2b94-0a69-46a7-bfa4-5d4e93bef81f
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IBOXXS Notional %' = ```
+			
+			VAR II = HOLDING[Instrument Identifier]
+			VAR PERIOD_END_DATE = HOLDING[Period End Date]
+			VAR RESULT = MAXX(
+			    FILTER(ALL(HOLDING),
+			        [PORTFOLIO_IDENTIFIER]=="IBOXX_SELECT" &&
+			        [Period End Date]==PERIOD_END_DATE && 
+			        [Instrument Identifier]==II),
+			    [Notional Holding %])
+			RETURN IF(ISBLANK(RESULT), 0, RESULT)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: f9d28a4f-52fc-4e83-aa6c-8864663efc9f
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'MPSIF - IBOXXS Notional %' = HOLDING[MPSIF Notional %] - HOLDING[IBOXXS Notional %]
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 6f272bec-859b-4769-91ae-e9badc93aab1
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'MPSIF - IBOXX Notional %' = HOLDING[MPSIF Notional %] - HOLDING[IBOXX Notional %]
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 8683c5e4-cd82-4697-b91a-a69de4b6738c
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'MPSIF - IBOXXS MV BPS' = 10000 * (HOLDING[MPSIF MV %] - HOLDING[IBOXXS MV %])
+		formatString: 0
+		lineageTag: 0b21d50e-438f-4a5d-b192-30b761bb88da
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column 'Holding Price Bucket' =
+			SWITCH(TRUE,
+			    [Price Home Amount] < 10, " [0,10)",
+			    [Price Home Amount] < 20, " [10,20)",
+			    [Price Home Amount] < 30, " [20,30)",
+			    [Price Home Amount] < 40, " [30,40)",
+			    [Price Home Amount] < 50, " [40,50)",
+			    [Price Home Amount] < 60, " [50,60)",
+			    [Price Home Amount] < 65, " [60,65)",
+			    [Price Home Amount] < 70, " [65,70)",
+			    [Price Home Amount] < 75, " [70,75)",
+			    [Price Home Amount] < 80, " [75,80)",
+			    [Price Home Amount] < 85, " [80,85)",
+			    [Price Home Amount] < 90, " [85,90)",
+			    [Price Home Amount] < 95, " [90,95)",
+			    [Price Home Amount] < 100, " [95,100)",
+			    [Price Home Amount] < 105, "[100,105)",
+			    "[> 105)"
+			)
+		lineageTag: 69250515-cf2f-419e-ad92-decfda329877
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Hypo MV' =
+			
+			VAR OUT = SUMX(RELATEDTABLE(ORDERS),
+			   ( [Order Quantity]  * HOLDING[Price Home Amount])  + HOLDING[MV Home Amount]
+			)
+			RETURN IF(ISBLANK(OUT), HOLDING[Position Quantity], OUT)
+		lineageTag: c81c4ee1-9fa1-4856-be71-97320cb3317f
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Order MV' =
+			
+			VAR OUT = SUMX(RELATEDTABLE(ORDERS),
+			   ( [Order Quantity]  * HOLDING[Price Home Amount])
+			)
+			RETURN IF(ISBLANK(OUT), 0, OUT)
+		lineageTag: c2989535-447b-4959-96e9-50ecf2560f41
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column REDEMPTION_FACTOR
+		dataType: double
+		lineageTag: 626f09ef-2a23-4009-94b3-2711083a6e0d
+		summarizeBy: sum
+		sourceColumn: REDEMPTION_FACTOR
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Market Value + Accrued' = HOLDING[Accrued] + HOLDING[MV Home Amount]
+		formatString: #,0
+		lineageTag: 255f2df3-bc44-475e-92a2-98c0be219585
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column ENDING_NAV_AMOUNT
+		dataType: double
+		lineageTag: f0b28edf-153d-43d0-947b-7b55e4a5e4f4
+		summarizeBy: sum
+		sourceColumn: ENDING_NAV_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column BEGINNING_NAV_AMOUNT
+		dataType: double
+		lineageTag: 6791c440-c346-4bd1-ad2f-193cbb19e975
+		summarizeBy: sum
+		sourceColumn: BEGINNING_NAV_AMOUNT
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column POSITION_SETTLED_QUANTITY
+		dataType: double
+		lineageTag: d4f20e0d-a849-42b9-a2ca-877671550693
+		summarizeBy: sum
+		sourceColumn: POSITION_SETTLED_QUANTITY
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SENTRY_PORTFOLIO_IDENTIFIER
+		dataType: string
+		lineageTag: 1073e2f9-9887-409f-9d7a-48b688e3dc27
+		summarizeBy: none
+		sourceColumn: SENTRY_PORTFOLIO_IDENTIFIER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column DATA_PROVIDER_NAME
+		dataType: string
+		lineageTag: cfc79c28-6971-42cc-82f3-a9e9b2258247
+		summarizeBy: none
+		sourceColumn: DATA_PROVIDER_NAME
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column VANTAGE_PORTFOLIO_IDENTIFIER
+		dataType: string
+		lineageTag: ebea4665-183b-4777-977e-19545591d274
+		summarizeBy: none
+		sourceColumn: VANTAGE_PORTFOLIO_IDENTIFIER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column VANTAGE_CUSTODIAN_ACCOUNT_IDENTIFIER
+		dataType: string
+		lineageTag: 9e4cb04b-4ac9-4ee6-9013-e8be97ab3dd8
+		summarizeBy: none
+		sourceColumn: VANTAGE_CUSTODIAN_ACCOUNT_IDENTIFIER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition HOLDING = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases(snowflake_url,"ANALYST_WH_XS"),
+				    HUB_Database = Source{[Name="HUB",Kind="Database"]}[Data],
+				    POSITION_Schema = HUB_Database{[Name="POSITION",Kind="Schema"]}[Data],
+				    HOLDING_View = POSITION_Schema{[Name="HOLDING_DAILY",Kind="View"]}[Data],
+				    #"Added Custom" = Table.AddColumn(HOLDING_View, "ID_DATE", each [INSTRUMENT_IDENTIFIER]&Date.ToText([PERIOD_END_DATE], [Format="yyyy-MM-dd"])),
+				    #"Renamed Columns" = Table.RenameColumns(#"Added Custom",{{"MV_HOME_AMOUNT", "MV Home Amount"}, {"PERIOD_END_DATE", "Period End Date"}, {"INSTRUMENT_IDENTIFIER", "Instrument Identifier"}, {"FX_RATE", "FX Rate"}, {"PORTFOLIO_HOLDING_PERCENT", "Portfolio Holding Percent"}, {"POSITION_QUANTITY", "Position Quantity"}, {"PRICE_HOME_AMOUNT", "Price Home Amount"}}),
+				    #"Added Custom1" = Table.AddColumn(#"Renamed Columns", "ID_DATE_PORT", each [Instrument Identifier]&Date.ToText([Period End Date], [Format="yyyy-MM-dd"])&[PORTFOLIO_IDENTIFIER]),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Added Custom1",{{"ACCRUED_HOME_AMOUNT", "Accrued"}})
+				in
+				    #"Renamed Columns1"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

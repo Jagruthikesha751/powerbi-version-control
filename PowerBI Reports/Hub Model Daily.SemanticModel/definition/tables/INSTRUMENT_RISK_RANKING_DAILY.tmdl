@@ -1,0 +1,194 @@
+table INSTRUMENT_RISK_RANKING_DAILY
+	lineageTag: 53d63bc4-fa7d-4e3b-9e53-9642eee754d9
+
+	measure Highest_Risk = ```
+			
+			VAR MaxRiskRank = CALCULATE(
+			    MAXX( FILTER( 'INSTRUMENT_RISK_RANKING_DAILY', ISNUMBER( 'INSTRUMENT_RISK_RANKING_DAILY'[RISK_RANK] ) ), 'INSTRUMENT_RISK_RANKING_DAILY'[RISK_RANK] ),
+			    ALLEXCEPT('INSTRUMENT_TS', 'INSTRUMENT_TS'[Issuer Name])
+			)
+			RETURN MaxRiskRank
+			
+			```
+		lineageTag: 6b8bf817-fce5-4c79-98d1-f0e2b07a9354
+
+	column CALENDAR_DATE
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: cfe00711-be20-4cdb-ae73-846629b8c55d
+		summarizeBy: none
+		sourceColumn: CALENDAR_DATE
+
+		variation Variation
+			isDefault
+			relationship: 6a1eb389-cfd2-43b5-90f2-ea95c85bed7d
+			defaultHierarchy: LocalDateTable_113f117d-a1fb-42c4-a026-198a661402b8.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column INSTRUMENT_IDENTIFIER
+		dataType: string
+		lineageTag: 1b1e6e46-4d02-40b8-8e10-7974fdcc0fc7
+		summarizeBy: none
+		sourceColumn: INSTRUMENT_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column RISK_RANK
+		dataType: string
+		lineageTag: 01d59c83-799d-4844-a6d2-3ba2b0ee32d3
+		summarizeBy: none
+		sourceColumn: RISK_RANK
+
+		annotation SummarizationSetBy = Automatic
+
+	column IS_SELECT
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: b3bfe48e-2030-43ba-9e75-72eec16140af
+		summarizeBy: none
+		sourceColumn: IS_SELECT
+
+		annotation SummarizationSetBy = Automatic
+
+	column PRICE_RISK_RANK
+		dataType: double
+		lineageTag: f414d6ec-21d9-445d-9e55-500f46d5a682
+		summarizeBy: sum
+		sourceColumn: PRICE_RISK_RANK
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SPGLOBAL_RATING_RISK_RANK
+		dataType: double
+		lineageTag: f052f3f1-8db3-49de-a301-56e67ffa0faf
+		summarizeBy: sum
+		sourceColumn: SPGLOBAL_RATING_RISK_RANK
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SPGLOBAL_RATING_WATCHLIST_RISK_RANK
+		dataType: double
+		lineageTag: db63840d-a5cb-4bf2-a544-b904165d8087
+		summarizeBy: sum
+		sourceColumn: SPGLOBAL_RATING_WATCHLIST_RISK_RANK
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MOODYS_RATING_RISK_RANK
+		dataType: double
+		lineageTag: fa3cd662-8e46-4634-94ea-94f6f98962c2
+		summarizeBy: sum
+		sourceColumn: MOODYS_RATING_RISK_RANK
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MOODYS_RATING_WATCHLIST_RISK_RANK
+		dataType: double
+		lineageTag: 3014c21d-7c72-48d0-ae64-7457003b946e
+		summarizeBy: sum
+		sourceColumn: MOODYS_RATING_WATCHLIST_RISK_RANK
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column RISK_RANK_REASON_TEXT
+		dataType: string
+		lineageTag: f5db98c0-9faf-40ad-bb05-a8e9cf3534e3
+		summarizeBy: none
+		sourceColumn: RISK_RANK_REASON_TEXT
+
+		annotation SummarizationSetBy = Automatic
+
+	column IS_NEW_ISSUE
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 6caf0106-2725-41dd-ba5c-805d9dff6e4b
+		summarizeBy: none
+		sourceColumn: IS_NEW_ISSUE
+
+		annotation SummarizationSetBy = Automatic
+
+	column IS_NOT_IN_SELECT_EXCLUDE_LOANS
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: c25d25c1-2171-4dff-b8d5-9d1e2c51ca32
+		summarizeBy: none
+		sourceColumn: IS_NOT_IN_SELECT_EXCLUDE_LOANS
+
+		annotation SummarizationSetBy = Automatic
+
+	column IS_FIRST_LIEN
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: de643f33-2925-41ff-9489-5a46e049a9f8
+		summarizeBy: none
+		sourceColumn: IS_FIRST_LIEN
+
+		annotation SummarizationSetBy = Automatic
+
+	column IS_NOTIONAL_AMOUNT_GTE_300M
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 60405d20-8811-484a-b9fb-357c21cf6081
+		summarizeBy: none
+		sourceColumn: IS_NOTIONAL_AMOUNT_GTE_300M
+
+		annotation SummarizationSetBy = Automatic
+
+	column IS_CURRENT_AMOUNT_GT_100M
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 5e4fe38d-02bc-458b-8024-1fa381e0e09e
+		summarizeBy: none
+		sourceColumn: IS_CURRENT_AMOUNT_GT_100M
+
+		annotation SummarizationSetBy = Automatic
+
+	column IS_LIQUIDITY_SCORE_60_DAY_LT_4
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 37c4db93-341a-4093-8539-183c1a6f6e5b
+		summarizeBy: none
+		sourceColumn: IS_LIQUIDITY_SCORE_60_DAY_LT_4
+
+		annotation SummarizationSetBy = Automatic
+
+	column IS_SELECT_ELIGIBLE
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 061d7792-47e3-4169-aa88-a5c3d70501f4
+		summarizeBy: none
+		sourceColumn: IS_SELECT_ELIGIBLE
+
+		annotation SummarizationSetBy = Automatic
+
+	partition INSTRUMENT_RISK_RANKING_DAILY = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases(snowflake_url,"ANALYST_WH_XS"),
+				    HUB_Database = Source{[Name="HUB",Kind="Database"]}[Data],
+				    ASSET_Schema = HUB_Database{[Name="ASSET",Kind="Schema"]}[Data],
+				    INSTRUMENT_RISK_RANKING_DAILY_View = ASSET_Schema{[Name="INSTRUMENT_RISK_RANKING_DAILY",Kind="View"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(INSTRUMENT_RISK_RANKING_DAILY_View,{{"RISK_RANK", type text}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Changed Type","0","NI",Replacer.ReplaceText,{"RISK_RANK"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","-1","CCY",Replacer.ReplaceText,{"RISK_RANK"})
+				in
+				    #"Replaced Value1"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

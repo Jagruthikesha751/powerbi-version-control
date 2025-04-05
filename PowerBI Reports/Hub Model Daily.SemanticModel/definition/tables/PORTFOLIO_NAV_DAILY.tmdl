@@ -1,0 +1,370 @@
+table PORTFOLIO_NAV_DAILY
+	lineageTag: 7f23fbe3-9591-49e2-b173-61e0c5431bd7
+
+	measure target_portfolio_size_excl_new_issue_mpinv1 = CALCULATE(MAX(PORTFOLIO_NAV_DAILY[TARGET_PORTFOLIO_SIZE_EXCLUDING_NEW_ISSUE_AMOUNT]), PORTFOLIO_NAV_DAILY[PORTFOLIO_IDENTIFIER] = "MPINV1")
+		lineageTag: 593dc9f5-cb28-433c-a610-a4ab6046c08b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PERIOD_END_DATE
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 87762dbd-2b7e-4153-b70b-c4611366d3ac
+		summarizeBy: none
+		sourceColumn: PERIOD_END_DATE
+
+		variation Variation
+			isDefault
+			relationship: c95be129-c6c1-4a8b-8363-eeece8631fbb
+			defaultHierarchy: LocalDateTable_753f4edc-8e42-4a28-ad9a-048f1f61f83e.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column AUDIT_DATE
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 8fba3fb0-4f20-4dc4-b0c3-3a0e2b392a4d
+		summarizeBy: none
+		sourceColumn: AUDIT_DATE
+
+		variation Variation
+			isDefault
+			relationship: 9ebfea28-1569-40a0-9764-18cd776453f3
+			defaultHierarchy: LocalDateTable_7aa6fc3e-438e-4ced-afcf-05d876f8d9ba.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column SOURCE_SYSTEM_CODE
+		dataType: string
+		lineageTag: d5270565-2b39-411f-bca2-e499f61fb94e
+		summarizeBy: none
+		sourceColumn: SOURCE_SYSTEM_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column SOURCE_SYSTEM_SHORT_NAME
+		dataType: string
+		lineageTag: 1a2d29f2-6d08-41a8-b729-34dccc81ee62
+		summarizeBy: none
+		sourceColumn: SOURCE_SYSTEM_SHORT_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column SOURCE_SYSTEM_NAME
+		dataType: string
+		lineageTag: 97362c83-229c-4e6b-8527-d1cfa8abd807
+		summarizeBy: none
+		sourceColumn: SOURCE_SYSTEM_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column PORTFOLIO_IDENTIFIER
+		dataType: string
+		lineageTag: 564cfa41-1206-4c49-af11-3dc48d342ce8
+		summarizeBy: none
+		sourceColumn: PORTFOLIO_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column DATA_PERIOD_CODE
+		dataType: string
+		lineageTag: 6ca28685-808e-4eae-aa61-fde3d4ce127f
+		summarizeBy: none
+		sourceColumn: DATA_PERIOD_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column DTD_PNL_AMOUNT
+		dataType: double
+		formatString: #,0
+		lineageTag: a4da596a-85d9-413a-b1be-90e184745c65
+		summarizeBy: sum
+		sourceColumn: DTD_PNL_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column MTD_PNL_AMOUNT
+		dataType: double
+		formatString: #,0
+		lineageTag: 2d4df6da-47d1-46fc-a33c-7cb636a95cf0
+		summarizeBy: sum
+		sourceColumn: MTD_PNL_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column YTD_PNL_AMOUNT
+		dataType: double
+		formatString: #,0
+		lineageTag: 7438379f-49c8-4d99-8d18-6528e4a2d5f7
+		summarizeBy: sum
+		sourceColumn: YTD_PNL_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column BEGINNING_NAV_AMOUNT
+		dataType: double
+		lineageTag: 4e38b209-57b8-4f56-a6ab-50e89a844111
+		summarizeBy: sum
+		sourceColumn: BEGINNING_NAV_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ENDING_NAV_AMOUNT
+		dataType: double
+		lineageTag: 877f9d53-8524-4d83-afeb-a2b8156ed604
+		summarizeBy: sum
+		sourceColumn: ENDING_NAV_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DTD_SUBSCRIPTION_AMOUNT
+		dataType: double
+		lineageTag: f876aa4d-010d-4ff7-a41d-f92c313445a8
+		summarizeBy: sum
+		sourceColumn: DTD_SUBSCRIPTION_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MTD_SUBSCRIPTION_AMOUNT
+		dataType: double
+		lineageTag: f59ea69b-ad91-4401-be3d-f5749c64dc1b
+		summarizeBy: sum
+		sourceColumn: MTD_SUBSCRIPTION_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column YTD_SUBSCRIPTION_AMOUNT
+		dataType: double
+		lineageTag: fc296d8c-c76e-4a29-be73-532993e44036
+		summarizeBy: sum
+		sourceColumn: YTD_SUBSCRIPTION_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DTD_REDEMPTION_AMOUNT
+		dataType: double
+		lineageTag: ab11d6e7-7a19-4b14-97b8-5f1e31f20f43
+		summarizeBy: sum
+		sourceColumn: DTD_REDEMPTION_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MTD_REDEMPTION_AMOUNT
+		dataType: double
+		lineageTag: 84280afe-58b7-4955-8bf4-9fe781d7820d
+		summarizeBy: sum
+		sourceColumn: MTD_REDEMPTION_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column YTD_REDEMPTION_AMOUNT
+		dataType: double
+		lineageTag: ef6d4a58-6591-4a1e-92c7-c4ba79dc0bc9
+		summarizeBy: sum
+		sourceColumn: YTD_REDEMPTION_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DTD_RETURN_RATE
+		dataType: double
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: f474bafb-2085-46cf-93c7-b79057d3f58a
+		summarizeBy: sum
+		sourceColumn: DTD_RETURN_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+	column MTD_RETURN_RATE
+		dataType: double
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 67dce8d3-af12-4bc3-8555-8d0937e308c4
+		summarizeBy: sum
+		sourceColumn: MTD_RETURN_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+	column YTD_RETURN_RATE
+		dataType: double
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 19cc8967-d0f8-4763-b248-23d74a194087
+		summarizeBy: sum
+		sourceColumn: YTD_RETURN_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+	column AUM_AMOUNT
+		dataType: double
+		lineageTag: d81a37b9-dccd-4e77-80ee-39690b87daf3
+		summarizeBy: sum
+		sourceColumn: AUM_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column GROSS_ASSETS_AMOUNT
+		dataType: double
+		lineageTag: d3e55947-9a88-4825-a146-1e1d3c6d951c
+		summarizeBy: sum
+		sourceColumn: GROSS_ASSETS_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column UNFUNDED_COMMITMENT_AMOUNT
+		dataType: double
+		lineageTag: 5e54b7a5-e522-46d3-8e14-fed0ced9159d
+		summarizeBy: sum
+		sourceColumn: UNFUNDED_COMMITMENT_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DUE_TO_BROKER_AMOUNT
+		dataType: double
+		lineageTag: c26e6f92-6123-4170-9618-88b460699d01
+		summarizeBy: sum
+		sourceColumn: DUE_TO_BROKER_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CONFORMING_ASSET_NOTIONAL_AMOUNT
+		dataType: double
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: b610830b-0b3e-4f5a-aba7-96ff2f4df7ce
+		summarizeBy: sum
+		sourceColumn: CONFORMING_ASSET_NOTIONAL_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+	column TRADE_DATE_CASH_AMOUNT
+		dataType: double
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: fd1a1c7d-182e-4e8f-aae1-a50c9c770606
+		summarizeBy: sum
+		sourceColumn: TRADE_DATE_CASH_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+	column MAX_PORTFOLIO_SIZE_AMOUNT
+		dataType: double
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 4abae443-3355-47f7-86c1-f17eaa357e49
+		summarizeBy: sum
+		sourceColumn: MAX_PORTFOLIO_SIZE_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+	column CASH_AND_BORROWING_AVAILABILITY_AMOUNT
+		dataType: double
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 3649b13b-72ef-4043-bd49-afae20f7dd19
+		summarizeBy: sum
+		sourceColumn: CASH_AND_BORROWING_AVAILABILITY_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+	column CASH_FOR_NEW_ISSUE_AMOUNT
+		dataType: double
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 8c04bc24-7125-4321-a982-3841d6899cf5
+		summarizeBy: sum
+		sourceColumn: CASH_FOR_NEW_ISSUE_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+	column CASH_FOR_SECONDARY_TRADING_AMOUNT
+		dataType: double
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 62cd4ece-a0d5-499b-ba09-e89ca1da725b
+		summarizeBy: sum
+		sourceColumn: CASH_FOR_SECONDARY_TRADING_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+	column HIT_RATE
+		dataType: double
+		lineageTag: 309ac23e-95b2-4405-9377-e07c08027ac5
+		summarizeBy: sum
+		sourceColumn: HIT_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column HIT_RATE_30_DAY
+		dataType: double
+		lineageTag: 2aa8bded-ed6c-453f-819b-82872f04b087
+		summarizeBy: sum
+		sourceColumn: HIT_RATE_30_DAY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TARGET_PORTFOLIO_SIZE_AMOUNT
+		dataType: double
+		lineageTag: 018f5458-4326-413e-adff-a118d2f8b1da
+		summarizeBy: sum
+		sourceColumn: TARGET_PORTFOLIO_SIZE_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TARGET_PORTFOLIO_SIZE_EXCLUDING_NEW_ISSUE_AMOUNT
+		dataType: double
+		lineageTag: c2a703e6-499b-4439-9862-9a280c978e45
+		summarizeBy: sum
+		sourceColumn: TARGET_PORTFOLIO_SIZE_EXCLUDING_NEW_ISSUE_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition PORTFOLIO_NAV_DAILY = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases(snowflake_url,"ANALYST_WH_XS"),
+				    HUB_Database = Source{[Name="HUB",Kind="Database"]}[Data],
+				    POSITION_Schema = HUB_Database{[Name="POSITION",Kind="Schema"]}[Data],
+				    PORTFOLIO_NAV_DAILY_View = POSITION_Schema{[Name="PORTFOLIO_NAV_DAILY",Kind="View"]}[Data],
+				    #"Filtered Rows" = Table.SelectRows(PORTFOLIO_NAV_DAILY_View, each ([PORTFOLIO_IDENTIFIER] <> "MPSIF"))
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
