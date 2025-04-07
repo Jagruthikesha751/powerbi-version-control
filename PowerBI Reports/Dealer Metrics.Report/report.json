@@ -1,5 +1,7 @@
 {
+
   "config": "{\"version\":\"5.59\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY24SU10\",\"version\":\"5.61\",\"type\":2}},\"activeSectionIndex\":0,\"modelExtensions\":[{\"name\":\"extension\",\"entities\":[{\"name\":\"Data Dictionary\",\"extends\":\"Data Dictionary\",\"measures\":[{\"name\":\"TestMeasure_5\",\"dataType\":3,\"expression\":\"\\\"Testing in Dev1\\\"\",\"errorMessage\":null,\"hidden\":false,\"formulaOverride\":null,\"formatInformation\":{\"formatString\":\"G\",\"format\":\"General\",\"thousandSeparator\":false,\"currencyFormat\":null,\"dateTimeCustomFormat\":null}},{\"name\":\"Testmeasure1\",\"dataType\":3,\"expression\":\"\\\"Testing Developer2 Measure\\\"\",\"errorMessage\":null,\"hidden\":false,\"formulaOverride\":null,\"formatInformation\":{\"formatString\":\"G\",\"format\":\"General\",\"thousandSeparator\":false,\"currencyFormat\":null,\"dateTimeCustomFormat\":null}},{\"name\":\"TestTestdev1\",\"dataType\":3,\"expression\":\"\\\"Testing solution\\\"\",\"errorMessage\":null,\"hidden\":false,\"formulaOverride\":null,\"formatInformation\":{\"formatString\":\"G\",\"format\":\"General\",\"thousandSeparator\":false,\"currencyFormat\":null,\"dateTimeCustomFormat\":null}}]}]}],\"defaultDrillFilterOtherVisuals\":true,\"linguisticSchemaSyncVersion\":0,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"useEnhancedTooltips\":true,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true,\"allowInlineExploration\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}],\"outspacePane\":[{\"properties\":{\"expanded\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]},\"creationSource\":\"QuickCreate\"}",
+
   "layoutOptimization": 0,
   "resourcePackages": [
     {
@@ -396,6 +398,15 @@
           "x": 31.80,
           "y": 60.57,
           "z": 0.00
+        },
+        {
+          "config": "{\"name\":\"627debcd5dd0b78aedf6\",\"layouts\":[{\"id\":0,\"position\":{\"x\":32,\"y\":371,\"width\":318,\"height\":300,\"z\":1,\"tabOrder\":1}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"Data Dictionary.TestTest\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"d\",\"Entity\":\"Data Dictionary\",\"Schema\":\"extension\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"TestTest\"},\"Name\":\"Data Dictionary.TestTest\",\"NativeReferenceName\":\"TestTest\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"TestTest\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true}}",
+          "filters": "[]",
+          "height": 300.00,
+          "width": 318.00,
+          "x": 32.00,
+          "y": 371.00,
+          "z": 1.00
         }
       ],
       "width": 1280.00
