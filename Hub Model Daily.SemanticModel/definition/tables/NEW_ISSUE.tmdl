@@ -1,0 +1,1112 @@
+table NEW_ISSUE
+	lineageTag: 8f9a970d-2ca0-46a8-953b-2842ffa36561
+
+	measure Filtered_Commitment = ```
+			
+			CALCULATE(
+			    SUM(NEW_ISSUE[Commitment]),
+			    FILTER(
+			        ALL(NEW_ISSUE), 
+			        NOT(ISBLANK(NEW_ISSUE[Allocation])) && NEW_ISSUE[Deal_Name] IN VALUES(NEW_ISSUE[Deal_Name])
+			    )
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: 7ab18cb9-b22d-466d-99c1-b4075c02044f
+
+	measure Filtered_Allocation = ```
+			
+			CALCULATE(
+			    SUM(NEW_ISSUE[Allocation]),
+			    FILTER(
+			        ALL(NEW_ISSUE), 
+			        NOT(ISBLANK(NEW_ISSUE[Allocation])) && NEW_ISSUE[Deal_Name] IN VALUES(NEW_ISSUE[Deal_Name])
+			    )
+			)
+			
+			```
+		formatString: 0
+		lineageTag: f2ef9e7f-9a88-4e3e-9aa1-a03411908be2
+
+	measure Measure
+		lineageTag: 5a3349e1-7c83-46cb-b55a-bf289ef05409
+
+		annotation 43dbc3e8-3a1c-4b6f-9923-b49ff7d6691c = True
+
+	column CALENDAR_DATE
+		dataType: dateTime
+		formatString: Short Date
+		displayFolder: Audit
+		lineageTag: 85551657-e957-48ed-819a-1620ba0dfd38
+		summarizeBy: none
+		sourceColumn: CALENDAR_DATE
+
+		variation Variation
+			isDefault
+			relationship: 88b791b9-7f31-4951-9299-f38075954e22
+			defaultHierarchy: LocalDateTable_83abeb2a-2abf-4a36-b77c-e00358e3a935.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column INSTRUMENT_IDENTIFIER
+		dataType: string
+		displayFolder: Identifiers
+		lineageTag: e46507c2-1ba2-480e-ba59-5d0e8e2133da
+		summarizeBy: none
+		sourceColumn: INSTRUMENT_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column DATA_PROVIDER_NAME
+		dataType: string
+		displayFolder: System
+		lineageTag: 12147733-127d-4d33-aa6d-e544d96a99f4
+		summarizeBy: none
+		sourceColumn: DATA_PROVIDER_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column JSON_VERSION
+		dataType: string
+		displayFolder: System
+		lineageTag: 1c51ab3a-1a24-4ab4-9ad5-0deb20639f88
+		summarizeBy: none
+		sourceColumn: JSON_VERSION
+
+		annotation SummarizationSetBy = Automatic
+
+	column DOCUMENT_NAME
+		dataType: string
+		displayFolder: System
+		lineageTag: 17de1cc4-608d-46e5-baef-f35a20cdd0f1
+		summarizeBy: none
+		sourceColumn: DOCUMENT_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column LEVPRO_LOANX_IDENTIFIER
+		dataType: string
+		displayFolder: Identifiers
+		lineageTag: 1416569d-0297-41ce-8788-a1ed6467229f
+		summarizeBy: none
+		sourceColumn: LEVPRO_LOANX_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column NEW_FIGI_IDENTIFIER
+		dataType: string
+		displayFolder: Identifiers
+		lineageTag: acd26144-1316-420a-972e-fe195304f0c2
+		summarizeBy: none
+		sourceColumn: NEW_FIGI_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column Commitment
+		dataType: int64
+		formatString: #,0
+		lineageTag: d005582d-049d-41a9-a5e3-36ae84f718f7
+		summarizeBy: sum
+		sourceColumn: Commitment
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Allocation
+		dataType: int64
+		formatString: #,0
+		lineageTag: 3fab7d2a-5861-4256-ad00-63f4a1eb0a55
+		summarizeBy: sum
+		sourceColumn: Allocation
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column AGENT_BANK_NAME
+		dataType: string
+		displayFolder: Counterparty
+		lineageTag: 424aa923-3894-42d0-9d79-ff2c1de972c2
+		summarizeBy: none
+		sourceColumn: AGENT_BANK_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column CALL_PROTECTION_DESCRIPTION
+		dataType: string
+		lineageTag: bc41ffaa-e67a-455d-b70a-a81bff67a762
+		summarizeBy: none
+		sourceColumn: CALL_PROTECTION_DESCRIPTION
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Due Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: b4fe32e0-e96f-47a6-92eb-cb337a53a8aa
+		summarizeBy: none
+		sourceColumn: Due Date
+
+		variation Variation
+			isDefault
+			relationship: 5f5b7871-d355-48dc-b5ae-f7a54eb720e7
+			defaultHierarchy: LocalDateTable_174a1f54-18c2-4715-8ebf-3947ed8921b8.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column DUE_DATE_TIME
+		dataType: string
+		lineageTag: e1144583-8d71-48ff-9115-26cce63c5572
+		summarizeBy: none
+		sourceColumn: DUE_DATE_TIME
+
+		annotation SummarizationSetBy = Automatic
+
+	column FINAL_OID
+		dataType: string
+		lineageTag: fe8b2614-e681-42a5-8081-076d7f34174d
+		summarizeBy: none
+		sourceColumn: FINAL_OID
+
+		annotation SummarizationSetBy = Automatic
+
+	column FINAL_OUTSTANDING_AMOUNT
+		dataType: double
+		lineageTag: 791b3b8a-4ea7-43d8-a2d1-3a75cf70f99c
+		summarizeBy: sum
+		sourceColumn: FINAL_OUTSTANDING_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column INITIAL_OID
+		dataType: string
+		lineageTag: 65b23a7d-c289-471d-8f18-d90b8f4e163e
+		summarizeBy: none
+		sourceColumn: INITIAL_OID
+
+		annotation SummarizationSetBy = Automatic
+
+	column INITIAL_OUTSTANDING_AMOUNT
+		dataType: double
+		lineageTag: c44fde8d-6209-45c6-86f3-479138719cb3
+		summarizeBy: sum
+		sourceColumn: INITIAL_OUTSTANDING_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column INTIAL_FLOATER_SPREAD_RATE
+		dataType: string
+		lineageTag: 80e35589-fffc-443b-a121-50f01e51b1df
+		summarizeBy: none
+		sourceColumn: INTIAL_FLOATER_SPREAD_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+	column IS_FUNGIBLE
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 95bf519c-f23d-43ad-8f5a-dd0aeb353b06
+		summarizeBy: none
+		sourceColumn: IS_FUNGIBLE
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column LIBOR_FLOOR
+		dataType: string
+		lineageTag: dc3098b7-9c22-4659-b401-ce6268834eb0
+		summarizeBy: none
+		sourceColumn: LIBOR_FLOOR
+
+		annotation SummarizationSetBy = Automatic
+
+	column MATURITY_DATE
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: c78c4818-b64a-4556-8603-1cd155e42c18
+		summarizeBy: none
+		sourceColumn: MATURITY_DATE
+
+		variation Variation
+			isDefault
+			relationship: a517b7e9-d8b7-4652-8755-c51afc0b9b03
+			defaultHierarchy: LocalDateTable_992220b0-b391-4578-a829-4782aad32c50.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column MEETING_DATE
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: a36f9562-b161-44ec-b59e-714423ab57aa
+		summarizeBy: none
+		sourceColumn: MEETING_DATE
+
+		variation Variation
+			isDefault
+			relationship: ce7df301-7303-4da0-aba0-3694d8e0ca8e
+			defaultHierarchy: LocalDateTable_18d4a08c-b8d0-4cc3-a808-11945cb1aecf.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column MEETING_DATE_TIME
+		dataType: string
+		lineageTag: 40ef8aea-dfd3-46db-bfd8-7d305ad80b6b
+		summarizeBy: none
+		sourceColumn: MEETING_DATE_TIME
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Pricing Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 0fb5bbd2-c64c-4c28-8b78-425d0a9d784d
+		summarizeBy: none
+		sourceColumn: Pricing Date
+
+		variation Variation
+			isDefault
+			relationship: 16a20326-635a-4432-88b0-57f10856447e
+			defaultHierarchy: LocalDateTable_3a624a6b-26a2-495b-b04c-0ee76bb2b4be.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column RATING_RECOVERY
+		dataType: string
+		displayFolder: Rating
+		lineageTag: 2b3d0e23-353c-4417-bd68-9eb860e96477
+		summarizeBy: none
+		sourceColumn: RATING_RECOVERY
+
+		annotation SummarizationSetBy = Automatic
+
+	column SHELVED_DATE
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 9de27bf5-89d8-45b4-88e6-d3da809b0ed7
+		summarizeBy: none
+		sourceColumn: SHELVED_DATE
+
+		variation Variation
+			isDefault
+			relationship: 6da98a5e-b700-4e24-97d2-ba8e2bcf4b8f
+			defaultHierarchy: LocalDateTable_e6d00191-dbd5-4759-a9a0-6dfefb41a3a6.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column TRANSACTION_TYPE
+		dataType: string
+		lineageTag: e2360ac2-922b-4233-b38b-1a5a07f941e8
+		summarizeBy: none
+		sourceColumn: TRANSACTION_TYPE
+
+		annotation SummarizationSetBy = Automatic
+
+	column UOP
+		dataType: string
+		lineageTag: e8e2e26d-7fd6-44a2-966c-98068ad5b762
+		summarizeBy: none
+		sourceColumn: UOP
+
+		annotation SummarizationSetBy = Automatic
+
+	column UPDATED_OID
+		dataType: string
+		lineageTag: 41efa0fb-2cef-4cc0-a80e-4fd918905462
+		summarizeBy: none
+		sourceColumn: UPDATED_OID
+
+		annotation SummarizationSetBy = Automatic
+
+	column UPDATED_OUTSTANDING_AMOUNT
+		dataType: double
+		lineageTag: 1cfc1160-e0cf-4acf-b26a-28b958c1187c
+		summarizeBy: sum
+		sourceColumn: UPDATED_OUTSTANDING_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column UPDATED_FLOATER_SPREAD_RATE
+		dataType: string
+		lineageTag: 7df4fcef-8cba-45a7-ab7c-74400b7e4daa
+		summarizeBy: none
+		sourceColumn: UPDATED_FLOATER_SPREAD_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+	column NOTES
+		dataType: string
+		lineageTag: 3ae2ad3f-96e5-43f8-a0aa-6e31045a2957
+		summarizeBy: none
+		sourceColumn: NOTES
+
+		annotation SummarizationSetBy = Automatic
+
+	column FILE_NAME
+		dataType: string
+		displayFolder: System
+		lineageTag: 814eea0f-2b0e-43d0-9eb5-b61b139176ca
+		summarizeBy: none
+		sourceColumn: FILE_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column SOURCE_SYSTEM_STATUS_IDENTIFIER
+		dataType: double
+		displayFolder: Audit
+		lineageTag: aafe149a-63fd-418f-908a-60e67d92516c
+		summarizeBy: sum
+		sourceColumn: SOURCE_SYSTEM_STATUS_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column RECORD_IDENTIFIER
+		dataType: double
+		displayFolder: System
+		lineageTag: 752494d1-b98b-4726-bd51-85f2d425c779
+		summarizeBy: sum
+		sourceColumn: RECORD_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CREATED_DATETIME
+		dataType: dateTime
+		formatString: General Date
+		displayFolder: Audit
+		lineageTag: 3dfc696a-05a4-444d-bdfb-172e845f8c5a
+		summarizeBy: none
+		sourceColumn: CREATED_DATETIME
+
+		variation Variation
+			isDefault
+			relationship: 62eea6ab-182c-4c05-80e8-94cac8ee55d2
+			defaultHierarchy: LocalDateTable_391451a2-796f-491b-8252-a3682f98abbd.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_BY_NAME
+		dataType: string
+		displayFolder: Audit
+		lineageTag: 9735fbd7-12d8-4d7c-8cb3-c900b6eb6092
+		summarizeBy: none
+		sourceColumn: CREATED_BY_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_BY_COMMENTS
+		dataType: string
+		displayFolder: Audit
+		lineageTag: 57c1c8eb-5fe6-4f21-bf6a-fe85eb44d8f5
+		summarizeBy: none
+		sourceColumn: CREATED_BY_COMMENTS
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_DATETIME
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e941050c-4a98-4d01-b987-96627a8e33da
+		summarizeBy: none
+		sourceColumn: MODIFIED_DATETIME
+
+		variation Variation
+			isDefault
+			relationship: 6ceff207-30f9-4de3-a000-ce34154c6f91
+			defaultHierarchy: LocalDateTable_689f8316-a1dc-431a-b3cd-9e1f0ee0ce3e.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_BY_NAME
+		dataType: string
+		displayFolder: Audit
+		lineageTag: 5cab3d20-bae6-4614-ab8c-7c5e530c32f1
+		summarizeBy: none
+		sourceColumn: MODIFIED_BY_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_BY_COMMENTS
+		dataType: string
+		displayFolder: Audit
+		lineageTag: 3a0dc278-69d0-405e-9d26-30c765359203
+		summarizeBy: none
+		sourceColumn: MODIFIED_BY_COMMENTS
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Allocation %' = DIVIDE( NEW_ISSUE[Allocation],NEW_ISSUE[Commitment])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: a0b21002-9c75-431a-91f2-78098f3b5488
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Allocation Hit Rate %' = DIVIDE( NEW_ISSUE[Deals Allocated],NEW_ISSUE[Deals Committed])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: f355ef9e-a8cc-483a-ac63-b66cf3c67b64
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Deals Allocated' = If(ISBLANK(CALCULATE(DISTINCTCOUNT(NEW_ISSUE[INSTRUMENT_IDENTIFIER]), NEW_ISSUE[Allocation] > 0)),0,CALCULATE(DISTINCTCOUNT(NEW_ISSUE[INSTRUMENT_IDENTIFIER]), NEW_ISSUE[Allocation] > 0))
+		formatString: 0
+		lineageTag: fc5f11cb-cef7-4a8a-b7b4-e05ec11cca0d
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Deals Committed' = CALCULATE(DISTINCTCOUNT(NEW_ISSUE[INSTRUMENT_IDENTIFIER]), NEW_ISSUE[Commitment] > 0)
+		formatString: 0
+		lineageTag: fd07b631-e4e1-43ad-a8b5-226b7a68278e
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Deals Not Allocated' = If(ISBLANK(CALCULATE(DISTINCTCOUNT(NEW_ISSUE[INSTRUMENT_IDENTIFIER]), NEW_ISSUE[Allocation] = 0)),0,CALCULATE(DISTINCTCOUNT(NEW_ISSUE[INSTRUMENT_IDENTIFIER]), NEW_ISSUE[Allocation] = 0))
+		formatString: 0
+		lineageTag: 8db6161d-2135-4748-a54c-975d0a00bb56
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column INSTRUMENT_IDENTIFIER_MATCH_TYPE
+		dataType: string
+		lineageTag: fab1fce1-b3c9-44fc-9f3c-c907d236241b
+		summarizeBy: none
+		sourceColumn: INSTRUMENT_IDENTIFIER_MATCH_TYPE
+
+		annotation SummarizationSetBy = Automatic
+
+	column LEVPRO_IDENTIFIER
+		dataType: string
+		lineageTag: 636f26e4-cbca-40f7-9368-24635ab1cc09
+		summarizeBy: none
+		sourceColumn: LEVPRO_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column OLD_LOANX_IDENTIFIER_0
+		dataType: string
+		lineageTag: cdf83ecb-d311-43d1-ade0-268e06d089ab
+		summarizeBy: none
+		sourceColumn: OLD_LOANX_IDENTIFIER_0
+
+		annotation SummarizationSetBy = Automatic
+
+	column OLD_LOANX_IDENTIFIER_1
+		dataType: string
+		lineageTag: c2b0009b-44ca-466d-904c-e36b678bd951
+		summarizeBy: none
+		sourceColumn: OLD_LOANX_IDENTIFIER_1
+
+		annotation SummarizationSetBy = Automatic
+
+	column OLD_LOANX_IDENTIFIER_2
+		dataType: string
+		lineageTag: 04b37aa1-bd21-4cd0-9255-996dc41fe57b
+		summarizeBy: none
+		sourceColumn: OLD_LOANX_IDENTIFIER_2
+
+		annotation SummarizationSetBy = Automatic
+
+	column OLD_LOANX_IDENTIFIER_3
+		dataType: string
+		lineageTag: 7e5b86f3-677c-4b6d-819b-b4c5a66db60a
+		summarizeBy: none
+		sourceColumn: OLD_LOANX_IDENTIFIER_3
+
+		annotation SummarizationSetBy = Automatic
+
+	column OLD_LOANX_IDENTIFIER_4
+		dataType: string
+		lineageTag: 1f79e222-6c1e-4f20-95a1-53182203390b
+		summarizeBy: none
+		sourceColumn: OLD_LOANX_IDENTIFIER_4
+
+		annotation SummarizationSetBy = Automatic
+
+	column OLD_FIGI_IDENTIFIER_0
+		dataType: string
+		lineageTag: 545397c4-2104-40f1-8d3d-3818caa962fb
+		summarizeBy: none
+		sourceColumn: OLD_FIGI_IDENTIFIER_0
+
+		annotation SummarizationSetBy = Automatic
+
+	column OLD_FIGI_IDENTIFIER_1
+		dataType: string
+		lineageTag: 50428a7f-132b-48a4-be6e-bf97c99fcd32
+		summarizeBy: none
+		sourceColumn: OLD_FIGI_IDENTIFIER_1
+
+		annotation SummarizationSetBy = Automatic
+
+	column OLD_FIGI_IDENTIFIER_2
+		dataType: string
+		lineageTag: 177d44fc-2756-4ac0-a536-79b232cda9d9
+		summarizeBy: none
+		sourceColumn: OLD_FIGI_IDENTIFIER_2
+
+		annotation SummarizationSetBy = Automatic
+
+	column OLD_FIGI_IDENTIFIER_3
+		dataType: string
+		lineageTag: 52cd66c4-5630-4244-b8a1-935e030921e7
+		summarizeBy: none
+		sourceColumn: OLD_FIGI_IDENTIFIER_3
+
+		annotation SummarizationSetBy = Automatic
+
+	column OLD_FIGI_IDENTIFIER_4
+		dataType: string
+		lineageTag: 9ea5504e-9842-43ca-adf0-5ae3ec0559a7
+		summarizeBy: none
+		sourceColumn: OLD_FIGI_IDENTIFIER_4
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_DATE
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 933a4d21-859d-489e-b85c-8d078dc9b248
+		summarizeBy: none
+		sourceColumn: CREATED_DATE
+
+		variation Variation
+			isDefault
+			relationship: 68460adc-30ff-41e7-862d-06cb7e117c67
+			defaultHierarchy: LocalDateTable_4d678e83-afd4-44ac-aa0e-876ca90a08f7.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column SOURCE_SYSTEM_CODE
+		dataType: string
+		lineageTag: 7015254f-1d76-4fdd-9f6d-89800090e8fd
+		summarizeBy: none
+		sourceColumn: SOURCE_SYSTEM_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column SOURCE_SYSTEM_SHORT_NAME
+		dataType: string
+		lineageTag: ea8e896e-cf29-48fc-9ebf-3cec6e0fbf4f
+		summarizeBy: none
+		sourceColumn: SOURCE_SYSTEM_SHORT_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column SOURCE_SYSTEM_NAME
+		dataType: string
+		lineageTag: 65a434a0-33bf-4e88-b747-6de4dc657561
+		summarizeBy: none
+		sourceColumn: SOURCE_SYSTEM_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column FINAL_FLOATER_SPREAD_RATE
+		dataType: string
+		lineageTag: 5ce2d2ae-069c-4b63-8380-ff078d9ee391
+		summarizeBy: none
+		sourceColumn: FINAL_FLOATER_SPREAD_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+	column LEVPRO_INSTRUMENT_IDENTIFIER
+		dataType: string
+		lineageTag: a5618d36-1cfb-459b-86d5-96ea48bafd7e
+		summarizeBy: none
+		sourceColumn: LEVPRO_INSTRUMENT_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column INSTRUMENT_NAME
+		dataType: string
+		lineageTag: 4387a97f-5223-4405-a01d-9dcf733774a6
+		summarizeBy: none
+		sourceColumn: INSTRUMENT_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column INSTRUMENT_FULL_NAME
+		dataType: string
+		lineageTag: 5b9c6b69-b5e9-4e3d-ada1-5079ad4c6908
+		summarizeBy: none
+		sourceColumn: INSTRUMENT_FULL_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column FIGI_IDENTIFIER
+		dataType: string
+		lineageTag: 28f2e801-88d2-4f5e-8abb-6ee5df92d2dc
+		summarizeBy: none
+		sourceColumn: FIGI_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column CUSIP_CODE
+		dataType: string
+		lineageTag: 68188fa1-e205-4a4d-ba59-54551749c824
+		summarizeBy: none
+		sourceColumn: CUSIP_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column ISIN_CODE
+		dataType: string
+		lineageTag: d285f6e7-6ced-49c8-b827-5fe3c87d7968
+		summarizeBy: none
+		sourceColumn: ISIN_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column ISSUE_COUNTRY_CODE
+		dataType: string
+		lineageTag: 161320a3-48be-4b97-aa0e-84d1c686f673
+		summarizeBy: none
+		sourceColumn: ISSUE_COUNTRY_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column ISSUER_COUNTRY_NAME
+		dataType: string
+		lineageTag: aa13d856-fb69-47e3-bd0f-68a7329718f8
+		summarizeBy: none
+		sourceColumn: ISSUER_COUNTRY_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column LEVPRO_ISSUER_TICKER
+		dataType: string
+		lineageTag: c6a94f1b-ee23-4608-a599-f55db3be6811
+		summarizeBy: none
+		sourceColumn: LEVPRO_ISSUER_TICKER
+
+		annotation SummarizationSetBy = Automatic
+
+	column LEVPRO_ISSUER_GROUP_NAME
+		dataType: string
+		lineageTag: 81d0963c-5738-4afa-b32d-2e7fb73491e6
+		summarizeBy: none
+		sourceColumn: LEVPRO_ISSUER_GROUP_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column LEVPRO_ISSUER_NAME
+		dataType: string
+		lineageTag: cc4af9f8-54d5-420d-be7e-977815cc7c9e
+		summarizeBy: none
+		sourceColumn: LEVPRO_ISSUER_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column LEVPRO_ISSUER_FULL_NAME
+		dataType: string
+		lineageTag: 478f53b8-b833-41e7-8c2c-d7f249371d76
+		summarizeBy: none
+		sourceColumn: LEVPRO_ISSUER_FULL_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column LEVPRO_ISSUER_IDENTIFIER
+		dataType: string
+		lineageTag: 18161132-bbb6-43e0-ad2f-794e71b897bb
+		summarizeBy: none
+		sourceColumn: LEVPRO_ISSUER_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column AGENT_BANK_IDENTIFIER
+		dataType: string
+		lineageTag: f9913364-0778-47ee-b88b-6f70a5f8247b
+		summarizeBy: none
+		sourceColumn: AGENT_BANK_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column ISSUER_DESCRIPTION
+		dataType: string
+		lineageTag: b0dfe313-cae3-4ed5-af25-d0a3c616a656
+		summarizeBy: none
+		sourceColumn: ISSUER_DESCRIPTION
+
+		annotation SummarizationSetBy = Automatic
+
+	column MOODYS_CORP_INDUSTRY_CODE
+		dataType: string
+		lineageTag: cbb12066-60f0-4663-b092-4fb2ba2d2791
+		summarizeBy: none
+		sourceColumn: MOODYS_CORP_INDUSTRY_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column MOODYS_CORP_INDUSTRY_NAME
+		dataType: string
+		lineageTag: 8cb9a4f1-45df-49c2-b620-1eec7dea2e82
+		summarizeBy: none
+		sourceColumn: MOODYS_CORP_INDUSTRY_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column SPGLOBAL_INDUSTRY_CODE
+		dataType: string
+		lineageTag: ae1e0a55-bd88-4668-9cb2-f9662293f994
+		summarizeBy: none
+		sourceColumn: SPGLOBAL_INDUSTRY_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column SPGLOBAL_INDUSTRY_NAME
+		dataType: string
+		lineageTag: f5b280d3-53b2-44e8-b3eb-59df90f2ccff
+		summarizeBy: none
+		sourceColumn: SPGLOBAL_INDUSTRY_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column JP_INDUSTRY_CODE
+		dataType: string
+		lineageTag: a7e958df-3e47-4b39-81ab-284ddfaae6bd
+		summarizeBy: none
+		sourceColumn: JP_INDUSTRY_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column JP_SECTOR_NAME
+		dataType: string
+		lineageTag: 73adc58d-539a-40e1-977d-e7daaeb0ccc3
+		summarizeBy: none
+		sourceColumn: JP_SECTOR_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column FITCH_ISSUER_RATING_CODE
+		dataType: string
+		lineageTag: fa67c5bf-5d0a-4234-8c81-7f87caca92e4
+		summarizeBy: none
+		sourceColumn: FITCH_ISSUER_RATING_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column FITCH_RATING_CODE
+		dataType: string
+		lineageTag: 91642b56-933a-4257-a42c-89d67f10f73d
+		summarizeBy: none
+		sourceColumn: FITCH_RATING_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column MOODYS_ISSUER_RATING_CODE
+		dataType: string
+		lineageTag: 8ec0f307-7592-4e9e-8423-eacc11104237
+		summarizeBy: none
+		sourceColumn: MOODYS_ISSUER_RATING_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column MOODYS_RATING_CODE
+		dataType: string
+		lineageTag: 3997152d-ec77-4f7d-8a8e-643b6724355a
+		summarizeBy: none
+		sourceColumn: MOODYS_RATING_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column SPGLOBAL_ISSUER_RATING_CODE
+		dataType: string
+		lineageTag: 4ade1716-2483-45f0-8392-80d2b1714092
+		summarizeBy: none
+		sourceColumn: SPGLOBAL_ISSUER_RATING_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column SPGLOBAL_RATING_CODE
+		dataType: string
+		lineageTag: bf8d3b74-cf83-40ed-a268-243655bdd15f
+		summarizeBy: none
+		sourceColumn: SPGLOBAL_RATING_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column ASSET_CLASS
+		dataType: string
+		lineageTag: 662c503a-0d97-4af8-993c-03a6a314fb71
+		summarizeBy: none
+		sourceColumn: ASSET_CLASS
+
+		annotation SummarizationSetBy = Automatic
+
+	column ASSET_TYPE_TEXT
+		dataType: string
+		lineageTag: 6f24a670-07c2-4845-90b9-8a098a00ff52
+		summarizeBy: none
+		sourceColumn: ASSET_TYPE_TEXT
+
+		annotation SummarizationSetBy = Automatic
+
+	column INSTRUMENT_CLASSIFICATION_CODE
+		dataType: string
+		lineageTag: f8f02b33-9f34-426a-bb7a-ef4cd1c4f914
+		summarizeBy: none
+		sourceColumn: INSTRUMENT_CLASSIFICATION_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column INVESTMENT_TYPE_CODE
+		dataType: string
+		lineageTag: 5c0674d0-731b-4547-8fb2-ef672904a5c1
+		summarizeBy: none
+		sourceColumn: INVESTMENT_TYPE_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column COUPON_RATE
+		dataType: double
+		lineageTag: a4fab37a-589a-4ce5-9b14-b2386becd24e
+		summarizeBy: sum
+		sourceColumn: COUPON_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column COUPON_BASE_RATE
+		dataType: string
+		lineageTag: 305dc2de-7f15-42e7-8fe2-f06da0849044
+		summarizeBy: none
+		sourceColumn: COUPON_BASE_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+	column ISSUE_CURRENCY_CODE
+		dataType: string
+		lineageTag: 4c6e15c5-2896-447b-a487-496fc2a07e8a
+		summarizeBy: none
+		sourceColumn: ISSUE_CURRENCY_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column DEAL_NAME
+		dataType: string
+		lineageTag: 7079ce75-05af-4cbd-94e3-501cd4fe64de
+		summarizeBy: none
+		sourceColumn: DEAL_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column ISSUE_AMOUNT
+		dataType: double
+		lineageTag: 1e0530c7-94a6-48dc-8f89-a88a1f2aca26
+		summarizeBy: sum
+		sourceColumn: ISSUE_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column IS_PIK
+		dataType: string
+		lineageTag: 2ccc1204-b762-4f0e-bbbd-0351957ac177
+		summarizeBy: none
+		sourceColumn: IS_PIK
+
+		annotation SummarizationSetBy = Automatic
+
+	column ISSUE_DATE
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 6ef14b26-2828-43ca-ba6a-353f909f2083
+		summarizeBy: none
+		sourceColumn: ISSUE_DATE
+
+		variation Variation
+			isDefault
+			relationship: 3e2ff779-8dc5-45f0-9720-e76cbcd43ff5
+			defaultHierarchy: LocalDateTable_4466022f-c30a-4029-aa24-41061c901f1d.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ISSUE_PRICE
+		dataType: double
+		lineageTag: 9eae5a0e-8cf6-4cf4-a295-7b546608ce2c
+		summarizeBy: sum
+		sourceColumn: ISSUE_PRICE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column LIBOR_FLOOR_RATE
+		dataType: double
+		lineageTag: 51c24c48-8bf5-4133-bc4e-a05292a19db3
+		summarizeBy: sum
+		sourceColumn: LIBOR_FLOOR_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SENIORITY_TEXT
+		dataType: string
+		lineageTag: f9769ba5-7d45-4364-a050-cbe06ead5541
+		summarizeBy: none
+		sourceColumn: SENIORITY_TEXT
+
+		annotation SummarizationSetBy = Automatic
+
+	column LIEN_TYPE
+		dataType: string
+		lineageTag: e4532746-8a0e-44d2-97b0-e27fcabc6b2f
+		summarizeBy: none
+		sourceColumn: LIEN_TYPE
+
+		annotation SummarizationSetBy = Automatic
+
+	column SENIORITY_TYPE
+		dataType: string
+		lineageTag: 86da4f97-9ca0-4e46-86f5-38f292f5fbec
+		summarizeBy: none
+		sourceColumn: SENIORITY_TYPE
+
+		annotation SummarizationSetBy = Automatic
+
+	column TRANCHE_NAME
+		dataType: string
+		lineageTag: aaf51948-f9a0-405f-8d0f-f5dd9c2e1959
+		summarizeBy: none
+		sourceColumn: TRANCHE_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column TRANCHE_SIZE
+		dataType: double
+		lineageTag: 4068caa1-c078-4477-9fd3-649e9b53a818
+		summarizeBy: sum
+		sourceColumn: TRANCHE_SIZE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column UNDERWRITER_NAME
+		dataType: string
+		lineageTag: d5491895-84b1-4a89-abcc-b59d7f47a80d
+		summarizeBy: none
+		sourceColumn: UNDERWRITER_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column OUTSTANDING_AMOUNT
+		dataType: double
+		lineageTag: 8794b90c-cb99-4ae2-be9c-f43b3f62af69
+		summarizeBy: sum
+		sourceColumn: OUTSTANDING_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column FLOATER_SPREAD_RATE
+		dataType: double
+		lineageTag: ede5c749-ac30-4697-b0f4-8b344e5873c0
+		summarizeBy: sum
+		sourceColumn: FLOATER_SPREAD_RATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Allocated Indicator' = ```
+			
+			IF(NOT(ISBLANK(NEW_ISSUE[Allocation])), TRUE(), FALSE())
+			
+			```
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: d871e244-2c16-47b9-80ad-8aeb8d0272d0
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column NEW_ISSUE_THRESHOLD_DATE
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 815a5d29-87e4-490c-9222-9e5af72f342f
+		summarizeBy: none
+		sourceColumn: NEW_ISSUE_THRESHOLD_DATE
+
+		variation Variation
+			isDefault
+			relationship: e06376aa-8644-4007-b056-506c23d4c9f8
+			defaultHierarchy: LocalDateTable_9271578c-3ab8-4828-b358-18a988c30993.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column IS_CALENDAR_DATE_AFTER_NEW_ISSUE_THRESHOLD_DATE
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: f942f2f9-b3e0-4127-a98a-b2de5e1a16cc
+		summarizeBy: none
+		sourceColumn: IS_CALENDAR_DATE_AFTER_NEW_ISSUE_THRESHOLD_DATE
+
+		annotation SummarizationSetBy = Automatic
+
+	column BFILL_SELECT_INELIGIBLE
+		dataType: string
+		lineageTag: a8a8a7bb-6a1f-4f1c-8804-446b2124384a
+		summarizeBy: none
+		sourceColumn: BFILL_SELECT_INELIGIBLE
+
+		annotation SummarizationSetBy = Automatic
+
+	column SELECT_INELIGIBLE_INDICATOR
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: d1e22547-da67-48d5-8490-0d167b82151f
+		summarizeBy: none
+		sourceColumn: SELECT_INELIGIBLE_INDICATOR
+
+		annotation SummarizationSetBy = Automatic
+
+	partition NEW_ISSUE = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases(#"snowflake_url","ANALYST_WH_XS"),
+				    HUB_Database = Source{[Name="HUB",Kind="Database"]}[Data],
+				    POSITION_Schema = HUB_Database{[Name="POSITION",Kind="Schema"]}[Data],
+				    NEW_ISSUE_DAILY_View = POSITION_Schema{[Name="NEW_ISSUE_DAILY",Kind="View"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(NEW_ISSUE_DAILY_View,{{"COMMITMENT_AMOUNT", "Commitment"}, {"ALLOCATION_AMOUNT", "Allocation"}, {"DUE_DATE", "Due Date"}, {"PRICING_DATE", "Pricing Date"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"Pricing Date", type date}}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Changed Type",{{"LEVPRO_CREATED_DATETIME", "CREATED_DATE"}})
+				in
+				    #"Renamed Columns1"
+
+	annotation PBI_ResultType = Table
+

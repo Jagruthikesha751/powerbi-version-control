@@ -1,0 +1,129 @@
+table HOQ_INSTRUMENT_CHANGE
+	lineageTag: 15b8d296-f5f8-4faa-ab5a-7fc1313667f2
+
+	column 'Calendar Date'
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 4a288625-a20c-4e44-a937-412ae569fbbb
+		summarizeBy: none
+		sourceColumn: Calendar Date
+
+		variation Variation
+			isDefault
+			relationship: d2ee60fa-2117-441e-930f-97575e47f258
+			defaultHierarchy: LocalDateTable_c79d8a30-c298-47a1-a5ae-da6049a55232.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'HOQ Message'
+		dataType: string
+		lineageTag: 1c2974c5-f18b-4dc5-81d0-1c9be1ca0d93
+		summarizeBy: none
+		sourceColumn: HOQ Message
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Identifier Type'
+		dataType: string
+		lineageTag: 65ab259b-cd75-465c-97fe-5627d75c75c8
+		summarizeBy: none
+		sourceColumn: Identifier Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Current Identifier'
+		dataType: string
+		lineageTag: 434256e3-3cc7-42e6-9139-13ad2987563a
+		summarizeBy: none
+		sourceColumn: Current Identifier
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Previous Identifier'
+		dataType: string
+		lineageTag: 5f39d515-5d7c-41cf-91a5-cf11d5008de1
+		summarizeBy: none
+		sourceColumn: Previous Identifier
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID_DATE
+		dataType: string
+		lineageTag: 67596c95-c235-4384-acff-dfd2c99fcd25
+		summarizeBy: none
+		sourceColumn: ID_DATE
+
+		annotation SummarizationSetBy = Automatic
+
+	column HOQ_MESSAGE_IDENTIFIER
+		dataType: double
+		lineageTag: cd2368f6-6574-4c5a-ad96-bf3d73965f62
+		summarizeBy: none
+		sourceColumn: HOQ_MESSAGE_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Source System Status Identifier'
+		dataType: double
+		formatString: 0
+		lineageTag: 45181ba2-83de-4dc4-9042-db7fa6e82da5
+		summarizeBy: sum
+		sourceColumn: Source System Status Identifier
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Facility Name'
+		dataType: string
+		lineageTag: 24165783-cb9f-4a57-a73c-6c9636854781
+		summarizeBy: none
+		sourceColumn: Facility Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Identifiers Equivalent' = HOQ_INSTRUMENT_CHANGE[Previous Identifier]==HOQ_INSTRUMENT_CHANGE[Current Identifier]
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 282067c7-ea7c-45ce-a158-b770e4557ba0
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column INSTRUMENT_IDENTIFIER
+		dataType: string
+		lineageTag: 65c845c6-84bd-401f-884d-d85375edb20b
+		summarizeBy: none
+		sourceColumn: INSTRUMENT_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column IdentifierChangeStatus = if(HOQ_INSTRUMENT_CHANGE[Previous Identifier]<> HOQ_INSTRUMENT_CHANGE[Current Identifier], "Changed", "Unchanged")
+		dataType: string
+		lineageTag: c0821f7d-2b36-40f5-b96b-54b029f007db
+		summarizeBy: none
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	partition HOQ_INSTRUMENT_CHANGE = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases(snowflake_url,"ANALYST_WH_XS"),
+				    HUB_Database = Source{[Name="HUB",Kind="Database"]}[Data],
+				    JOB_Schema = HUB_Database{[Name="JOB",Kind="Schema"]}[Data],
+				    HOQ_INSTRUMENT_CHANGE_View = JOB_Schema{[Name="HOQ_INSTRUMENT_CHANGE",Kind="View"]}[Data],
+				    #"Added Custom" = Table.AddColumn(HOQ_INSTRUMENT_CHANGE_View, "ID_DATE", each [INSTRUMENT_IDENTIFIER]&Date.ToText([CALENDAR_DATE], [Format="yyyy-MM-dd"])),
+				    #"Renamed Columns" = Table.RenameColumns(#"Added Custom",{{"CALENDAR_DATE", "Calendar Date"}, {"CURRENT_IDENTIFIER", "Current Identifier"}, {"HOQ_MESSAGE_DESCRIPTION", "HOQ Message"}, {"IDENTIFIER_TYPE", "Identifier Type"}, {"PREVIOUS_IDENTIFIER", "Previous Identifier"}, {"SOURCE_SYSTEM_STATUS_IDENTIFIER", "Source System Status Identifier"}, {"INSTRUMENT_NAME", "Facility Name"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
