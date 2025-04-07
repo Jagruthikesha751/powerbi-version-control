@@ -1,0 +1,99 @@
+table INDEX_DELTA_DAILY
+	lineageTag: 30825ace-e35b-471b-8c50-7aeb412a94b0
+
+	column PORTFOLIO_IDENTIFIER
+		dataType: string
+		lineageTag: 9440c65c-3005-49f1-9e87-14684ce92212
+		summarizeBy: none
+		sourceColumn: PORTFOLIO_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column INSTRUMENT_IDENTIFIER
+		dataType: string
+		lineageTag: 6c4384b8-2586-49df-b904-25f2cdeb0023
+		summarizeBy: none
+		sourceColumn: INSTRUMENT_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column CALENDAR_DATE
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 63019d60-6388-4068-9c25-9c502db7334a
+		summarizeBy: none
+		sourceColumn: CALENDAR_DATE
+
+		variation Variation
+			isDefault
+			relationship: 4a818053-bd84-41a5-b30a-2e9a053c6dfd
+			defaultHierarchy: LocalDateTable_1882f248-6676-4cc1-a567-f2503eeb66f7.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column DELTA_TYPE
+		dataType: string
+		lineageTag: b3a7c6d9-30a9-445a-a1f8-6f48ef6253ff
+		summarizeBy: none
+		sourceColumn: DELTA_TYPE
+
+		annotation SummarizationSetBy = Automatic
+
+	column PREVIEW_INDICATOR
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 81b66c82-c46b-44cd-b1a2-417f218ff875
+		summarizeBy: none
+		sourceColumn: PREVIEW_INDICATOR
+
+		annotation SummarizationSetBy = Automatic
+
+	column OLD_PERIOD
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 1e835361-ffd5-42f9-9eef-64797e529e66
+		summarizeBy: none
+		sourceColumn: OLD_PERIOD
+
+		variation Variation
+			isDefault
+			relationship: 4621f99c-1936-4818-8002-1b86c12f9746
+			defaultHierarchy: LocalDateTable_db57f543-631b-4ca6-aa19-ae8368d9bff3.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column NEW_PERIOD
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 69131de5-7249-43d9-a261-5334866f4889
+		summarizeBy: none
+		sourceColumn: NEW_PERIOD
+
+		variation Variation
+			isDefault
+			relationship: bd6c6d70-2f02-4293-b83b-86038eb10c58
+			defaultHierarchy: LocalDateTable_23da0b34-5659-4b7c-8ba7-2a1e7988b978.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition INDEX_DELTA_DAILY = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases(snowflake_url,"ANALYST_WH_XS"),
+				    HUB_Database = Source{[Name="HUB",Kind="Database"]}[Data],
+				    POSITION_Schema = HUB_Database{[Name="POSITION",Kind="Schema"]}[Data],
+				    INDEX_DELTA_DAILY_View = POSITION_Schema{[Name="INDEX_DELTA_DAILY",Kind="View"]}[Data]
+				in
+				    INDEX_DELTA_DAILY_View
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

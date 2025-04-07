@@ -1,0 +1,182 @@
+table HOQ_RULE
+	lineageTag: f9ae51be-b341-4dae-94bc-264357d3c73b
+
+	column HOQ_RULE_IDENTIFIER
+		dataType: double
+		lineageTag: c26e59b1-d54d-4284-9090-9d7d82980d55
+		summarizeBy: none
+		sourceColumn: HOQ_RULE_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column HOQ_RULE_TYPE_CODE
+		dataType: string
+		lineageTag: 3ffcb128-369c-4838-b4bd-fcf2a1b14cc4
+		summarizeBy: none
+		sourceColumn: HOQ_RULE_TYPE_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column HOQ_RULE_SEVERITY_CODE
+		dataType: string
+		lineageTag: 7a7fd9d7-abcc-4537-8ed8-7e455345cd6c
+		summarizeBy: none
+		sourceColumn: HOQ_RULE_SEVERITY_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column OBJECT_TYPE_CODE
+		dataType: string
+		lineageTag: 67832289-3f63-42c1-ba3d-47366ae9d3d7
+		summarizeBy: none
+		sourceColumn: OBJECT_TYPE_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Rule Name'
+		dataType: string
+		lineageTag: 333ef077-6462-4bcc-9f82-f56e180192a0
+		summarizeBy: none
+		sourceColumn: Rule Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_DATETIME
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a1321a7e-f62e-4052-b6ce-655eacef9650
+		summarizeBy: none
+		sourceColumn: CREATED_DATETIME
+
+		variation Variation
+			isDefault
+			relationship: 468fbe19-3493-4790-91c5-b17fb7385861
+			defaultHierarchy: LocalDateTable_c943b941-13a2-43d8-b7ae-ab8fcbdfd97c.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_BY_NAME
+		dataType: string
+		lineageTag: 158c6c23-8847-414d-b780-0bea4936125f
+		summarizeBy: none
+		sourceColumn: CREATED_BY_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_BY_COMMENTS
+		dataType: string
+		lineageTag: e1802f8c-05fa-46b0-9629-ac08715f601a
+		summarizeBy: none
+		sourceColumn: CREATED_BY_COMMENTS
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_DATETIME
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 47787a72-624e-47e1-87dc-5d38d3d5e6b8
+		summarizeBy: none
+		sourceColumn: MODIFIED_DATETIME
+
+		variation Variation
+			isDefault
+			relationship: c030c8f8-2159-48a0-bc87-b21b20c52213
+			defaultHierarchy: LocalDateTable_ab68562f-3321-4c98-af34-5ed5fa27699b.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_BY_NAME
+		dataType: string
+		lineageTag: 097e0b3e-acc3-436c-868c-0b865397d78f
+		summarizeBy: none
+		sourceColumn: MODIFIED_BY_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_BY_COMMENTS
+		dataType: string
+		lineageTag: cb47278f-2fdf-4022-a68f-0483937a2594
+		summarizeBy: none
+		sourceColumn: MODIFIED_BY_COMMENTS
+
+		annotation SummarizationSetBy = Automatic
+
+	column HOQ_RULE_DESCRIPTION
+		dataType: string
+		lineageTag: 699b8386-5ecc-4ced-b528-5791d470d31a
+		summarizeBy: none
+		sourceColumn: HOQ_RULE_DESCRIPTION
+
+		annotation SummarizationSetBy = Automatic
+
+	column HOQ_RULE_ACTION_DESCRIPTION
+		dataType: string
+		lineageTag: 2fd4bde0-81e8-4b1d-ad83-e0221552a119
+		summarizeBy: none
+		sourceColumn: HOQ_RULE_ACTION_DESCRIPTION
+
+		annotation SummarizationSetBy = Automatic
+
+	column HOQ_RULE_DESCRIPTION_URL
+		dataType: string
+		lineageTag: 17f1e629-f0dc-4efc-8c53-a9541ff277da
+		summarizeBy: none
+		sourceColumn: HOQ_RULE_DESCRIPTION_URL
+
+		annotation SummarizationSetBy = Automatic
+
+	column ACTIVE_INDICATOR
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 58a4b4d4-9d8b-46a7-a74e-6be6afb37187
+		summarizeBy: none
+		sourceColumn: ACTIVE_INDICATOR
+
+		annotation SummarizationSetBy = Automatic
+
+	column HOQ_RULE_CODE
+		dataType: string
+		lineageTag: e5550e8b-1cb3-44ca-abea-fd0a9e080b6e
+		summarizeBy: none
+		sourceColumn: HOQ_RULE_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column HOQ_RULE_THRESHOLD
+		dataType: double
+		lineageTag: 2bba85d3-fc78-4b0b-9a50-fbfe72c54558
+		summarizeBy: sum
+		sourceColumn: HOQ_RULE_THRESHOLD
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column REQUIRES_REVIEW_INDICATOR
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 08fdc225-a135-4bc4-b0fb-fcb8c2f9a758
+		summarizeBy: none
+		sourceColumn: REQUIRES_REVIEW_INDICATOR
+
+		annotation SummarizationSetBy = Automatic
+
+	partition HOQ_RULE = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases(snowflake_url,"ANALYST_WH_XS"),
+				    HUB_Database = Source{[Name="HUB",Kind="Database"]}[Data],
+				    JOB_Schema = HUB_Database{[Name="JOB",Kind="Schema"]}[Data],
+				    HOQ_RULE_Table = JOB_Schema{[Name="HOQ_RULE",Kind="Table"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(HOQ_RULE_Table,{{"HOQ_RULE_NAME", "Rule Name"}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns",{"HOQ_RULE_ACTION_URL"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
