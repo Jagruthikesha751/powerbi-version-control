@@ -1,9 +1,5 @@
 {
-
-  "config": "{\"version\":\"5.59\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY24SU10\",\"version\":\"5.61\",\"type\":2}},\"activeSectionIndex\":5,\"modelExtensions\":[{\"name\":\"extension\",\"entities\":[{\"name\":\"Data Dictionary\",\"extends\":\"Data Dictionary\",\"measures\":[{\"name\":\"Measure 4\",\"dataType\":3,\"expression\":\"\\\"Test from Dev2\\\"\",\"errorMessage\":null,\"hidden\":false,\"formulaOverride\":null,\"formatInformation\":{\"formatString\":\"G\",\"format\":\"General\",\"thousandSeparator\":false,\"currencyFormat\":null,\"dateTimeCustomFormat\":null}}]}]}],\"defaultDrillFilterOtherVisuals\":true,\"linguisticSchemaSyncVersion\":0,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"useEnhancedTooltips\":true,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true,\"allowInlineExploration\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}],\"outspacePane\":[{\"properties\":{\"expanded\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]},\"creationSource\":\"QuickCreate\"}",
-
-  "config": "{\"version\":\"5.59\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY24SU10\",\"version\":\"5.61\",\"type\":2}},\"activeSectionIndex\":7,\"modelExtensions\":[{\"name\":\"extension\",\"entities\":[{\"name\":\"Data Dictionary\",\"extends\":\"Data Dictionary\",\"measures\":[{\"name\":\"TestMeasure_5\",\"dataType\":3,\"expression\":\"\\\"Testing in Dev1\\\"\",\"errorMessage\":null,\"hidden\":false,\"formulaOverride\":null,\"formatInformation\":{\"formatString\":\"G\",\"format\":\"General\",\"thousandSeparator\":false,\"currencyFormat\":null,\"dateTimeCustomFormat\":null}}]}]}],\"defaultDrillFilterOtherVisuals\":true,\"linguisticSchemaSyncVersion\":0,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"useEnhancedTooltips\":true,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true,\"allowInlineExploration\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}],\"outspacePane\":[{\"properties\":{\"expanded\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]},\"creationSource\":\"QuickCreate\"}",
-
+  "config": "{\"version\":\"5.59\",\"themeCollection\":{\"baseTheme\":{\"name\":\"CY24SU10\",\"version\":\"5.61\",\"type\":2}},\"activeSectionIndex\":0,\"modelExtensions\":[{\"name\":\"extension\",\"entities\":[{\"name\":\"Data Dictionary\",\"extends\":\"Data Dictionary\",\"measures\":[{\"name\":\"TestMeasure_5\",\"dataType\":3,\"expression\":\"\\\"Testing in Dev1\\\"\",\"errorMessage\":null,\"hidden\":false,\"formulaOverride\":null,\"formatInformation\":{\"formatString\":\"G\",\"format\":\"General\",\"thousandSeparator\":false,\"currencyFormat\":null,\"dateTimeCustomFormat\":null}},{\"name\":\"Testmeasure1\",\"dataType\":3,\"expression\":\"\\\"Testing Developer2 Measure\\\"\",\"errorMessage\":null,\"hidden\":false,\"formulaOverride\":null,\"formatInformation\":{\"formatString\":\"G\",\"format\":\"General\",\"thousandSeparator\":false,\"currencyFormat\":null,\"dateTimeCustomFormat\":null}}]}]}],\"defaultDrillFilterOtherVisuals\":true,\"linguisticSchemaSyncVersion\":0,\"settings\":{\"useNewFilterPaneExperience\":true,\"allowChangeFilterTypes\":true,\"useStylableVisualContainerHeader\":true,\"queryLimitOption\":6,\"useEnhancedTooltips\":true,\"exportDataMode\":1,\"useDefaultAggregateDisplayName\":true,\"allowInlineExploration\":true},\"objects\":{\"section\":[{\"properties\":{\"verticalAlignment\":{\"expr\":{\"Literal\":{\"Value\":\"'Top'\"}}}}}],\"outspacePane\":[{\"properties\":{\"expanded\":{\"expr\":{\"Literal\":{\"Value\":\"false\"}}}}}]},\"creationSource\":\"QuickCreate\"}",
   "layoutOptimization": 0,
   "resourcePackages": [
     {
@@ -43,7 +39,7 @@
       "filters": "[]",
       "height": 720.00,
       "name": "21067b01d386f26371c2",
-      "ordinal": 7,
+      "ordinal": 6,
       "visualContainers": [
         {
           "config": "{\"name\":\"98ee8b1527c63d9a2b9e\",\"layouts\":[{\"id\":0,\"position\":{\"x\":985.747398384503,\"y\":313.44041699783736,\"z\":0,\"width\":280.1279089111107,\"height\":280.1279089111107,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"Data Dictionary.TestMeasure_5\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"d\",\"Entity\":\"Data Dictionary\",\"Schema\":\"extension\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"TestMeasure_5\"},\"Name\":\"Data Dictionary.TestMeasure_5\",\"NativeReferenceName\":\"TestMeasure_5\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"TestMeasure_5\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true}}",
@@ -112,6 +108,27 @@
         }
       ],
       "width": 1920.00
+    },
+    {
+      "config": "{}",
+      "displayName": "Page 2",
+      "displayOption": 1,
+      "filters": "[]",
+      "height": 720.00,
+      "name": "455f3096553f14291fa0",
+      "ordinal": 7,
+      "visualContainers": [
+        {
+          "config": "{\"name\":\"c898dc770cf0c19725a5\",\"layouts\":[{\"id\":0,\"position\":{\"x\":31.798303173693643,\"y\":60.56819652132123,\"z\":0,\"width\":317.9830317369364,\"height\":299.8125727805401,\"tabOrder\":0}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"Data Dictionary.Testmeasure1\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"d\",\"Entity\":\"Data Dictionary\",\"Schema\":\"extension\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Testmeasure1\"},\"Name\":\"Data Dictionary.Testmeasure1\",\"NativeReferenceName\":\"Testmeasure1\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Testmeasure1\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true}}",
+          "filters": "[]",
+          "height": 299.81,
+          "width": 317.98,
+          "x": 31.80,
+          "y": 60.57,
+          "z": 0.00
+        }
+      ],
+      "width": 1280.00
     },
     {
       "config": "{\"objects\":{\"outspacePane\":[{\"properties\":{\"width\":{\"expr\":{\"Literal\":{\"Value\":\"396L\"}}}}}]}}",
@@ -228,11 +245,7 @@
       "ordinal": 5,
       "visualContainers": [
         {
-
-          "config": "{\"name\":\"23234c77696681f56e9e\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":168,\"width\":772,\"height\":150,\"z\":1001,\"tabOrder\":1001}}],\"singleVisual\":{\"visualType\":\"card\",\"projections\":{\"Values\":[{\"queryRef\":\"Data Dictionary.Measure 4\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"d\",\"Entity\":\"Data Dictionary\",\"Schema\":\"extension\",\"Type\":0}],\"Select\":[{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Measure 4\"},\"Name\":\"Data Dictionary.Measure 4\",\"NativeReferenceName\":\"Measure 4\"}],\"OrderBy\":[{\"Direction\":2,\"Expression\":{\"Measure\":{\"Expression\":{\"SourceRef\":{\"Source\":\"d\"}},\"Property\":\"Measure 4\"}}}]},\"drillFilterOtherVisuals\":true,\"hasDefaultSort\":true}}",
-
           "config": "{\"name\":\"dcaee94fd8a4a3079826\",\"layouts\":[{\"id\":0,\"position\":{\"x\":0,\"y\":168,\"width\":772,\"height\":150,\"z\":2000,\"tabOrder\":2000}}],\"singleVisual\":{\"visualType\":\"tableEx\",\"projections\":{\"Values\":[{\"queryRef\":\"GICS_MATRIX.GICS Sector\"},{\"queryRef\":\"GICS_MATRIX.GICS Industry Group\"}]},\"prototypeQuery\":{\"Version\":2,\"From\":[{\"Name\":\"g\",\"Entity\":\"GICS_MATRIX\",\"Type\":0}],\"Select\":[{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"g\"}},\"Property\":\"GICS Sector\"},\"Name\":\"GICS_MATRIX.GICS Sector\",\"NativeReferenceName\":\"GICS Sector\"},{\"Column\":{\"Expression\":{\"SourceRef\":{\"Source\":\"g\"}},\"Property\":\"GICS Industry Group\"},\"Name\":\"GICS_MATRIX.GICS Industry Group\",\"NativeReferenceName\":\"GICS Industry Group\"}]},\"drillFilterOtherVisuals\":true}}",
-
           "filters": "[]",
           "height": 150.00,
           "width": 772.00,
