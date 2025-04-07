@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "Dealer Metrics"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "d81e375e-57b4-9d45-4970-99153954e519"
+  }
+}

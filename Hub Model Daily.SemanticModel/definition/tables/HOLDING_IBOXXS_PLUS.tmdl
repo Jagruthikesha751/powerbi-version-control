@@ -1,0 +1,500 @@
+table HOLDING_IBOXXS_PLUS
+	lineageTag: 373ca740-9a19-4af1-8213-04d228abd54e
+
+	measure 'IBOXXS PLUS MV + AI Measure' = sum(HOLDING_IBOXXS_PLUS[IBOXXS PLUS MV (Dirty)])
+		lineageTag: 880b8d6a-544e-4210-8dff-069ba42b567b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'IBOXXS PLUS MV (Mid Clean)' = ```
+			SUMX(
+			    'HOLDING_IBOXXS_PLUS',
+			    'HOLDING_IBOXXS_PLUS'[IBOXXS PLUS Notional] * 
+			    IF(
+			        ISBLANK(DIVIDE(RELATED('INSTRUMENT_OFFICIAL_PRICE'[Mid Price]), 100)),
+			        1,
+			        DIVIDE(RELATED('INSTRUMENT_OFFICIAL_PRICE'[Mid Price]), 100)
+			    )
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: 3be8604d-b7b0-4ca1-aaa2-ca13bad50803
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	measure 'IBOXXS PLUS MV % (Clean - Cash)' = ```
+			
+			IF(
+			    HOLDING_IBOXXS_PLUS[IBOXXS PLUS MV (Mid Clean)] = BLANK(),
+			    BLANK(),
+			    DIVIDE(
+			        SUMX(
+			    FILTER(
+			        HOLDING_IBOXXS_PLUS,
+			        HOLDING_IBOXXS_PLUS[Instrument Identifier] <> "96c3f10ecbc02bf14bdee5a10eebf998"
+			    ),
+			    HOLDING_IBOXXS_PLUS[IBOXXS PLUS MV (Mid Clean)]
+			), 
+			        CALCULATE(
+			            HOLDING_IBOXXS_PLUS[IBOXXS PLUS MV (Mid Clean)] ,
+			            filter(ALL(HOLDING_IBOXXS_PLUS),'HOLDING_IBOXXS_PLUS'[Instrument Identifier] <> "96c3f10ecbc02bf14bdee5a10eebf998")
+			        ),
+			        
+			        BLANK()
+			    )
+			)
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: e7041d43-9fca-4c9b-8aa8-607375e0211b
+
+	column 'Period End Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 3466d71c-7ad1-4fe9-81ed-35c6cae0dbc5
+		summarizeBy: none
+		sourceColumn: Period End Date
+
+		variation Variation
+			isDefault
+			relationship: 2433889c-3e8a-4699-9aaf-02194e1f064a
+			defaultHierarchy: LocalDateTable_12f9946a-ec47-4b2e-b095-d5d5554f3232.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column SOURCE_SYSTEM_CODE
+		dataType: string
+		lineageTag: 31872a13-c17a-43f8-b3da-1fa2d501c217
+		summarizeBy: none
+		sourceColumn: SOURCE_SYSTEM_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column SOURCE_SYSTEM_SHORT_NAME
+		dataType: string
+		lineageTag: e7c32135-ae9e-48b3-8528-0d4c5fc385db
+		summarizeBy: none
+		sourceColumn: SOURCE_SYSTEM_SHORT_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column SOURCE_SYSTEM_NAME
+		dataType: string
+		lineageTag: b4f703e6-1060-4027-8d91-8d5f145f2469
+		summarizeBy: none
+		sourceColumn: SOURCE_SYSTEM_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Instrument Identifier'
+		dataType: string
+		lineageTag: 43487060-acf8-4245-b04d-fa1e86ad1200
+		summarizeBy: none
+		sourceColumn: Instrument Identifier
+
+		annotation SummarizationSetBy = Automatic
+
+	column PORTFOLIO_IDENTIFIER
+		dataType: string
+		lineageTag: ae2ae621-d989-4e52-a859-04dd7e7cf6b9
+		summarizeBy: none
+		sourceColumn: PORTFOLIO_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column CUSTODIAN_ACCOUNT_IDENTIFIER
+		dataType: string
+		lineageTag: f7935a8e-f595-4267-bb1d-a1c07fbb5c76
+		summarizeBy: none
+		sourceColumn: CUSTODIAN_ACCOUNT_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IBOXXS PLUS Notional'
+		dataType: double
+		formatString: #,0
+		lineageTag: 1a2ecb68-d8c7-4a7a-af10-1b1cef8c82df
+		summarizeBy: sum
+		sourceColumn: IBOXXS PLUS Notional
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column ORIGINAL_FACE_AMOUNT
+		dataType: double
+		lineageTag: 1d28ac39-9c3a-4d06-b83f-7d05896dd855
+		summarizeBy: sum
+		sourceColumn: ORIGINAL_FACE_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CURRENT_FACE_AMOUNT
+		dataType: double
+		lineageTag: 19709fce-b853-441d-8fbc-0377f732b714
+		summarizeBy: sum
+		sourceColumn: CURRENT_FACE_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'IBOXXS PLUS MV (Dirty)'
+		dataType: double
+		formatString: #,0
+		lineageTag: 6f0e636d-b335-4f08-9eac-7c83d152a20b
+		summarizeBy: sum
+		sourceColumn: IBOXXS PLUS MV (Dirty)
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	column MV_LOCAL_AMOUNT
+		dataType: double
+		lineageTag: 96a0ee03-6555-4717-9355-9b26f28f6064
+		summarizeBy: sum
+		sourceColumn: MV_LOCAL_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'IBOXXS PLUS AI'
+		dataType: double
+		lineageTag: da42e3bb-33d2-45f5-a109-27963a886e28
+		summarizeBy: sum
+		sourceColumn: IBOXXS PLUS AI
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ACCRUED_LOCAL_AMOUNT
+		dataType: double
+		lineageTag: 97e2ab9e-48ae-4a72-9f6a-53e53e93b1f0
+		summarizeBy: sum
+		sourceColumn: ACCRUED_LOCAL_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column COST_BASIS_HOME_AMOUNT
+		dataType: double
+		lineageTag: 3ae59225-6f4e-4e0e-8c13-1467e60174be
+		summarizeBy: sum
+		sourceColumn: COST_BASIS_HOME_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column COST_BASIS_LOCAL_AMOUNT
+		dataType: double
+		lineageTag: 746b5e04-f97b-40bf-bea3-31405469122e
+		summarizeBy: sum
+		sourceColumn: COST_BASIS_LOCAL_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column CURRENCY_CODE
+		dataType: string
+		lineageTag: f1baf722-06ad-4663-b724-1ec8fbcdcc69
+		summarizeBy: none
+		sourceColumn: CURRENCY_CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column PRICE_DATE
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 214d9ff9-e2bb-4d05-9c7e-eb0118f8c545
+		summarizeBy: none
+		sourceColumn: PRICE_DATE
+
+		variation Variation
+			isDefault
+			relationship: 40d878c7-6f01-4701-a549-ac7138fed18c
+			defaultHierarchy: LocalDateTable_23a0e434-f8af-42c9-8bf3-fbb944721ebd.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Price Home Amount'
+		dataType: double
+		lineageTag: a381eb3a-98d1-47e1-9bc4-97adfee0138a
+		summarizeBy: sum
+		sourceColumn: Price Home Amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PRICE_LOCAL_AMOUNT
+		dataType: double
+		lineageTag: fafb4a45-e43c-4bb2-b1c5-1c5578e4aa96
+		summarizeBy: sum
+		sourceColumn: PRICE_LOCAL_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PRICE_SOURCE_NAME
+		dataType: string
+		lineageTag: 7f18c1d5-eeda-4117-b969-51e66b47d9ac
+		summarizeBy: none
+		sourceColumn: PRICE_SOURCE_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'FX Rate'
+		dataType: double
+		lineageTag: c6fd593d-7a55-4ad5-b3e6-568791e538eb
+		summarizeBy: sum
+		sourceColumn: FX Rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Portfolio Holding Percent'
+		dataType: double
+		lineageTag: fd80775d-e6bf-4f22-81bf-bdf1cbbc4381
+		summarizeBy: sum
+		sourceColumn: Portfolio Holding Percent
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column REDEMPTION_FACTOR
+		dataType: double
+		lineageTag: 5844c1a4-de50-4afa-bb07-5d42d7062234
+		summarizeBy: sum
+		sourceColumn: REDEMPTION_FACTOR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SOURCE_SYSTEM_STATUS_IDENTIFIER
+		dataType: double
+		lineageTag: 9caedaad-f8e4-4bb6-a459-08b71e9ca17c
+		summarizeBy: sum
+		sourceColumn: SOURCE_SYSTEM_STATUS_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ENDING_NAV_AMOUNT
+		dataType: double
+		lineageTag: 8ebc5241-e62e-4f6e-bba4-3d05f5f05b93
+		summarizeBy: sum
+		sourceColumn: ENDING_NAV_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column BEGINNING_NAV_AMOUNT
+		dataType: double
+		lineageTag: 946c7377-6eef-4ef6-867e-1f37fe73084c
+		summarizeBy: sum
+		sourceColumn: BEGINNING_NAV_AMOUNT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SENTRY_PORTFOLIO_IDENTIFIER
+		dataType: string
+		lineageTag: f073d8b5-9101-4eb4-95fb-1889437cf9b9
+		summarizeBy: none
+		sourceColumn: SENTRY_PORTFOLIO_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column POSITION_SETTLED_QUANTITY
+		dataType: double
+		lineageTag: 6da92bd1-13f9-492e-941d-38a65d037a29
+		summarizeBy: sum
+		sourceColumn: POSITION_SETTLED_QUANTITY
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column UNFUNDED_COMMITMENT_LOCAL
+		dataType: double
+		lineageTag: 93f2bf64-f6d7-4bfc-b36b-8dc950b3bb29
+		summarizeBy: sum
+		sourceColumn: UNFUNDED_COMMITMENT_LOCAL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DATA_PROVIDER_NAME
+		dataType: string
+		lineageTag: 60882a1a-8e0f-4a35-80e3-abbd8e35cff1
+		summarizeBy: none
+		sourceColumn: DATA_PROVIDER_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column VANTAGE_PORTFOLIO_IDENTIFIER
+		dataType: string
+		lineageTag: f904f6be-b4ed-4dc1-bc17-f7572c0d89de
+		summarizeBy: none
+		sourceColumn: VANTAGE_PORTFOLIO_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column VANTAGE_CUSTODIAN_ACCOUNT_IDENTIFIER
+		dataType: string
+		lineageTag: df3a6a69-4542-43b4-b05e-7cec55c76319
+		summarizeBy: none
+		sourceColumn: VANTAGE_CUSTODIAN_ACCOUNT_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_DATETIME
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 12544d81-bac6-4df5-a92b-8444fda5ae03
+		summarizeBy: none
+		sourceColumn: CREATED_DATETIME
+
+		variation Variation
+			isDefault
+			relationship: 88c613d8-c804-470e-810c-8f5cd777f8de
+			defaultHierarchy: LocalDateTable_c2b31f71-cf21-46e7-ae9c-27906f340453.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_BY_NAME
+		dataType: string
+		lineageTag: 89a23ecc-1eab-43da-87db-b1c1ab195e81
+		summarizeBy: none
+		sourceColumn: CREATED_BY_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column CREATED_BY_COMMENTS
+		dataType: string
+		lineageTag: f41d8533-f94b-41f8-8b37-12f308e59e2d
+		summarizeBy: none
+		sourceColumn: CREATED_BY_COMMENTS
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_DATETIME
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 479fee03-f211-431e-9dcd-9481dbe1f9a0
+		summarizeBy: none
+		sourceColumn: MODIFIED_DATETIME
+
+		variation Variation
+			isDefault
+			relationship: c0c5ff43-2fa9-4550-8eb0-f275f7c7accc
+			defaultHierarchy: LocalDateTable_70a76f4a-d773-4444-babd-855cf7c4a714.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_BY_NAME
+		dataType: string
+		lineageTag: 42828aa8-37a2-43d2-b8a7-4cd2733fdfc1
+		summarizeBy: none
+		sourceColumn: MODIFIED_BY_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column MODIFIED_BY_COMMENTS
+		dataType: string
+		lineageTag: 72678fd6-425f-459c-89ad-192f46361a7a
+		summarizeBy: none
+		sourceColumn: MODIFIED_BY_COMMENTS
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID_DATE
+		dataType: string
+		lineageTag: 54a5ba64-bb12-4517-990c-76c5749d9076
+		summarizeBy: none
+		sourceColumn: ID_DATE
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID_DATE_PORT
+		dataType: string
+		lineageTag: 67bef335-0c8a-4e95-a3fb-9fc5519bc067
+		summarizeBy: none
+		sourceColumn: ID_DATE_PORT
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IBOXXS PLUS MV (Dirty) + AI %' =
+			
+			IF(
+			    HOLDING_IBOXXS_PLUS[IBOXXS PLUS MV + AI Measure] = BLANK(),
+			    BLANK(),
+			    DIVIDE(
+			        HOLDING_IBOXXS_PLUS[IBOXXS PLUS MV + AI Measure],
+			        CALCULATE(
+			            HOLDING_IBOXXS_PLUS[IBOXXS PLUS MV + AI Measure],
+			            ALL(HOLDING_IBOXXS_PLUS)
+			        ),
+			        BLANK()
+			    )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 8b4b217b-6f5d-4946-8316-fd59ef1625c7
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'IBOXXS PLUS MV % (Dirty)' =
+			
+			IF(
+			    HOLDING_IBOXXS_PLUS[IBOXXS PLUS MV (Dirty)] = BLANK(),
+			    BLANK(),
+			    DIVIDE(
+			        HOLDING_IBOXXS_PLUS[IBOXXS PLUS MV (Dirty)],
+			        CALCULATE(
+			            sum(HOLDING_IBOXXS_PLUS[IBOXXS PLUS MV (Dirty)]),
+			            ALL(HOLDING_IBOXXS_PLUS)
+			        ),
+			        BLANK()
+			    )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: c7e32f20-28a5-46f6-a4c1-378acabb6f50
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition HOLDING_IBOXXS_PLUS = m
+		mode: import
+		source =
+				let
+				    Source = HOLDING,
+				    #"Filtered Rows1" = Table.SelectRows(Source, each ([PORTFOLIO_IDENTIFIER] = "MPC_IBOXX_SELECT_PLUS")),
+				    #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows1",{{"Accrued", "IBOXXS PLUS AI"}, {"MV Home Amount", "IBOXXS PLUS MV (Dirty)"}, {"Position Quantity", "IBOXXS PLUS Notional"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

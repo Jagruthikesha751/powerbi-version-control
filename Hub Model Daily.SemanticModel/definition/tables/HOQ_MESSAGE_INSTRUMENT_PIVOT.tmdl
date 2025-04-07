@@ -1,0 +1,98 @@
+table HOQ_MESSAGE_INSTRUMENT_PIVOT
+	lineageTag: c4ecb9fe-80a7-4767-99a8-0b90194bc250
+
+	column CREATED_DATE
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: cf276620-3901-4f97-bb17-cbaa6e1b6f05
+		summarizeBy: none
+		sourceColumn: CREATED_DATE
+
+		variation Variation
+			isDefault
+			relationship: 0edc4d59-b637-4a6a-85f6-241d0d5a1a05
+			defaultHierarchy: LocalDateTable_b4918367-6f0b-4325-942e-e7dca5a001bf.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column CHANGED_IDENTIFIERS
+		dataType: string
+		lineageTag: 392b31e8-018e-4ef0-9f6d-2d67d784a343
+		summarizeBy: none
+		sourceColumn: CHANGED_IDENTIFIERS
+
+		annotation SummarizationSetBy = Automatic
+
+	column MISSING_IDENTIFIERS
+		dataType: string
+		lineageTag: 3f26b67e-3e9b-43ff-b29e-25aad39c7864
+		summarizeBy: none
+		sourceColumn: MISSING_IDENTIFIERS
+
+		annotation SummarizationSetBy = Automatic
+
+	column INSTRUMENT_TC_CHANGES
+		dataType: string
+		lineageTag: 02691d70-a03c-4769-9183-790a0443fa9b
+		summarizeBy: none
+		sourceColumn: INSTRUMENT_TC_CHANGES
+
+		annotation SummarizationSetBy = Automatic
+
+	column FLOATER_RATE_DIFFERENCES
+		dataType: string
+		lineageTag: 7e1cc131-f0f0-4db7-b735-5b6acef5cc2f
+		summarizeBy: none
+		sourceColumn: FLOATER_RATE_DIFFERENCES
+
+		annotation SummarizationSetBy = Automatic
+
+	column DUPLICATE_IDENTIFIERS
+		dataType: string
+		lineageTag: a68d6646-188c-4d77-8889-48d7e9d4d784
+		summarizeBy: none
+		sourceColumn: DUPLICATE_IDENTIFIERS
+
+		annotation SummarizationSetBy = Automatic
+
+	column POSSIBLE_STALE_FIGI
+		dataType: string
+		lineageTag: c1940f15-f588-481b-be6d-3a05df8e5a1e
+		summarizeBy: none
+		sourceColumn: POSSIBLE_STALE_FIGI
+
+		annotation SummarizationSetBy = Automatic
+
+	column POSSIBLE_REPRICING
+		dataType: string
+		lineageTag: 80706aa4-73b7-42e1-b614-b0cc34e6760c
+		summarizeBy: none
+		sourceColumn: POSSIBLE_REPRICING
+
+		annotation SummarizationSetBy = Automatic
+
+	column INSTRUMENT_IDENTIFIER
+		dataType: string
+		lineageTag: cf7ee3cc-9b60-4c7a-a91b-b373d30a031b
+		summarizeBy: none
+		sourceColumn: INSTRUMENT_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	partition HOQ_MESSAGE_INSTRUMENT_PIVOT = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases("vtb24437.us-east-1.snowflakecomputing.com","ANALYST_WH_XS"),
+				    HUB_Database = Source{[Name="HUB",Kind="Database"]}[Data],
+				    JOB_Schema = HUB_Database{[Name="JOB",Kind="Schema"]}[Data],
+				    HOQ_MESSAGE_INSTRUMENT_PIVOT_View = JOB_Schema{[Name="HOQ_MESSAGE_INSTRUMENT_PIVOT",Kind="View"]}[Data]
+				in
+				    HOQ_MESSAGE_INSTRUMENT_PIVOT_View
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
