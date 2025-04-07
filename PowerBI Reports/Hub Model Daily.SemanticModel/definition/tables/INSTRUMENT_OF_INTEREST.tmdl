@@ -1,0 +1,64 @@
+table INSTRUMENT_OF_INTEREST
+	isHidden
+	lineageTag: 61e5f668-7869-4817-b711-253c192fd657
+
+	column LoanX
+		dataType: string
+		isHidden
+		sourceProviderType: nvarchar(16777216)
+		lineageTag: 0677db3a-c090-4967-8229-80def861cce4
+		summarizeBy: none
+		sourceColumn: LoanX
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column INSTRUMENT_IDENTIFIER
+		dataType: string
+		isHidden
+		lineageTag: 14436a0a-aa70-467b-a60f-7adc938fb329
+		summarizeBy: none
+		sourceColumn: INSTRUMENT_IDENTIFIER
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CALENDAR_DATE
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: d28315df-f65e-4f01-b119-15a19e7c5d2e
+		summarizeBy: none
+		sourceColumn: CALENDAR_DATE
+
+		variation Variation
+			isDefault
+			relationship: 9f3e2ef4-aabd-435f-a0b1-f2dcc1163db1
+			defaultHierarchy: LocalDateTable_2c6bf89d-16e6-4098-bdf8-36abdccd80e0.'Date Hierarchy'
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition INSTRUMENT_OF_INTEREST = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases(snowflake_url,"ANALYST_WH_XS"),
+				    HUB_Database = Source{[Name="HUB",Kind="Database"]}[Data],
+				    ASSET_Schema = HUB_Database{[Name="ASSET",Kind="Schema"]}[Data],
+				    INSTRUMENT_OF_INTEREST_View = ASSET_Schema{[Name="INSTRUMENT_OF_INTEREST_DAILY",Kind="View"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(INSTRUMENT_OF_INTEREST_View,{{"LOANX_IDENTIFIER", "LoanX"}})
+				in
+				    #"Renamed Columns"
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

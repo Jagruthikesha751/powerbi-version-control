@@ -1,0 +1,172 @@
+table INSTRUMENT_PRICE_SPGLOBAL
+	lineageTag: 44fe1685-be0f-41cb-8d30-4a54b447a393
+
+	column 'Calendar Date'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 397e9bab-1dc6-4fa7-ba01-57ec4d6088ce
+		summarizeBy: none
+		sourceColumn: Calendar Date
+
+		variation Variation
+			isDefault
+			relationship: 03d9c766-2182-4f64-8911-c087528d257b
+			defaultHierarchy: LocalDateTable_fb375f3a-1820-42ea-80f4-e656347c5ce6.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column INSTRUMENT_IDENTIFIER
+		dataType: string
+		lineageTag: 296a7304-e031-4daa-a8d8-f0bd1e4a2889
+		summarizeBy: none
+		sourceColumn: INSTRUMENT_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Data Provider Name'
+		dataType: string
+		lineageTag: 24c24f53-75fb-493d-9379-902eb5ec2cc3
+		summarizeBy: none
+		sourceColumn: Data Provider Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column COUNTERPARTY_PRICE_IDENTIFIER
+		dataType: string
+		lineageTag: b051fca0-476b-431d-bd88-59cff0052461
+		summarizeBy: none
+		sourceColumn: COUNTERPARTY_PRICE_IDENTIFIER
+
+		annotation SummarizationSetBy = Automatic
+
+	column FINAL_PRICE_INDICATOR
+		dataType: double
+		lineageTag: 41392402-f250-4c2a-b3bd-ae3ce5172e3f
+		summarizeBy: sum
+		sourceColumn: FINAL_PRICE_INDICATOR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column EOD_PRICE
+		dataType: double
+		lineageTag: d1692b47-d9a8-4ce1-8e8e-5bc2d1d39e9a
+		summarizeBy: sum
+		sourceColumn: EOD_PRICE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column BID_SIZE
+		dataType: double
+		lineageTag: dcc08b5e-95ab-453a-ab5f-b6ffbf1322c2
+		summarizeBy: sum
+		sourceColumn: BID_SIZE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Bid Price'
+		dataType: double
+		formatString: 0.000
+		lineageTag: cffa0dbf-0df0-495e-a86b-c8c575087210
+		summarizeBy: sum
+		sourceColumn: Bid Price
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ask Price'
+		dataType: double
+		formatString: 0.000
+		lineageTag: 9fe758a3-4944-4972-bb14-73b31f4540da
+		summarizeBy: sum
+		sourceColumn: Ask Price
+
+		annotation SummarizationSetBy = Automatic
+
+	column ASK_SIZE
+		dataType: double
+		lineageTag: 62c0192a-47bb-497c-82ab-8c2f69bb1cb0
+		summarizeBy: sum
+		sourceColumn: ASK_SIZE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Mid Price'
+		dataType: double
+		formatString: 0.000
+		lineageTag: 606039e0-aeeb-482b-9518-3b99723f7297
+		summarizeBy: sum
+		sourceColumn: Mid Price
+
+		annotation SummarizationSetBy = Automatic
+
+	column QUOTE_DEPTH
+		dataType: double
+		lineageTag: 1cd20251-9df5-4e7d-98ae-9fb3132ceaa2
+		summarizeBy: sum
+		sourceColumn: QUOTE_DEPTH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column QUOTE_DEPTH_TEXT
+		dataType: string
+		lineageTag: 15674cc0-a1aa-4ad7-8aa5-b54ba5d3acb3
+		summarizeBy: none
+		sourceColumn: QUOTE_DEPTH_TEXT
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID_DATE
+		dataType: string
+		lineageTag: 89c8b2d4-cc41-4693-b744-4da30f9a9148
+		summarizeBy: none
+		sourceColumn: ID_DATE
+
+		annotation SummarizationSetBy = Automatic
+
+	column PRICE_DATE
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: c0ff367e-dec0-4227-b283-481dd3583c72
+		summarizeBy: none
+		sourceColumn: PRICE_DATE
+
+		variation Variation
+			isDefault
+			relationship: 3aa99d9a-a071-4df9-84fc-31a951f89759
+			defaultHierarchy: LocalDateTable_e0b69df3-a77d-4e8b-9639-b14b32e02a86.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition INSTRUMENT_PRICE_SPGLOBAL = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases(snowflake_url,"ANALYST_WH_XS"),
+				    HUB_Database = Source{[Name="HUB",Kind="Database"]}[Data],
+				    PRICE_Schema = HUB_Database{[Name="PRICE",Kind="Schema"]}[Data],
+				    INSTRUMENT_PRICE_View = PRICE_Schema{[Name="INSTRUMENT_PRICE_DAILY",Kind="View"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(INSTRUMENT_PRICE_View,{{"CALENDAR_DATE", "Calendar Date"}, {"BID_PRICE", "Bid Price"}}),
+				    #"Added Custom" = Table.AddColumn(#"Renamed Columns", "ID_DATE", each [INSTRUMENT_IDENTIFIER]&Date.ToText([Calendar Date], [Format="yyyy-MM-dd"])),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Added Custom",{{"MID_PRICE", "Mid Price"}, {"ASK_PRICE", "Ask Price"}, {"DATA_PROVIDER_NAME", "Data Provider Name"}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Renamed Columns1", each Date.IsInYearToDate([Calendar Date])),
+				    #"Filtered Rows1" = Table.SelectRows(#"Filtered Rows", each ([Data Provider Name] = "SPGLOBAL"))
+				in
+				    #"Filtered Rows1"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

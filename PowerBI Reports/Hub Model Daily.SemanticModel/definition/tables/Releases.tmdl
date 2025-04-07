@@ -1,0 +1,77 @@
+table Releases
+	lineageTag: f1eafaa1-3258-45bd-a514-f95f9ca1579d
+
+	column ReleaseDate
+		formatString: Short Date
+		lineageTag: 7cca7dac-58ed-4d85-90e1-dc9b1b7ac285
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [ReleaseDate]
+
+		variation Variation
+			isDefault
+			relationship: 08037618-a970-4b98-9243-2b60fb622860
+			defaultHierarchy: LocalDateTable_15544bd5-15bb-47c7-a9bb-85027629c50e.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReleaseNotesHTML
+		lineageTag: 1687faa1-3dc5-4803-a154-ff627b7052c2
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [ReleaseNotesHTML]
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReleaseNotesHTML_ = ```
+			
+			"<p style='counter-reset:list-1 0 list-2 0 list-3 0 list-4 0 list-5 0 list-6 0 list-7 0 list-8 0 list-9 0;cursor:text;margin:0px;padding:0px;'><strong style='font-size:16pt;'>Release: 2025-03-27</strong></p>
+			<p style='counter-reset:list-1 0 list-2 0 list-3 0 list-4 0 list-5 0 list-6 0 list-7 0 list-8 0 list-9 0;cursor:text;margin:0px;padding:0px;'>For full details on this release, use the link below:</p>
+			<p style='counter-reset:list-1 0 list-2 0 list-3 0 list-4 0 list-5 0 list-6 0 list-7 0 list-8 0 list-9 0;cursor:text;margin:0px;padding:0px;'>
+			    <a href='https://mountainpointcredit.atlassian.net/wiki/x/AgBxEQ' target='_blank'>https://mountainpointcredit.atlassian.net/wiki/x/AgBxEQ</a>
+			</p>
+			<p style='counter-reset:list-1 0 list-2 0 list-3 0 list-4 0 list-5 0 list-6 0 list-7 0 list-8 0 list-9 0;cursor:text;margin:0px;padding:0px;'>&nbsp;</p>
+			<p style='margin-left:auto;'><strong>New Dashboard</strong></p>
+			<p style='counter-reset:list-1 0 list-2 0 list-3 0 list-4 0 list-5 0 list-6 0 list-7 0 list-8 0 list-9 0;cursor:text;margin:0px;padding:0px;'>We added a new Dashboard page to highlight useful information.</p>
+			<p style='counter-reset:list-1 0 list-2 0 list-3 0 list-4 0 list-5 0 list-6 0 list-7 0 list-8 0 list-9 0;cursor:text;margin:0px;padding:0px;'> </p>
+			<p style='margin-left:auto;'><strong>Life is Good!</strong></p>
+			<p style='counter-reset:list-1 0 list-2 0 list-3 0 list-4 0 list-5 0 list-6 0 list-7 0 list-8 0 list-9 0;cursor:text;margin:0px;padding:0px;'>On the top of the new Dashboard page is the “Life Is Good” visual. When the dots are GREEN, that means Life is Good. When there are any red dots, look for Leo!</p>
+			<p style='counter-reset:list-1 0 list-2 0 list-3 0 list-4 0 list-5 0 list-6 0 list-7 0 list-8 0 list-9 0;cursor:text;margin:0px;padding:0px;'> </p>
+			<p style='margin-left:auto;'><strong>New Page Navigation</strong></p>
+			<p style='counter-reset:list-1 0 list-2 0 list-3 0 list-4 0 list-5 0 list-6 0 list-7 0 list-8 0 list-9 0;cursor:text;margin:0px;padding:0px;'>We changed the page navigation by adding a nav bar on the left. Client the 'hamburger' icon at the top to open the page nave. Click the 'Home' icon to go back to the dashboard</p>
+			<p style='counter-reset:list-1 0 list-2 0 list-3 0 list-4 0 list-5 0 list-6 0 list-7 0 list-8 0 list-9 0;cursor:text;margin:0px;padding:0px;'> </p>
+			<p style='margin-left:auto;'><strong>Data Dictionary</strong></p>
+			<p style='counter-reset:list-1 0 list-2 0 list-3 0 list-4 0 list-5 0 list-6 0 list-7 0 list-8 0 list-9 0;cursor:text;margin:0px;padding:0px;'>For calculated fields, we added a Data Dictionary page that shows how the calculations are being done in PowerBI’s DAX Language</p>
+			<p style='counter-reset:list-1 0 list-2 0 list-3 0 list-4 0 list-5 0 list-6 0 list-7 0 list-8 0 list-9 0;cursor:text;margin:0px;padding:0px;'> </p>
+			<p style='margin-left:auto;'><strong>MPC Ratings</strong></p>
+			<p style='counter-reset:list-1 0 list-2 0 list-3 0 list-4 0 list-5 0 list-6 0 list-7 0 list-8 0 list-9 0;cursor:text;margin:0px;padding:0px;'>Now all S&amp;P Ratings and Moodys Ratings use the new Ratings Waterfall logic.</p>
+			<p style='counter-reset:list-1 0 list-2 0 list-3 0 list-4 0 list-5 0 list-6 0 list-7 0 list-8 0 list-9 0;cursor:text;margin:0px;padding:0px;'> </p>
+			<p style='margin-left:auto;'><strong>Price Movers Adjustments</strong></p>
+			<p style='counter-reset:list-1 0 list-2 0 list-3 0 list-4 0 list-5 0 list-6 0 list-7 0 list-8 0 list-9 0;cursor:text;margin:0px;padding:0px;'>Added Top/Bottom MoM tables and changed ranking to Top 10. %Change 1W was not coming correct, it's been updated.</p>
+			<p style='counter-reset:list-1 0 list-2 0 list-3 0 list-4 0 list-5 0 list-6 0 list-7 0 list-8 0 list-9 0;cursor:text;margin:0px;padding:0px;'> </p>
+			<p style='margin-left:auto;'><strong>Totals are Coming Correct now</strong></p>
+			<p style='counter-reset:list-1 0 list-2 0 list-3 0 list-4 0 list-5 0 list-6 0 list-7 0 list-8 0 list-9 0;cursor:text;margin:0px;padding:0px;'>Updated Benchmark Pnl, MPSIF PnL, and MPSIF vs Benchmark PnL to show correct Total. Added MTD $ and % to <span style='font-size:13.3333px;'>MPSIF vs Benchmark PnL Page</span></p>
+			<p style='counter-reset:list-1 0 list-2 0 list-3 0 list-4 0 list-5 0 list-6 0 list-7 0 list-8 0 list-9 0;cursor:text;margin:0px;padding:0px;'> </p>"
+			
+			```
+		lineageTag: 1243154d-8785-445e-acef-3609ca337a07
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Releases = calculated
+		mode: import
+		source = ```
+				
+				DATATABLE (
+				   "ReleaseDate", DATETIME,
+				   "ReleaseNotesHTML", STRING,
+				   {
+				      {"2025-03-15", "<p>Your HTML content here</p>"}
+				   }
+				)
+				
+				```
+
+	annotation PBI_Id = a20c24426cb6407782f8ade4ba033dfc
+
